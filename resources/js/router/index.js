@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 //Auth
 import login from '../components/auth/login.vue'
+import resetPassword from '../components/auth/resetPassword.vue'
+import newPassword from '../components/auth/newPassword.vue'
 //Not Found
 import notFound from '../components/notFound.vue'
 //Pages
@@ -28,6 +30,14 @@ const routes = [
     {
         path: '/login',
         component: login
+    },
+    {
+        path: '/reset-password',
+        component: resetPassword
+    },
+    {
+        path: '/new-password',
+        component: newPassword
     },
     //Pages
     {
