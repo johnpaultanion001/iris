@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
       'user_id',
@@ -52,4 +54,26 @@ class Ticket extends Model
   {
       return $this->belongsTo(ReportedBy::class, 'reported_by_id');
   }
+  public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly([ 'user_id',
+        'ticket_no',
+        'product_service',
+        'complaint',
+        'platform',
+        'link',
+        'additional_documents_file',
+        'vendor_id',
+        'reported_by_id',
+        'remarks',
+        'isFollow',
+        'severity',
+        'status',]);
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "This ticket has been {$eventName}";
+    }
 }

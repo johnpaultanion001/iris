@@ -20,8 +20,12 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   Route::post('ticket/update_severity', 'TicketController@update_severity')->name('ticket.update_severity');
   Route::post('ticket/update_status', 'TicketController@update_status')->name('ticket.update_status');
   Route::post('ticket/comment', 'TicketController@create_comment')->name('ticket.create_comment');
+  Route::post('ticket/update_follow', 'TicketController@update_follow')->name('ticket.update_follow');
   Route::apiResource('violations', 'ViolationController');
-  Route::post('register', 'RegisterController@register');
+  Route::post('register', 'RegisterController@register')->name('admin.register');
+  Route::get('activities', 'ActivityController@index')->name('activities.index');
+
+
 
 });
 

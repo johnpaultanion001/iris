@@ -70,6 +70,7 @@ class TicketController extends ApiController
 
             $ticket = Ticket::create([
                 'user_id'         => auth()->user()->id,
+                'ticket_no'         => auth()->user()->id,
                 'product_service' => request('product_service'),
                 'complaint' => request('complaint'),
                 'platform' => request('platform'),
@@ -93,7 +94,6 @@ class TicketController extends ApiController
                 'agency_id' => $agency['agency_id'],
               ]);
             }
-
 
             $data = [
                 'id' => $ticket->id,
@@ -199,6 +199,39 @@ class TicketController extends ApiController
 
       return $this->responseResourceUpdated('Status updated successfully',$data);
     }
+
+    public function update_follow(Request $request)
+    {
+      $validator = Validator::make($request->all(), [
+          'ticket_id' => 'required',
+          'isFollow' => ['required', 'in:0,1'],
+      ]);
+
+      if ($validator->fails()) {
+        return $this->responseUnprocessable($validator->errors());
+      }
+
+      $ticket = Ticket::where('id',  request('ticket_id'))->first();
+      if ($ticket == null) {
+        return $this->ticketNotFound();
+      }
+      if (auth()->user()->id != $ticket->user_id) {
+        return $this->ticketUnauthorized();
+      }
+
+      $ticket->update([
+        'isFollow' => request('isFollow'),
+      ]);
+
+      $data = [
+        'tiket_id' => $ticket->id,
+        'tiket_no' => $ticket->id,
+        'isFollow' => $ticket->isFollow,
+      ];
+
+      return $this->responseResourceUpdated('Follow updated successfully',$data);
+    }
+
 
     public function create_comment(Request $request)
     {

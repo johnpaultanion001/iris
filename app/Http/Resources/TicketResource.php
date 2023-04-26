@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Custom\Hasher;
+use Spatie\Activitylog\Models\Activity;
 
 class TicketResource extends ApiResource
 {
@@ -14,22 +15,31 @@ class TicketResource extends ApiResource
      */
     public function toArray($request)
     {
+
+      $activity_logs = Activity::where('subject_id',$this->id)
+                                ->where('subject_type',"App\Models\Ticket")
+                                ->latest()->get();
+
+
         return [
             'id' => $this->id,
             'ticket_no' => $this->id,
-            'product_service' => $this->product_service,
-            'complaint' => $this->complaint,
-            'link' => $this->link,
-            'additional_documents_file' => $this->additional_documents_file,
             'severity'=> $this->severity,
             'status'=> $this->status,
             'isFollow'=> $this->isFollow,
+            'product_service' => $this->product_service,
+            'complaint' => $this->complaint,
+            'platform' => $this->platform,
+            'link' => $this->link,
+            'created_by' => $this->user->name,
+            'reported_by' => [
+              new ReportedByResource($this->reportedby),
+            ],
+            'date_submitted' => (string)$this->created_at->toDateTimeString(),
+            'additional_documents_file' => $this->additional_documents_file,
             'remarks' => $this->remarks,
             'vendor' => [
               new VendorResource($this->vendor),
-            ],
-            'reported_by' => [
-              new ReportedByResource($this->reportedby),
             ],
             'violations' => [
               new ViolationResource($this->violations()->get()),
@@ -41,11 +51,14 @@ class TicketResource extends ApiResource
             'comments' => [
               new CommentCollection($this->comments()->latest()->get()),
             ],
+            'activity_log' => [
+              new ActivityCollection($activity_logs),
+            ],
 
 
-            'created_by' => $this->user->name,
-            'created_at' => (string)$this->created_at->toDateTimeString(),
-            'updated_at' => (string)$this->updated_at->toDateTimeString(),
+
+
+
         ];
     }
 }

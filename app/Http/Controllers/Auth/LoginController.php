@@ -22,7 +22,7 @@ class LoginController extends ApiController
 
         // Get the user data.
         $user = auth()->user();
-
+        activity()->event('Login')->log('This user is logged in');
         return response()->json([
             'status' => 200,
             'message' => 'Authorized.',

@@ -8,11 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Custom\Hasher;
-use App\Models\Todo;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, HasFactory;
+    use Notifiable, HasFactory, LogsActivity;
 
 
     protected $fillable = [
@@ -64,5 +65,17 @@ class User extends Authenticatable implements JWTSubject
     public function agency()
     {
         return $this->belongsTo(Agency::class, 'agency_id');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['agency_id',
+        'name',
+        'email',
+        'mobile_number',
+        'role',
+        'status',
+        'profile',]);
     }
 }
