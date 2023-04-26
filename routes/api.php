@@ -15,14 +15,21 @@ Route::group([
 });
 
 Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+  //NEW PASSWORD
+  Route::post('new_password', 'UserController@new_password')->name('admin.new_password');
 
+  //Tickets
   Route::apiResource('tickets', 'TicketController');
   Route::post('ticket/update_severity', 'TicketController@update_severity')->name('ticket.update_severity');
   Route::post('ticket/update_status', 'TicketController@update_status')->name('ticket.update_status');
   Route::post('ticket/comment', 'TicketController@create_comment')->name('ticket.create_comment');
   Route::post('ticket/update_follow', 'TicketController@update_follow')->name('ticket.update_follow');
   Route::apiResource('violations', 'ViolationController');
+
+  //REGISTER
   Route::post('register', 'RegisterController@register')->name('admin.register');
+
+  //ACTIVITY LOG
   Route::get('activities', 'ActivityController@index')->name('activities.index');
 
 
