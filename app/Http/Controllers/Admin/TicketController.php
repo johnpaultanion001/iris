@@ -8,7 +8,6 @@ use App\Http\Controllers\APIController;
 use App\Http\Resources\TicketResource;
 use App\Http\Resources\TicketCollection;
 use App\Http\Resources\CommentCollection;
-
 use App\Models\Ticket;
 use App\Models\Vendor;
 use App\Models\ReportedBy;
@@ -22,7 +21,7 @@ class TicketController extends ApiController
 {
     public function index(Request $request)
     {
-      $collection = Ticket::where('user_id', auth()->user()->id);
+      $collection = Ticket::where('user_id', auth("api")->user()->id);
       $collection = $collection->latest()->paginate();
 
       return new TicketCollection($collection);
@@ -69,8 +68,7 @@ class TicketController extends ApiController
             ]);
 
             $ticket = Ticket::create([
-                'user_id'         => auth()->user()->id,
-                'ticket_no'         => auth()->user()->id,
+                'user_id'         => auth("api")->user()->id,
                 'product_service' => request('product_service'),
                 'complaint' => request('complaint'),
                 'platform' => request('platform'),
@@ -111,7 +109,7 @@ class TicketController extends ApiController
     public function show(Request $request, Ticket $ticket)
     {
 
-      if (auth()->user()->id != $ticket->user_id) {
+      if (auth("api")->user()->id != $ticket->user_id) {
         return $this->ticketUnauthorized();
       }
 
@@ -144,7 +142,7 @@ class TicketController extends ApiController
       if ($ticket == null) {
         return $this->ticketNotFound();
       }
-      if (auth()->user()->id != $ticket->user_id) {
+      if (auth("api")->user()->id != $ticket->user_id) {
         return $this->ticketUnauthorized();
       }
 
@@ -176,7 +174,7 @@ class TicketController extends ApiController
       if ($ticket == null) {
         return $this->ticketNotFound();
       }
-      if (auth()->user()->id != $ticket->user_id) {
+      if (auth("api")->user()->id != $ticket->user_id) {
         return $this->ticketUnauthorized();
       }
 
@@ -185,7 +183,7 @@ class TicketController extends ApiController
       ]);
 
       $ticket_comment = TicketComment::create([
-        'user_id' => auth()->user()->id,
+        'user_id' => auth("api")->user()->id,
         'ticket_id' => $ticket->id,
         'comment' => request('comment'),
       ]);
@@ -215,7 +213,7 @@ class TicketController extends ApiController
       if ($ticket == null) {
         return $this->ticketNotFound();
       }
-      if (auth()->user()->id != $ticket->user_id) {
+      if (auth("api")->user()->id != $ticket->user_id) {
         return $this->ticketUnauthorized();
       }
 
@@ -247,13 +245,13 @@ class TicketController extends ApiController
       if ($ticket == null) {
         return $this->ticketNotFound();
       }
-      if (auth()->user()->id != $ticket->user_id) {
+      if (auth("api")->user()->id != $ticket->user_id) {
         return $this->ticketUnauthorized();
       }
 
 
       $ticket_comment = TicketComment::create([
-        'user_id' => auth()->user()->id,
+        'user_id' => auth("api")->user()->id,
         'ticket_id' => $ticket->id,
         'comment' => request('comment'),
       ]);

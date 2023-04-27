@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\Resource;
 use Hashids\Hashids;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+      Passport::hashClientSecrets();
     }
 
     /**
@@ -25,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
+
     }
 }

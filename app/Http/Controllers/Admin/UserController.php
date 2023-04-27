@@ -28,7 +28,7 @@ class UserController extends ApiController
         return $this->responseUnprocessable($validator->errors());
       }
 
-      $user = User::where('id',  auth()->user()->id)->first();
+      $user = User::where('id',  auth("api")->user()->id)->first();
 
       $user->update([
         'password' => Hash::make(request('password')),

@@ -4,15 +4,15 @@ use Illuminate\Http\Request;
 
 
 // Auth Endpoints
-Route::group([
-    'prefix' => 'v1/auth'
-], function ($router) {
-    Route::post('login', 'Auth\LoginController@login');
-    Route::post('logout', 'Auth\LogoutController@logout');
+// Route::group([
+//     'prefix' => 'v1/auth'
+// ], function ($router) {
+//     Route::post('login', 'Auth\LoginController@login');
+//     Route::post('logout', 'Auth\LogoutController@logout');
 
-    Route::post('forgot-password', 'Auth\ForgotPasswordController@email');
-    Route::post('password-reset', 'Auth\ResetPasswordController@reset');
-});
+//     Route::post('forgot-password', 'Auth\ForgotPasswordController@email');
+//     Route::post('password-reset', 'Auth\ResetPasswordController@reset');
+// });
 
 Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
   //NEW PASSWORD

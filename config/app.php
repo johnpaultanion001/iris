@@ -105,7 +105,9 @@ return [
 
     'key' => env('APP_KEY', 'base64:If+mHOc1r6mVpzS0I+579XGvq/+E9NyErziQ5r+8G1o='),
 
+
     'cipher' => 'AES-256-CBC',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -145,11 +147,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
-        /*
-         * Package Service Providers...
-         */
-         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
         /*
          * Application Service Providers...
