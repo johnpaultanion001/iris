@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\APIController;
+use App\Http\Controllers\ApiController;
 use App\Http\Resources\TicketResource;
 use App\Http\Resources\TicketCollection;
 use App\Http\Resources\CommentCollection;
