@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,8 +38,6 @@ return [
     | application. If disabled, a simple generic error page is shown.
     |
     */
-
-    'debug' => env('APP_DEBUG', true),
     'debug' => env('APP_DEBUG', true),
 
     /*
