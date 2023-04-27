@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Http\Controllers\APIController;
 
-class UserController extends ApiController
+class UserController extends APIController
 {
      public function new_password(Request $request)
     {
