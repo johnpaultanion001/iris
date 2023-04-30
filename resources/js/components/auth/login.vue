@@ -34,7 +34,9 @@
 import Layout from './layout.vue'
 
 export default {
-    title: 'Login',
+    setup: () => ({
+        title: 'Login'
+    }),
     components: { Layout },
     data() {
         return {

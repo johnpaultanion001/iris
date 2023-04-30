@@ -42,7 +42,9 @@
 import Layout from './layout.vue'
 
 export default {
-    title: 'New Password',
+    setup: () => ({
+        title: 'New Password'
+    }),
     components: { Layout },
     data() {
         return {

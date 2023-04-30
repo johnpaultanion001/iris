@@ -22,7 +22,9 @@
 
 <script>
 export default {
-    title: 'Auth',
+    setup: () => ({
+        title: 'Auth'
+    }),
     props: ['headerBg', 'headerTitle', 'headerText']
 }
 </script>

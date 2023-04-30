@@ -10,12 +10,17 @@ module.exports = {
       height: {
         '7.5': '1.875rem',
       },
+      width: {
+        '15': '3.75rem',
+      },
       minWidth: {
         '412': '412px',
       },
       colors: {
         'blue-grey': '#525F7F',
         'blue': '#1267E5',
+        'light': '#CED4DA',
+        'lighter': '#F2F7FF'
       },
       fontSize: {
         xxs: '0.75rem',
