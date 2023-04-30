@@ -23,7 +23,9 @@ import Layout from './layout.vue'
 import AlertTop from '../utilities/alertTop.vue'
 
 export default {
-    title: 'Reset Password',
+    setup: () => ({
+        title: 'Reset Password'
+    }),
     components: { Layout, AlertTop },
     data() {
         return {

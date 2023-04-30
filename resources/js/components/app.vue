@@ -5,9 +5,7 @@
 <script>
 
 export default {
-    setup: () => ({
-        name: 'App'
-    })
+    title: 'App',
 }
 </script>
 
