@@ -20,7 +20,8 @@ module.exports = {
         'blue-grey': '#525F7F',
         'blue': '#1267E5',
         'light': '#CED4DA',
-        'lighter': '#F2F7FF'
+        'lighter': '#F2F7FF',
+        'green': '#12B2B2'
       },
       fontSize: {
         xxs: '0.75rem',
@@ -44,6 +45,9 @@ module.exports = {
       margin: {
         '4.5': '1.125rem',
         '23': '5.5rem',
+      },
+      padding: {
+        '4.5': '1.125rem',
       },
       screens: {
         'xs': '450px',
