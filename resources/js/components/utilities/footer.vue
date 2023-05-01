@@ -16,7 +16,7 @@
 <script>
 export default {
     setup: () => ({
-        title: 'Navidation'
+        title: 'Footer'
     })
 }
 </script>

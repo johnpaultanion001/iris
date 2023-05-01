@@ -21,7 +21,11 @@ module.exports = {
         'blue': '#1267E5',
         'light': '#CED4DA',
         'lighter': '#F2F7FF',
-        'green': '#12B2B2'
+        'green': '#12B2B2',
+        'dark': '#333333',
+        'darker': '#0C0C0C',
+        'white-60': '#ffffff99',
+        'white-25': '#ffffff40'
       },
       fontSize: {
         xxs: '0.75rem',

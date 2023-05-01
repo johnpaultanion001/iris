@@ -10,7 +10,9 @@
 
 <script>
 export default {
-    title: 'Alert Top',
+    setup: () => ({
+        title: 'Alert Top'
+    }),
     props: ['alertIcon', 'active'],
     methods: {
         async closeAlert() {
