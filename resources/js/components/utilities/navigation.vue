@@ -32,7 +32,7 @@
 <script>
 export default {
     setup: () => ({
-        title: 'Navidation'
+        title: 'Navigation'
     }),
     data() {
         return {
