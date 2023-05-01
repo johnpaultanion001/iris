@@ -1,6 +1,6 @@
 <template>
     <PageLayout :pageName="title">
-        <h1 class="p-4">{{ title }}</h1>
+        <h1>{{ title }}</h1>
     </PageLayout>
 </template>
 

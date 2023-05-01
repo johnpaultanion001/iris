@@ -5,9 +5,9 @@
         </div>
         <div class="col-span-1">
             <ul class="w-full flex justify-end">
-                <li class="font-opensans-600 text-blue-grey text-sm pl-7"><router-link to="/about-us">About Us</router-link></li>
-                <li class="font-opensans-600 text-blue-grey text-sm pl-7"><router-link to="/terms">Terms</router-link></li>
-                <li class="font-opensans-600 text-blue-grey text-sm pl-7"><router-link to="/privacy">Privacy</router-link></li>
+                <li class="font-opensans-600 text-blue-grey hover:text-blue text-sm pl-7"><router-link to="/about-us">About Us</router-link></li>
+                <li class="font-opensans-600 text-blue-grey hover:text-blue text-sm pl-7"><router-link to="/terms">Terms</router-link></li>
+                <li class="font-opensans-600 text-blue-grey hover:text-blue text-sm pl-7"><router-link to="/privacy">Privacy</router-link></li>
             </ul>
         </div>
     </div>

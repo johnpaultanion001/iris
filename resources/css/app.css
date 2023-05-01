@@ -39,6 +39,11 @@
     src: url('/fonts/OpenSans-ExtraBold.ttf');
 }
 
+h1{
+    font-family: exo-700;
+    font-size: 32px;
+    color: #ffffff;
+}
 
 .main-input{
     border: 1px solid #8390A3;
