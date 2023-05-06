@@ -21,15 +21,17 @@ module.exports = {
         'blue': '#1267E5',
         'light': '#CED4DA',
         'lighter': '#F2F7FF',
+        'light-blue': '#F4F6FF',
         'green': '#12B2B2',
         'dark': '#333333',
         'darker': '#0C0C0C',
+        'dark2': '#212529',
         'white-60': '#ffffff99',
         'white-25': '#ffffff40'
       },
       fontSize: {
-        xxs: '0.75rem',
-        xs: ['0.8125rem', '1rem'],
+        xxs: '0.75rem', //12px
+        13: '0.8125rem', //13px
       },
       boxShadow: {
         'main': '0px 4px 6px rgba(50, 50, 93, 0.11), 0px 1px 3px rgba(0, 0, 0, 0.08);',

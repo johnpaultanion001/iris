@@ -36,27 +36,69 @@
             </div>
             <div class="col-span-6">
                 <ContentCard cardTitle="Violations">
+                    <table class="table-fixed mb-5">
+                        <thead>
+                            <tr class="border-b border-light">
+                                <th class="p-2.5">
+                                    <button class="filter-btn">Violation<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                </th>
+                                <th class="p-2.5 text-center">
+                                    <button class="filter-btn m-auto">Frequency<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-light">
+                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">1. Violation will be placed here</td>
+                                <td class="p-2.5 text-center">80</td>
+                            </tr>
+                            <tr class="border-b border-light">
+                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">2. Violation will be placed here</td>
+                                <td class="p-2.5 text-center">80</td>
+                            </tr>
+                            <tr class="border-b border-light">
+                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">3. Sample Long violation text here. Violation will be placed here. Violation will be placed here</td>
+                                <td class="p-2.5 text-center">60</td>
+                            </tr>
+                            <tr class="border-b border-light">
+                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">4. Violation will be placed here</td>
+                                <td class="p-2.5 text-center">80</td>
+                            </tr>
+                            <tr class="border-b border-light">
+                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">5. Violation will be placed here</td>
+                                <td class="p-2.5 text-center">70</td>
+                            </tr>
+                            <tr class="border-b border-light">
+                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">6. Violation will be placed here</td>
+                                <td class="p-2.5 text-center">90</td>
+                            </tr>
+                            <tr class="border-b border-light">
+                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">7. Violation will be placed here</td>
+                                <td class="p-2.5 text-center">80</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </ContentCard>
             </div>
         </div>
-        <div class="pt-5 pb-2">
-            <p class="font-opensans-600 text-xxs text-blue-grey">Ticket Status</p>
+        <div class="pt-8 pb-2">
+            <p class="font-opensans-600 text-13 text-blue-grey">Ticket Status</p>
         </div>
         <div class="grid grid-cols-5 gap-3">
             <div class="col-span-1">
-                <ButtonCard cardTitle="For Review" value="10" />
+                <ButtonCard cardTitle="For Review" value="10" icon="/img/icon/eye-active.png" />
             </div>
             <div class="col-span-1">
-                <ButtonCard cardTitle="Acknowledged" value="10" />
+                <ButtonCard cardTitle="Acknowledged" value="10" icon="/img/icon/like-active.png" />
             </div>
             <div class="col-span-1">
-                <ButtonCard cardTitle="On-going" value="10" />
+                <ButtonCard cardTitle="On-going" value="10" icon="/img/icon/clock-active.png" />
             </div>
             <div class="col-span-1">
-                <ButtonCard cardTitle="Resolved" value="10" />
+                <ButtonCard cardTitle="Resolved" value="10" icon="/img/icon/party-active.png" />
             </div>
             <div class="col-span-1">
-                <ButtonCard cardTitle="Invalid" value="10" />
+                <ButtonCard cardTitle="Invalid" value="10" icon="/img/icon/warning-active.png" />
             </div>
         </div>
     </PageLayout>

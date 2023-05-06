@@ -62,3 +62,15 @@ h1{
     top: auto;
     bottom: 22px;
 }
+.filter-btn {
+    width: fit-content;
+    display: block;
+    color: #525F7F;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-family: 'opensans-600';
+    white-space: nowrap;
+}
+.filter-btn img{
+    display: inline;
+}
