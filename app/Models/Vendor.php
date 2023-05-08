@@ -14,4 +14,9 @@ class Vendor extends Model
       'mobile_number',
       'city',
   ];
+
+  public function ticket()
+  {
+      return $this->belongsTo(Ticket::class, 'id','vendor_id');
+  }
 }

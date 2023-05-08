@@ -20,6 +20,8 @@ class VendorResource extends ApiResource
             'email' => $this->email,
             'mobile_number' => $this->mobile_number,
             'city' => $this->city,
+            'no_of_tickets' => $this->ticket->id,
+            'no_of_violations' => $this->ticket->violations()->count(),
 
             'created_at' => (string)$this->created_at->toDateTimeString(),
             'updated_at' => (string)$this->updated_at->toDateTimeString(),

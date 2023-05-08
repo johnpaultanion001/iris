@@ -54,11 +54,6 @@ class TicketResource extends ApiResource
             'activity_log' => [
               new ActivityCollection($activity_logs),
             ],
-
-
-
-
-
         ];
     }
 }

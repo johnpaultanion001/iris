@@ -24,6 +24,10 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   Route::post('ticket/update_status', 'TicketController@update_status')->name('ticket.update_status');
   Route::post('ticket/comment', 'TicketController@create_comment')->name('ticket.create_comment');
   Route::post('ticket/update_follow', 'TicketController@update_follow')->name('ticket.update_follow');
+
+  //REPORTED VENDORS
+  Route::get('reported_vendors', 'ReportedVendorsController@index')->name('reported_vendors.index');
+
   Route::apiResource('violations', 'ViolationController');
 
   //REGISTER
@@ -38,5 +42,5 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
 
 // Not Found
 Route::fallback(function(){
-    return response()->json(['message' => 'Resource not found.'], 404);
+    return response()->json(['message' => 'Api not found.'], 404);
 });
