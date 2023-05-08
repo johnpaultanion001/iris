@@ -6,7 +6,7 @@
                 <img src="/img/iris-logo.png"  class="h-auto h-7.5 mt-23 mb-9 mx-auto">
                 <div class="auth-card shadow-secondary bg-white w-full xs:w-fit min-w-0 xs:min-w-412 px-6 py-8 mx-auto rounded-2xl">
                     <div class="header pb-4">
-                        <h1 class="text-2xl mb-2 font-exo-600">{{ headerTitle }}</h1>
+                        <h1 class="text-2xl mb-2 font-exo-600 text-blue-grey">{{ headerTitle }}</h1>
                         <p class="text-base text-blue-grey font-inter-400">{{ headerText }}</p>
                     </div>
                     <slot></slot>

@@ -46,7 +46,7 @@ export default {
     max-height: 302px;
 }
 .content-body{
-    min-height: calc(100vh - 132px);
+    min-height: calc(100vh - 166px);
 }
 /* Column 1 transition */
 .slide-fade-enter-active {
