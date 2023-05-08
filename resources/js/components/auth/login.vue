@@ -3,7 +3,7 @@
         <form class="block" @submit.prevent="submitLogin">
             <div class="block pt-4 pb-2">
                <label for="username" class="text-base text-blue-grey text-xs font-inter-700">Username</label>
-               <input type="email" name="username" id="username" class="mt-1 w-full main-input"/>
+               <input type="email" v-model="username" name="username" id="username" class="mt-1 w-full main-input"/>
             </div>
             <div class="block relative py-2">
                 <label for="password" class="text-base text-blue-grey text-xs font-inter-700">Password</label>
@@ -32,6 +32,7 @@
 
 <script>
 import Layout from './layout.vue'
+import axios from 'axios'
 
 export default {
     setup: () => ({
@@ -40,6 +41,7 @@ export default {
     components: { Layout },
     data() {
         return {
+            username: '',
             showPassword: false,
             password: null,
         };
@@ -48,8 +50,22 @@ export default {
         toggleShow() {
             this.showPassword = !this.showPassword;
         },
-        submitLogin(){
-            this.$router.push("/new-password");
+        async submitLogin(){
+            // const inputs =  {
+            //     grant_type: "password",
+            //     client_id: "2",
+            //     client_secret: "v6OtL6QgLx9NlXLQQA5nLc3ksqXtXmXGJ5AAwqGb",
+            //     scope: "",
+            //     username: "admin@gmail.com",
+            //     password: "password"
+            // };
+            // const {data} = await axios.post('oauth/token', inputs, {
+            //     withCredentials: true
+            // });
+
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+
+            await $router.push("/new-password");
         }
     }
 }
