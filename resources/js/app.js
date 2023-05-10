@@ -1,20 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import Routes from './routes';
-import store from './store';
-import * as action from './store/actions';
+// require('./bootstrap')
 
-store.dispatch(action.authCheck());
+import { createApp } from 'vue'
+import app from './components/app.vue'
+import './axios.js'
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <Switch>
-        <Routes />
-      </Switch>
-    </Router>
-  </Provider>,
-  document.getElementById('app'),
-);
+import router from './router'
+
+createApp(app).use(router).mount('#app')
