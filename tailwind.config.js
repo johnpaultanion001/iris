@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       height: {
         '7.5': '1.875rem',
+        '15': '3.563rem' //57px
       },
       width: {
         '15': '3.75rem',
@@ -66,6 +67,11 @@ module.exports = {
       },
       padding: {
         '4.5': '1.125rem',
+      },
+      zIndex: {
+        '100': '100',
+        '9': '9',
+        '99': '99'
       },
       screens: {
         'xs': '450px',

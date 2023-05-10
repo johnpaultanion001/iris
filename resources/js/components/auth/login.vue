@@ -51,21 +51,42 @@ export default {
             this.showPassword = !this.showPassword;
         },
         async submitLogin(){
-            // const inputs =  {
-            //     grant_type: "password",
-            //     client_id: "2",
-            //     client_secret: "v6OtL6QgLx9NlXLQQA5nLc3ksqXtXmXGJ5AAwqGb",
-            //     scope: "",
-            //     username: "admin@gmail.com",
-            //     password: "password"
-            // };
-            // const {data} = await axios.post('oauth/token', inputs, {
+            const inputs =  {
+                grant_type: "password",
+                client_id: "2",
+                client_secret: "PpwoA8Ef1K6jMDlx5TxHeHr4g5EEsQDHv30dizP0",
+                scope: "",
+                username: "admin@gmail.com",
+                password: "password"
+            };
+
+            // const {data} = await axios.post('oauth/token', {
+            //         'Accept': 'application/json, multipart/form-data', 
+            //         'Content-Type': 'application/json; charset=UTF-8', 
+            //         'Access-Control-Allow-Origin': '*',
+            // }, inputs, {
             //     withCredentials: true
             // });
 
-            // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+            await axios.post('https://iris.supsofttech.com/oauth/token', inputs, {
+                withCredentials: true,
+                header: {
+                    'Accept': 'application/json, multipart/form-data', 
+                    'Content-Type': 'application/json; charset=UTF-8', 
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': 'Content-Type, x-xsrf-token'
+                },
+            })
+            .then((res) => {
+                console.log(res.data['refresh_token'])
+                axios.defaults.headers.common['Authorization'] = `Bearer ${res.data['refresh_token']}`;
+                success = true
+            })
+            .catch((error) => {
+                error = error.data
+            })
 
-            await $router.push("/new-password");
+            await this.$router.push("/new-password");
         }
     }
 }
