@@ -19,6 +19,7 @@ class AgencyResource extends ApiResource
         'logo' => $this->agency->logo ?? $this->logo,
         'agency' => $this->agency->title ?? $this->title,
         'code' => $this->agency->code ?? $this->code,
+        'color' => $this->agency->color ?? $this->color,
 
     ];
 

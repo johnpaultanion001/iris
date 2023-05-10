@@ -12,6 +12,7 @@ class Agency extends Model
         'logo',
         'title',
         'code',
+        'color',
     ];
 
 }

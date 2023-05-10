@@ -36,6 +36,9 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   //ACTIVITY LOG
   Route::get('activities', 'ActivityController@index')->name('activities.index');
 
+  //ALL USERS
+  Route::get('all_users', 'UserController@index')->name('users.index');
+
 
 
 });

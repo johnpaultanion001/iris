@@ -8,9 +8,17 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\UserCollection;
 
 class UserController extends ApiController
 {
+    public function index(Request $request)
+    {
+        $collection = User::latest()->paginate();
+
+        return new UserCollection($collection);
+    }
+
      public function new_password(Request $request)
     {
       $validator = Validator::make($request->all(), [
