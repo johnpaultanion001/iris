@@ -82,493 +82,98 @@
                                     <th class="p-2.5">
                                     </th>
                                     <th class="p-2.5">
-                                        <button class="filter-btn">Ticket No.<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="ticketsOrder = 'ticket_no'; orderedTickets()" class="filter-btn">Ticket No.<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button class="filter-btn">Reported By<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="ticketsOrder = 'first_name'; ticketsOrderArray = 'reported_by'; orderedTickets()" class="filter-btn">Reported By<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button class="filter-btn">Product/Service<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="ticketsOrder = 'product_service'; orderedTickets()" class="filter-btn">Product/Service<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button class="filter-btn">Vendor Name<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="ticketsOrder = 'vendor_name'; ticketsOrderArray = 'vendor'; orderedTickets()" class="filter-btn">Vendor Name<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button class="filter-btn">Complaint<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="ticketsOrder = 'complaint'; orderedTickets()" class="filter-btn">Complaint<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button class="filter-btn">Assigned Agency<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="ticketsOrder = 'assigned_agency'; orderedTickets()" class="filter-btn">Assigned Agency<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button class="filter-btn">Severity<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="ticketsOrder = 'severity'; orderedTickets()" class="filter-btn">Severity<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button class="filter-btn">Date Submitted<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="ticketsOrder = 'created_at'; ticketsOrderArray = 'reported_by'; orderedTickets()" class="filter-btn">Date Submitted<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody v-for="(ticket, index) in orderedTickets()" ref="tickets">
                                 <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
+                                    <td class="w-12 min-w-44">
+                                        <router-link :to="'ticket/'+ticket.ticket_no"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></router-link>
+                                    </td>
+                                    <td class="w-12 min-w-44">
+                                        <img @click.prevent="modalTicketID = ticket.ticket_no; ticket.isFollow ? openModal('unfollow') : openModal('follow')" :src="ticket.isFollow ? '/img/icon/favorite-active.png' : '/img/icon/favorite.png'" style="width: 11px; height: 17px;" class="cursor-pointer m-auto block">
+                                    </td>
+                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center ellipsis-2">
+                                        {{ ticket.ticket_no }}
+                                    </td>
                                     <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
+                                        <p class="text-dark2 truncate" v-for="(item, index) in ticket.reported_by" ref="tickets">
+                                            {{ item.first_name }} {{ item.last_name }}
+                                        </p>
+                                        <p class="text-lighttext truncate" v-for="(item, index) in ticket.reported_by" ref="tickets">
+                                            {{ item.email }}
+                                        </p>
                                     </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
+                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2 ellipsis-2">
+                                        {{ ticket.product_service }}
+                                    </td>
+                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2" v-for="(item, index) in ticket.vendor" ref="tickets">
+                                        <p class="ellipsis-2">{{ item.vendor_name }}</p> 
+                                    </td>
                                     <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
+                                        <p class="ellipsis-2">{{ ticket.complaint }}</p>
                                     </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
+                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white flex items-center whitespace-nowrap">
+                                        <div class="flex items-center whitespace-nowrap" v-for="(item, index) in ticket.assigned_agencies" ref="tickets">
+                                            <div class="whitespace-nowrap" v-for="(agency, index) in item" ref="tickets">
+                                                <span v-if="index <= 3" :style="'background-color:'+ agency.color +';'" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">{{ agency.code }}</span>
+                                            </div>
+                                        </div>
                                         <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
                                     </td>
                                     <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
+                                        <span :style="ticket.severity === 'LOW' ? 'background-color: #FFD600;' : '' || ticket.severity === 'MEDIUM' ? 'background-color: #F2994A;' : '' || ticket.severity === 'HIGH' ? 'background-color: #FA3A0E;' : ''"  class="px-2 py-1 rounded mr-1 w-auto min-w-52">
+                                            {{ ticket.severity }}
+                                        </span>
                                     </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
+                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2" v-for="(item, index) in ticket.reported_by" ref="tickets">
+                                        {{ format_date(item.created_at) }}
                                     </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
-                                </tr>
-                                <tr class="border-b border-light relative">
-                                    <td class="w-12 min-w-44"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></td>
-                                    <td class="w-12 min-w-44"><img src="/img/icon/favorite-active.png" style="width: 11px; height: 17px;" class="m-auto block"></td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs text-dark2 text-center">12</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxs">
-                                        <p class="text-dark2">Jesse Jacinto</p>
-                                        <p class="text-lighttext">jesse@email.com</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">Product Service Title</td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">VendorTech Inc.</td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. Integer consequat auctor sed condimentum justo, arcu non velit faucibus. Proin sit in elit ligula elit a. Ligula molestie maecenas a vestibulum.</p>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white whitespace-nowrap">
-                                        <span style="background: linear-gradient(237.38deg, #8A98EB 0%, #5E72E4 100%);" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DOH</span>
-                                        <span style="background-color: #0C9AB4;" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">PNP</span>
-                                        <span style="background-color: #CEBA00" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">DA</span>
-                                        <span style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+2</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-600 text-xxxs text-white text-center">
-                                        <span style="background-color: #F2994A;" class="px-2 py-1 rounded mr-1 w-auto min-w-52">Medium</span>
-                                    </td>
-                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2">May 27, 2023</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div  v-click-out-side="closeAction" style="top: 62px;" class="action-btn absolute right-0 bg-white shadow-secondary">
+                    <div v-click-out-side="closeAction" style="top: 62px;" class="action-btn absolute right-0 bg-white shadow-secondary">
                         <div class="py-5 border-b border-b-light px-6 flex items-center">
                         </div>
-                        <div @click="openAction('1')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-if="actionActive && showAction == '1'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="openAction('2')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-if="actionActive && showAction == '2'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="openAction('3')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-if="actionActive && showAction == '3'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="openAction('4')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-if="actionActive && showAction == '4'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="openAction('5')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-if="actionActive && showAction == '5'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="openAction('6')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-if="actionActive && showAction == '6'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="openAction('7')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-if="actionActive && showAction == '7'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="openAction('8')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-if="actionActive && showAction == '8'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="openAction('9')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-if="actionActive && showAction == '9'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="openAction('10')" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
-                            <img src="/img/icon/action.png" class="">
-                            <div v-show="actionActive && showAction == '10'" class="action-card shadow-secondary absolute rounded-lg bg-white">
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
-                                </div>
-                                <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                    <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
+                        <div v-for="(ticket, index) in orderedTickets()" ref="tickets">
+                            <div @click="openAction(ticket.ticket_no)" class="cursor-pointer relative h-15 border-b border-b-light px-6 flex items-center">
+                                <img src="/img/icon/action.png" class="">
+                                <div v-if="actionActive && showAction == ticket.ticket_no" class="action-card shadow-secondary absolute rounded-lg bg-white">
+                                    <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
+                                        <span class="w-5 mr-3 text-center"><img src="/img/icon/view.png" class="mx-auto"></span><span>View</span>
+                                    </div>
+                                    <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
+                                        <span class="w-5 mr-3 text-center"><img src="/img/icon/unfollow.png" class="mx-auto"></span><span>Unfollow</span>
+                                    </div>
+                                    <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
+                                        <span class="w-5 mr-3 text-center"><img src="/img/icon/status.png" class="mx-auto"></span><span>Update Ticket Status</span>
+                                    </div>
+                                    <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
+                                        <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Ticket</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -576,9 +181,29 @@
                 </ContentCard>
             </div>
         </div>
+        <Modal v-show="modalActive && showModal == 'follow'" @close="closeModal">
+            <template v-slot:body>
+                {{ modalTicketID }}
+            </template>
+            <template v-slot:footer>
+                <button @click="followTicket(modalTicketID)" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Follow Ticket
+                </button>
+            </template>
+        </Modal>
+        <Modal v-show="modalActive && showModal == 'unfollow'" @close="closeModal">
+            <template v-slot:body>
+                {{ modalTicketID }}
+            </template>
+            <template v-slot:footer>
+                <button @click="unfollowTicket(modalTicketID)" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Unfollow Ticket
+                </button>
+            </template>
+        </Modal>
         <Modal modalTitle="Filters" v-show="modalActive && showModal == 'filterModal'" @close="closeModal">
             <template v-slot:body>
-                <form class="block" @submit.prevent="submitLogin">
+                <!-- <form class="block" @submit.prevent="submitLogin">
                     <div class="block pt-4 pb-2">
                     <label for="username" class="text-base text-blue-grey text-xs font-inter-700">Username</label>
                     <input type="email" v-model="username" name="username" id="username" class="mt-1 w-full main-input"/>
@@ -604,7 +229,7 @@
                     <div class="block pb-1 w-full">
                         <router-link to="/reset-password" class="mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline">Forgot Password</router-link>
                     </div>
-                </form>
+                </form> -->
             </template>
             <template v-slot:footer>
                 foot
@@ -621,6 +246,8 @@ import ButtonCard from '../../utilities/buttonCard.vue'
 import ContentCard from '../../utilities/contentCard.vue'
 import Modal from '../../utilities/modal.vue'
 import clickOutSide from "@mahdikhashan/vue3-click-outside";
+import axios from 'axios'
+import moment from 'moment'
 
 export default {
     setup: () => ({
@@ -649,17 +276,36 @@ export default {
             showAction: '',
             actionActive: false,
             //Modal
-            showModal: 'filterModal',
-            modalActive: true
-            
+            showModal: '',
+            modalActive: false,
+            modalTicketID: '',
+            //Tickets
+            tickets: [],
+            ticketsOrder: 'ticket_no',
+            ticketsOrderArray: '',
+            ticketsASC: true,
         };
     },
     components: { PageLayout, ButtonCard, ContentCard, Modal},
-    mounted() {
+    async mounted() {
         this.isMobile(); //hides filter menu on mobile
         window.addEventListener("resize", this.isMobile); //hides filter menu on mobile when resized
+
+        //Get Tickets
+        const response = await axios.get('api/v1/tickets');
+        this.tickets = response.data.data;
     },
     methods: {
+        format_date(value){
+            if (value) {
+                return moment(String(value)).format('LL')
+            }
+        },
+        computed: {
+            watchableParams () {
+            return {...this.tickets}
+            }
+        },
         isMobile() {
             if( screen.width <= 768 ) {
                 this.showFilter = false;
@@ -689,6 +335,64 @@ export default {
                 document.querySelector('body').style.overflow = 'auto';
                 this.modalActive = false;
             }
+        },
+        orderedTickets() {
+            if(this.ticketsOrder == 'vendor_name' || this.ticketsOrder == 'first_name' || this.ticketsOrder == 'created_at'){
+                if(this.ticketsASC){
+                    this.ticketsASC = false;
+                    return this.tickets.sort((a, b) => (a[this.ticketsOrderArray]['0'][this.ticketsOrder] > b[this.ticketsOrderArray]['0'][this.ticketsOrder] ? -1 : 1));
+                }else{
+                    this.ticketsASC = true;
+                    return this.tickets.sort((a, b) => (a[this.ticketsOrderArray]['0'][this.ticketsOrder] < b[this.ticketsOrderArray]['0'][this.ticketsOrder] ? -1 : 1) );
+                }
+            }else if(this.ticketsOrder == 'assigned_agencies'){
+                if(this.ticketsASC){
+                    this.ticketsASC = false;
+                    return this.tickets.sort((a, b) => (a.assigned_agencies['0'].length > b.assigned_agencies['0'].length ? -1 : 1));
+                }else{
+                    this.ticketsASC = true;
+                    return this.tickets.sort((a, b) => (a.assigned_agencies['0'].length < b.assigned_agencies['0'].length ? -1 : 1) );
+                }
+            }else{
+                //normal sorting
+                if(this.ticketsASC){
+                    this.ticketsASC = false;
+                    return this.tickets.sort((a, b) => (a[this.ticketsOrder] > b[this.ticketsOrder] ? -1 : 1) );
+                }else{
+                    this.ticketsASC = true;
+                    return this.tickets.sort((a, b) => (a[this.ticketsOrder] < b[this.ticketsOrder] ? -1 : 1) );
+                }
+            }
+        },
+        async followTicket(ticketID) {
+            await axios.post('/api/v1/ticket/update_follow', {
+                ticket_id: ticketID,
+                isFollow: 1
+            })
+            .then((res) => {
+                this.closeModal();
+            })
+            .catch((error) => {
+                console.log(error.response.data.message || error.message)
+            })
+            //Refresh Data
+            const response = await axios.get('api/v1/tickets');
+            this.tickets = response.data.data;
+        },
+        async unfollowTicket(ticketID) {
+            await axios.post('/api/v1/ticket/update_follow', {
+                ticket_id: ticketID,
+                isFollow: 0
+            })
+            .then((res) => {
+                this.closeModal();
+            })
+            .catch((error) => {
+                console.log(error.response.data.message || error.message)
+            })
+            //Refresh Data
+            const response = await axios.get('api/v1/tickets');
+            this.tickets = response.data.data;
         },
     },
 }

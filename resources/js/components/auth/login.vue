@@ -54,21 +54,21 @@ export default {
             const inputs =  {
                 grant_type: "password",
                 client_id: "2",
-                client_secret: "PpwoA8Ef1K6jMDlx5TxHeHr4g5EEsQDHv30dizP0",
+                client_secret: "PaZ6PpOoEOcjz3hNX1Kv97MSUp6Lm0c3UNzFJnRz",
                 scope: "",
                 username: "admin@gmail.com",
                 password: "password"
             };
 
-            // const {data} = await axios.post('oauth/token', {
-            //         'Accept': 'application/json, multipart/form-data', 
-            //         'Content-Type': 'application/json; charset=UTF-8', 
-            //         'Access-Control-Allow-Origin': '*',
-            // }, inputs, {
+            // const {data} = await axios.post('oauth/token', inputs, {
             //     withCredentials: true
             // });
 
-            await axios.post('https://iris.supsofttech.com/oauth/token', inputs, {
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
+            //     const response = axios.get('api/v1/tickets');
+            // console.log(response);
+
+            await axios.post('oauth/token', inputs, {
                 withCredentials: true,
                 header: {
                     'Accept': 'application/json, multipart/form-data', 
@@ -78,15 +78,14 @@ export default {
                 },
             })
             .then((res) => {
-                console.log(res.data['refresh_token'])
-                axios.defaults.headers.common['Authorization'] = `Bearer ${res.data['refresh_token']}`;
+                localStorage.setItem('token', res.data['access_token']);
                 success = true
             })
             .catch((error) => {
-                error = error.data
+                console.log(error.response.data.message || error.message)
             })
 
-            await this.$router.push("/new-password");
+            await this.$router.push("/tickets");
         }
     }
 }

@@ -20,7 +20,9 @@
     },
     "dependencies": {
         "@mahdikhashan/vue3-click-outside": "^0.1.2",
+        "moment": "^2.29.4",
         "vue": "^3.2.36",
+        "vue-dataset": "^1.1.17",
         "vue-loader": "^17.0.1",
         "vue-router": "^4.0.13"
     }
