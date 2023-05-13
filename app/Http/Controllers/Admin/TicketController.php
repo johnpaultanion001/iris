@@ -22,7 +22,7 @@ class TicketController extends ApiController
     public function index(Request $request)
     {
       $collection = Ticket::where('user_id', auth("api")->user()->id);
-      $collection = $collection->latest()->paginate();
+      $collection = $collection->latest()->get();
 
       return new TicketCollection($collection);
     }

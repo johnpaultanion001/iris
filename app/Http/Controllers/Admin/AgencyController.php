@@ -14,7 +14,7 @@ class AgencyController extends ApiController
 {
     public function index(Request $request)
     {
-        $collection = Agency::latest()->paginate();
+        $collection = Agency::latest()->get();
 
         return new AgencyCollection($collection);
     }

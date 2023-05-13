@@ -12,7 +12,7 @@ class ReportedVendorsController extends ApiController
 {
   public function index(Request $request)
   {
-    $collection = Vendor::latest()->paginate();
+    $collection = Vendor::latest()->get();
 
     return new VendorCollection($collection);
   }

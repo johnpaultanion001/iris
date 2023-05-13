@@ -38,6 +38,8 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
 
   //ALL USERS
   Route::get('all_users', 'UserController@index')->name('users.index');
+  //PROFILE
+  Route::get('profile', 'UserController@profile')->name('users.profile');
 
   //ALL AGENCIES
   Route::get('agencies', 'AgencyController@index')->name('agencies.index');

@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserResource;
 
 class UserController extends ApiController
 {
     public function index(Request $request)
     {
-        $collection = User::latest()->paginate();
+        $collection = User::latest()->get();
 
         return new UserCollection($collection);
     }
@@ -50,4 +51,12 @@ class UserController extends ApiController
 
       return $this->responseResourceUpdated('Password updated successfully',$data);
     }
+
+    public function profile(Request $request)
+    {
+      $profile = User::where('id',auth("api")->user()->id)->first();
+
+      return new UserResource($profile);
+    }
+
 }
