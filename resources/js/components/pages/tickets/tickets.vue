@@ -420,6 +420,7 @@ export default {
             //Filter item number
             filterItemNumberDropdown: false,
             filterSearch: '',
+            reDate: null,
             //Actions
             showAction: '',
             actionActive: false,
@@ -463,6 +464,7 @@ export default {
     watch: {
         filterSearch: function() {
             this.getTickets(this.activeStatus, 0);
+            this.reDate = this.reformat_date(this.filterSearch);
         },
         filterSearchAgency: function() {
             this.getAgencies();
@@ -492,7 +494,8 @@ export default {
                     a['reported_by']['0']['first_name'].toLowerCase().includes(this.filterSearch) || a['reported_by']['0']['last_name'].toLowerCase().includes(this.filterSearch) ||
                     a['reported_by']['0']['first_name'].includes(this.filterSearch) || a['reported_by']['0']['last_name'].includes(this.filterSearch) ||
                     a['vendor']['0']['vendor_name'].toLowerCase().includes(this.filterSearch) || a['vendor']['0']['email'].toLowerCase().includes(this.filterSearch) ||
-                    a['vendor']['0']['vendor_name'].includes(this.filterSearch) || a['vendor']['0']['email'].includes(this.filterSearch)
+                    a['vendor']['0']['vendor_name'].includes(this.filterSearch) || a['vendor']['0']['email'].includes(this.filterSearch) ||
+                    a.date_submitted.includes(this.reDate) || a.date_submitted.includes(this.filterSearch)
                 )
                 return theFilter
             });
@@ -610,6 +613,11 @@ export default {
         format_date(value){
             if (value) {
                 return moment(String(value)).format('LL')
+            }
+        },
+        reformat_date(value){
+            if (value) {
+                return moment(String(value)).format('YYYY-MM-DD')
             }
         },
         //Format Mobile Display Settings
