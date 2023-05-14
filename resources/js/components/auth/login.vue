@@ -17,7 +17,7 @@
                 </button>
             </div>
             <div class="flex items-center pt-2 pb-4">
-                <input type="checkbox" id="remember-me" class="switch-toggle" name="remember-me">
+                <input @click="isRemember = !isRemember" v-model="isRemember" type="checkbox" id="remember-me" :class="isRemember ? 'checked' : 'unchecked'" name="remember-me">
                 <label for="remember-me" class="ml-2 text-blue-grey text-xs font-inter-400">Remember me</label>
             </div>
             <div class="block py-4">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { onMounted } from 'vue';
 import Layout from './layout.vue'
 import axios from 'axios'
 
@@ -41,10 +42,19 @@ export default {
     components: { Layout },
     data() {
         return {
-            username: '',
             showPassword: false,
-            password: null,
+            isRemember: false,
+            grant_type: 'password',
+            client_id: '2',
+            client_secret: 'PaZ6PpOoEOcjz3hNX1Kv97MSUp6Lm0c3UNzFJnRz',
+            scope: '',
+            username: '',
+            password: ''
         };
+    },
+    async mounted(){
+        this.username = localStorage.getItem('iris-username');
+        this.password = localStorage.getItem('iris-password');
     },
     methods: {
         toggleShow() {
@@ -52,21 +62,13 @@ export default {
         },
         async submitLogin(){
             const inputs =  {
-                grant_type: "password",
-                client_id: "2",
-                client_secret: "PaZ6PpOoEOcjz3hNX1Kv97MSUp6Lm0c3UNzFJnRz",
+                grant_type: this.grant_type,
+                client_id: this.client_id,
+                client_secret: this.client_secret,
                 scope: "",
-                username: "admin@gmail.com",
-                password: "password"
+                username: this.username,
+                password: this.password
             };
-
-            // const {data} = await axios.post('oauth/token', inputs, {
-            //     withCredentials: true
-            // });
-
-            // axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
-            //     const response = axios.get('api/v1/tickets');
-            // console.log(response);
 
             await axios.post('oauth/token', inputs, {
                 withCredentials: true,
@@ -79,21 +81,26 @@ export default {
             })
             .then((res) => {
                 localStorage.setItem('token', res.data['access_token']);
-                success = true
+                if(this.isRemember){
+                    localStorage.setItem('iris-username', this.username);
+                    localStorage.setItem('iris-password', this.password);
+                }else{
+                    localStorage.setItem('iris-username', '');
+                    localStorage.setItem('iris-password', '');
+                }
+                this.$router.push("/");
             })
             .catch((error) => {
-                console.log(error.response.data.message || error.message)
+                console.log(error.message)
             })
-
-            await this.$router.push("/tickets");
-        }
+        },
     }
 }
 </script>
 
 <style scoped>
 /* Switch Toggle */
-.switch-toggle[type="checkbox"] {
+.unchecked[type="checkbox"] {
     position: relative;
     width: 40px;
     height: 24px;
@@ -104,10 +111,7 @@ export default {
     box-shadow: inset 0 0 5px rgba(255, 0, 0, 0.2);
     transition: 0.2s;
 }
-.switch-toggle:checked[type="checkbox"] {
-    background: #54A581;
-}
-.switch-toggle[type="checkbox"]:before {
+.unchecked[type="checkbox"]:before {
     content: '';
     position: absolute;
     width: 18px;
@@ -118,7 +122,32 @@ export default {
     background: #ffffff;
     transition: .2s;
 }
-.switch-toggle:checked[type="checkbox"]:before {
+.checked[type="checkbox"] {
+    position: relative;
+    width: 40px;
+    height: 24px;
+    -webkit-appearance: none;
+    background: #c6c6c6;
+    outline: none;
+    border-radius: 20px;
+    box-shadow: inset 0 0 5px rgba(255, 0, 0, 0.2);
+    transition: 0.2s;
+}
+.checked:checked[type="checkbox"] {
+    background: #54A581;
+}
+.checked[type="checkbox"]:before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 20px;
+    top: 3px;
+    left: 4px;
+    background: #ffffff;
+    transition: .2s;
+}
+.checked:checked[type="checkbox"]:before {
     left: 19px;
 }
 </style>
