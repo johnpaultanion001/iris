@@ -15,7 +15,12 @@ class UserController extends ApiController
 {
     public function index(Request $request)
     {
-        $collection = User::latest()->get();
+        if(auth("api")->user()->role == "SUPER_ADMIN"){
+          $collection = User::latest()->get();
+        }else{
+          $collection = User::where('agency_id',auth("api")->user()->agency_id)->latest()->get();
+        }
+
 
         return new UserCollection($collection);
     }

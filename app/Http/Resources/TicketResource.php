@@ -45,9 +45,12 @@ class TicketResource extends ApiResource
               new ViolationResource($this->violations()->get()),
             ],
             'total_fine' => $this->violations()->sum('amount'),
-            'assigned_agencies' => [
+            'agencies' =>
+              new AgencyCodeCollection($this->agencies()->get()),
+
+            'assigned_agencies' =>
               new AgencyCollection($this->agencies()->get()),
-            ],
+
             'comments' => [
               new CommentCollection($this->comments()->latest()->get()),
             ],
@@ -57,3 +60,4 @@ class TicketResource extends ApiResource
         ];
     }
 }
+

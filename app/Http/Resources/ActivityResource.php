@@ -19,7 +19,9 @@ class ActivityResource extends ApiResource
       return [
           'action' => $this->event ?? '',
           'activity' => $this->description ?? '',
-          'agency' => $user->agency->code ?? '',
+          'agency' => [$user->agency->code ?? ''] ,
+          'assigned_agencies' =>
+              new AgencyResource($user->agency),
           'user' => [
               'name' => $user->name ?? '',
               'role' => $user->role ?? '',

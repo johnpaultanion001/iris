@@ -21,9 +21,14 @@ class TicketController extends ApiController
 {
     public function index(Request $request)
     {
-      $collection = Ticket::where('user_id', auth("api")->user()->id);
-      $collection = $collection->latest()->get();
+      if(auth("api")->user()->role == "SUPER_ADMIN"){
+        $collection = Ticket::latest()->get();
 
+      }else{
+        $collection = Ticket::whereHas('agencies', function ($query) {
+                        return $query->where('agency_id', '=', auth("api")->user()->agency_id);
+                    })->latest()->get();
+      }
       return new TicketCollection($collection);
     }
 
@@ -163,7 +168,7 @@ class TicketController extends ApiController
     {
       $validator = Validator::make($request->all(), [
           'ticket_id' => 'required',
-          'status' => ['required', 'in:FOR_REVIEW,ACKNOWLEDGED,ON_GOING,RESOLVED,IVALID'],
+          'status' => ['required', 'in:FOR_REVIEW,ACKNOWLEDGED,ON_GOING,RESOLVED,INVALID'],
       ]);
 
       if ($validator->fails()) {
@@ -260,6 +265,13 @@ class TicketController extends ApiController
 
       return new CommentCollection($ticket->comments()->latest()->get());
     }
+    public function product_service(Request $request){
+      $collection = Ticket::select('product_service')->latest()->get();
+      return response()->json([
+            'data' => $collection,
+      ], 200);
+    }
+
 
 
 
