@@ -57,10 +57,10 @@
                                         <button @click="rvendorsOrder = 'city'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn">City<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button @click="rvendorsOrder = 'no_of_tickets'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn">No. of Tickets<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="rvendorsOrder = 'no_of_tickets'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn mx-auto">No. of Tickets<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button @click="rvendorsOrder = 'no_of_violations'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn">No. of Violations<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="rvendorsOrder = 'no_of_violations'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn mx-auto">No. of Violations<img src="/img/icon/filter.png" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
                                         <button @click="rvendorsOrder = 'updated_at'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn">Date Updated<img src="/img/icon/filter.png" class="ml-1.5"></button>
@@ -73,7 +73,7 @@
                             <tbody>
                                 <tr class="border-b border-light relative" v-for="(rvendor, index) in orderedTickets()" ref="rvendors">
                                     <td class="w-12 min-w-44">
-                                        <router-link :to="'reported_vendors/'+rvendor.id"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></router-link>
+                                        <router-link :to="'/vendor-profile/'+rvendor.id"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></router-link>
                                     </td>
                                     <td class="p-2.5 font-opensans-600 text-xxs">
                                         <p class="text-dark2 truncate">
@@ -83,7 +83,7 @@
                                             {{ rvendor.email }}
                                         </p>
                                     </td>
-                                    <td class="p-2.5 font-opensans-800 text-xxxs text-dark2 whitespace-nowrap">
+                                    <td class="p-2.5 font-opensans-700 text-xxxs text-dark2 whitespace-nowrap">
                                         {{ rvendor.city }}
                                     </td>
                                     <td class="p-2.5 font-opensans-600 text-xxxs text-center text-dark2">

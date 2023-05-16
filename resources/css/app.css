@@ -35,6 +35,10 @@
     src: url('/fonts/OpenSans-SemiBold.ttf');
 }
 @font-face {
+    font-family: opensans-700;
+    src: url('/fonts/OpenSans-Bold.ttf');
+}
+@font-face {
     font-family: opensans-800;
     src: url('/fonts/OpenSans-ExtraBold.ttf');
 }

@@ -64,7 +64,8 @@ module.exports = {
         'lighttext': '#ADB5BD',
         'lightergrey': '#DEE2E6',
         'darkgrey': '#8898AA',
-        'greygrey': '#F5F7FA'
+        'greygrey': '#F5F7FA',
+        'greygreygrey': '#E9ECEF'
       },
       fontSize: {
         xxxs: '0.688rem', //11px
@@ -85,6 +86,7 @@ module.exports = {
         'inter-400': 'inter-400',
         'inter-700': 'inter-700',
         'opensans-600': 'opensans-600',
+        'opensans-700': 'opensans-700',
         'opensans-800': 'opensans-800',
       },
       margin: {

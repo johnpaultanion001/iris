@@ -46,7 +46,7 @@ export default {
             isRemember: false,
             grant_type: 'password',
             client_id: '2',
-            client_secret: 'PaZ6PpOoEOcjz3hNX1Kv97MSUp6Lm0c3UNzFJnRz',
+            client_secret: 'B9S5RYTa63ELppkdYc6Bv0Mh1yCWPXGgSwMjXs6i',
             scope: '',
             username: '',
             password: ''
