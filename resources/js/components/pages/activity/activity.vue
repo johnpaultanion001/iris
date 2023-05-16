@@ -72,7 +72,7 @@
                                     <td class="w-12 min-w-44">
                                         <router-link :to="'activity/'+act.id"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></router-link>
                                     </td>
-                                    <td class="p-2.5 font-opensans-800 text-xxxs text-dark2">
+                                    <td class="p-2.5 font-opensans-700 text-xxxs text-dark2">
                                         {{ act.action }}
                                     </td>
                                     <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">

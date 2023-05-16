@@ -69,7 +69,7 @@ const routes = [
         component: reportedVendors
     },
     {
-        path: '/vendor-profile',
+        path: '/vendor-profile/:id',
         component: vendorProfile
     },
     {
