@@ -59,18 +59,29 @@ class TicketController extends ApiController
         }
 
         try {
-            $vendor = Vendor::create([
-              'vendor_name' => request('vendor_name'),
-              'email' => request('email_address'),
-              'mobile_number' => request('mobile_number'),
-              'city' => request('city'),
-            ]);
-            $reportedBy = ReportedBy::create([
-              'first_name' => request('reported_first_name'),
-              'last_name' => request('reported_last_name'),
-              'email' => request('reported_email_address'),
-              'mobile_number' => request('reported_mobile_number'),
-            ]);
+            $vendor = Vendor::updateOrCreate(
+                [
+                  'email' => request('email_address'),
+                ],
+                [
+                  'vendor_name' => request('vendor_name'),
+                  'email' => request('email_address'),
+                  'mobile_number' => request('mobile_number'),
+                  'city' => request('city'),
+                ]
+            );
+            $reportedBy = ReportedBy::updateOrCreate(
+                [
+                  'email' => request('reported_email_address'),
+                ],
+                [
+                  'first_name' => request('reported_first_name'),
+                  'last_name' => request('reported_last_name'),
+                  'email' => request('reported_email_address'),
+                  'mobile_number' => request('reported_mobile_number'),
+                ]
+
+            );
 
             $ticket = Ticket::create([
                 'user_id'         => auth("api")->user()->id,
