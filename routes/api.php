@@ -50,6 +50,8 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   //List of Violations
   Route::get('list_violations', 'ViolationController@list_violations')->name('violations.list_violations');
 
+  //Reports
+  Route::get('reports', 'ReportController@index')->name('reports.index');
 
 
 });
