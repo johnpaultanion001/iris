@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Agency;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\AgencyCodeCollection;
+use App\Http\Resources\AgencyCollection;
 
 class AgencyController extends ApiController
 {
