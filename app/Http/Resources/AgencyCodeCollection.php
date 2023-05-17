@@ -11,3 +11,21 @@ class AgencyCodeCollection extends ApiResourceCollection
         return parent::toArray($request);
     }
 }
+
+class AgencyCodeResource extends ApiResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+      return [
+        $this->agency->code ?? $this->code,
+
+      ];
+
+    }
+}

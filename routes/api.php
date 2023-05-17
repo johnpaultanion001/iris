@@ -20,6 +20,7 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
 
   //Tickets
   Route::apiResource('tickets', 'TicketController');
+  Route::post('ticket/update/{ticket}', 'TicketController@update_ticket')->name('ticket.update_ticket');
   Route::post('ticket/update_severity', 'TicketController@update_severity')->name('ticket.update_severity');
   Route::post('ticket/update_status', 'TicketController@update_status')->name('ticket.update_status');
   Route::post('ticket/comment', 'TicketController@create_comment')->name('ticket.create_comment');
@@ -27,7 +28,7 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   Route::get('ticket/product_service', 'TicketController@product_service')->name('ticket.product_service');
 
   //REPORTED VENDORS
-  Route::get('reported_vendors', 'ReportedVendorsController@index')->name('reported_vendors.index');
+  Route::apiResource('reported_vendors', 'ReportedVendorsController');
 
   //REGISTER
   Route::post('register', 'RegisterController@register')->name('admin.register');

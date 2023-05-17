@@ -133,13 +133,51 @@ class TicketController extends ApiController
     }
 
 
-    public function update(Request $request, $id)
+    public function update_ticket(Request $request, Ticket $ticket)
     {
+        // Validate all the required parameters have been sent.
+        $validator = Validator::make($request->all(), [
+          'product_service' => 'required',
+          'complaint' => 'required',
+          'platform' => 'required',
+          'link' => 'required',
+          'additional_documents_file' => 'required',
 
-    }
+          // reported by info
+          'reported_first_name' => 'required',
+          'reported_last_name' => 'required',
+          'reported_email_address' => ['required', 'email', 'max:255' , 'unique:reported_bies,email,'.$ticket->reported_by_id],
+          'reported_mobile_number' => ['required', 'string', 'min:8','max:11', 'unique:reported_bies,mobile_number,'.$ticket->reported_by_id],
+        ]);
 
-    public function destroy(Request $request, $id)
-    {
+        if ($validator->fails()) {
+          return $this->responseUnprocessable($validator->errors());
+        }
+
+        $ticket->update([
+            'product_service' => request('product_service'),
+            'complaint' => request('complaint'),
+            'platform' => request('platform'),
+            'link' => request('link'),
+            'additional_documents_file' => request('additional_documents_file'),
+            'remarks' => request('remarks'),
+        ]);
+
+        ReportedBy::find($ticket->reported_by_id)->update(
+              [
+                'first_name' => request('reported_first_name'),
+                'last_name' => request('reported_last_name'),
+                'email' => request('reported_email_address'),
+                'mobile_number' => request('reported_mobile_number'),
+              ]
+        );
+        $data = [
+          'tiket_id' => $ticket->id,
+          'tiket_no' => $ticket->id,
+        ];
+
+        return $this->responseResourceUpdated('Ticket updated successfully',$data);
+
 
     }
 

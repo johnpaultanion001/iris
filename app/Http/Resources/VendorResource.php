@@ -14,17 +14,23 @@ class VendorResource extends ApiResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'vendor_name' => $this->vendor_name,
-            'email' => $this->email,
-            'mobile_number' => $this->mobile_number,
-            'city' => $this->city,
-            'no_of_tickets' => $this->ticket->id,
-            'no_of_violations' => $this->ticket->violations()->count(),
+          $collection = $this->tickets()->withCount('violations')->get();
+          $total_vio = $collection->sum('violations_count');
 
-            'created_at' => (string)$this->created_at->toDateTimeString(),
-            'updated_at' => (string)$this->updated_at->toDateTimeString(),
-        ];
+        return [
+                  'id' => $this->id,
+                  'vendor_name' => $this->vendor_name,
+                  'email' => $this->email,
+                  'mobile_number' => $this->mobile_number,
+                  'city' => $this->city,
+                  'quick_stats' => [
+                      'no_of_tickets' => $this->tickets()->count(),
+                      'no_of_violations' => $total_vio,
+                  ],
+                  'tickets' =>
+                      new TicketVendorCollection($this->tickets()->get()),
+                  'created_at' => (string)$this->created_at->toDateTimeString(),
+                  'updated_at' => (string)$this->updated_at->toDateTimeString(),
+              ];
     }
 }

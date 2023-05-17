@@ -19,4 +19,9 @@ class Vendor extends Model
   {
       return $this->belongsTo(Ticket::class, 'id','vendor_id');
   }
+
+  public function tickets()
+  {
+      return $this->hasMany(Ticket::class, 'vendor_id', 'id');
+  }
 }
