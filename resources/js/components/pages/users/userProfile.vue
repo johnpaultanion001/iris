@@ -7,53 +7,53 @@
 
             <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
                 <ContentCard cardTitle="">
-                    <div class="flex justify-start">
-                        <div class="mr-4">
-                            <div class="rounded-2xl w-36 h-36">
-                                <img src="/img/icon/search.png" class="w-full h-full object-cover">
+                    <div class="block md:flex justify-start p-3.5">
+                        <div class="mx-0 mb-4 md:my-0 md:mr-4">
+                            <div class="w-36 h-36">
+                                <img src="/img/icon/search.png" class="rounded-2xl w-full h-full object-cover">
                             </div>
                         </div>
-                        <div class="ml-4">
+                        <div class="mx-0 mt-4 md:my-0 md:ml-4">
                             <table class="table-fixed w-full">
                                 <tbody>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Name</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Name</td>
                                         <td class="py-3 text-black text-xl font-exo-400">Value</td>
                                     </tr>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Username</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Username</td>
                                         <td class="py-3 text-black text-base font-exo-400">Value</td>
                                     </tr>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Account Status</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Account Status</td>
                                         <td class="py-3 text-black text-base font-exo-400">Value</td>
                                     </tr>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">User Type</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">User Type</td>
                                         <td class="py-3 text-black text-base font-exo-400">Value</td>
                                     </tr>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Email Address</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Email Address</td>
                                         <td class="py-3 text-black text-base font-exo-400">Value</td>
                                     </tr>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Mobile Number</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Mobile Number</td>
                                         <td class="py-3 text-black text-base font-exo-400">Value</td>
                                     </tr>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Agency</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Agency</td>
                                         <td class="py-3 text-black text-base font-exo-400">Value</td>
                                     </tr>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Date Updated</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Date Updated</td>
                                         <td class="py-3 text-black text-base font-exo-400">Value</td>
                                     </tr>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Date Created</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Date Created</td>
                                         <td class="py-3 text-black text-base font-exo-400">Value</td>
                                     </tr>
                                     <tr class="border-b border-light relative">
-                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Created By</td>
+                                        <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Created By</td>
                                         <td class="py-3 text-black text-base font-exo-400">Value</td>
                                     </tr>
                                 </tbody>
@@ -64,21 +64,23 @@
             </div>
 
             <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
-                <ContentCard cardTitle="Assigned Agencies">
-                    <div class="block p-2 scroll-style overflow-auto" style="max-height: 390px;">
-                        <div class="grid grid-cols-2 gap-y-5 gap-x-3">
-                            <div class="col-span-2">
-                                <div class="relative w-full">
-                                    <input type="text" v-model="filterSearchAgency" placeholder="Search" name="selectagencies" id="selectagencies" class="mt-4 w-full secondary-input" style="padding-left: 35px;"/>
-                                    <img src="/img/icon/search.png" class="search-img" style="top: 31px">
-                                </div>
-                                <div v-for="(agency, index) in agencies" ref="agencies" class="my-4">
-                                    <label class="flex items-center">
-                                        <input type="radio" v-model="filterAgencyValue" :value="agency.id" name="filterAgencyValue">
-                                        <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
-                                        <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
-                                    </label>
-                                </div>
+                <ContentCard cardTitle="Account Actions">
+                    <div class="block p-2" style="max-height: 390px;">
+                        <div class="block lg:flex items-center justify-start">
+                            <div class="">
+                                <button @click="openModal('resendInvite')" class="border border-blue mt-1 lg:mt-0 min-w-160 w-full lg:w-fit bg-white text-sm font-opensans-600 mr-4 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+                                    Resend Invite
+                                </button>
+                            </div>
+                            <div class="">
+                                <router-link to="/create-user/1" class="border border-blue mt-1 lg:mt-0 min-w-160 w-full lg:w-fit bg-white text-sm font-opensans-600 mr-4 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+                                    Edit User
+                                </router-link>
+                            </div>
+                            <div class="">
+                                <button @click="openModal('deactivate')" class="border border-red mt-1 lg:mt-0 min-w-160 w-full lg:w-fit bg-white text-sm font-opensans-600 mr-4 py-2.5 px-5 text-red rounded-lg flex items-center justify-center">
+                                    Deactivate
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -86,6 +88,42 @@
             </div>
         </div>
     </PageLayout>
+    
+    <Modal v-show="modalActive && showModal == 'resendInvite'" @close="closeModal">
+        <template v-slot:body>
+            <img src="/img/icon/invite-modal.png" class="mb-6">
+            <h5 class="font-exo-600 text-xl text-dark2 mb-4">Resend Account Invite to NAME</h5>
+            <p class="font-inter-400 text-lg text-dark2 mb-11">Are you sure you want to send an account invite?</p> 
+        </template>
+        <template v-slot:footer>
+            <div class="flex items-center justify-end w-full">
+                <button @click="closeModal()" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-4 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+                    Cancel
+                </button>
+                <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Resend
+                </button>
+            </div>
+        </template>
+    </Modal>
+    
+    <Modal v-show="modalActive && showModal == 'deactivate'" @close="closeModal">
+        <template v-slot:body>
+            <img src="/img/icon/invite-modal.png" class="mb-6">
+            <h5 class="font-exo-600 text-xl text-dark2 mb-4">Deactivate NAME</h5>
+            <p class="font-inter-400 text-lg text-dark2 mb-11">Once you deactivate this account, the user can no longer access the system. Do you wish to continue?</p> 
+        </template>
+        <template v-slot:footer>
+            <div class="flex items-center justify-end w-full">
+                <button @click="closeModal()" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-4 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+                    Cancel
+                </button>
+                <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-red text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Yes, Deactive
+                </button>
+            </div>
+        </template>
+    </Modal>
 </template>
 
 <script>
@@ -95,6 +133,7 @@ import ContentCard from '../../utilities/contentCard.vue'
 import Modal from '../../utilities/modal.vue'
 import axios from 'axios'
 import 'vue-select/dist/vue-select.css';
+import AlertTop from '../../utilities/alertTop.vue'
 
 export default {
     setup: () => ({
@@ -105,10 +144,18 @@ export default {
             //Modal
             showModal: '',
             modalActive: false,
+            modalTicketID: '',
+            successAlert: false,
+            successMessage: '',
+            successIcon: null,
         };
     },
     components: { PageLayout, ContentCard, Modal },
     methods: {
+        //Alert
+        async closeAlert() {
+            this.successAlert = false
+        },
         //Modals
         openModal(itemID){
             document.querySelector('body').style.overflow = 'hidden';

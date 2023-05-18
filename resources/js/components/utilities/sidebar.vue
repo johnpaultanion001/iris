@@ -1,5 +1,5 @@
 <template>
-    <div class="py-4 pl-2 h-screen">
+    <div class="py-4 pl-2 h-full">
         <div class="sidebar bg-lighter rounded-2xl h-full w-full overflow-hidden shadow-secondary">
             <div class="sidebar-header p-4 border border-t-0 border-x-0 border-b-1-light">
                 <img src="/img/iris-logo-blue.png" class="mx-auto"> 
