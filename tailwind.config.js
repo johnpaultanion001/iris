@@ -65,7 +65,8 @@ module.exports = {
         'lightergrey': '#DEE2E6',
         'darkgrey': '#8898AA',
         'greygrey': '#F5F7FA',
-        'greygreygrey': '#E9ECEF'
+        'greygreygrey': '#E9ECEF',
+        'red': '#F5365C'
       },
       fontSize: {
         xxxs: '0.688rem', //11px

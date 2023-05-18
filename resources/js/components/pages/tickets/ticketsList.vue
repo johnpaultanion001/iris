@@ -146,9 +146,9 @@
                                 </td>
                                 <td class="p-2.5 font-opensans-600 text-xxxs text-white flex items-center whitespace-nowrap">
                                     <div class="flex items-center whitespace-nowrap" v-for="(item, index) in ticket.assigned_agencies" ref="tickets">
-                                        <div class="whitespace-nowrap" v-for="(agency, index) in item" ref="tickets">
-                                            <span v-if="index <= 3" :style="'background-color:'+ agency.color +';'" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">{{ agency.code }}</span>
-                                            <span v-if="index == 3" style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+{{ item.length - 4 }}</span>
+                                        <div class="whitespace-nowrap" ref="tickets">
+                                            <span v-if="index <= 3" :style="'background-color:'+ item.color +';'" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">{{ item.code }}</span>
+                                            <span v-if="index == 3" style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+{{ ticket.assigned_agencies.length - 4 }}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -426,6 +426,7 @@ export default {
             modalActive: false,
             modalTicketID: '',
             successAlert: false,
+            successMessage: '',
             successIcon: null,
             //Filter Modal
             dropdownToggle: '',
