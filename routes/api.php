@@ -14,7 +14,7 @@ Route::group([
     Route::post('password-reset', 'Auth\ResetPasswordController@reset');
 });
 
-Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth','check_user_status']], function () {
   //NEW PASSWORD
   Route::post('new_password', 'UserController@new_password')->name('admin.new_password');
 
@@ -38,6 +38,9 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
 
   //ALL USERS
   Route::get('all_users', 'UserController@index')->name('users.index');
+  Route::post('user/account_status', 'UserController@account_status')->name('users.account_status');
+  Route::post('user/change_password', 'UserController@change_password')->name('users.change_password');
+
   //PROFILE
   Route::get('profile', 'UserController@profile')->name('users.profile');
 

@@ -130,4 +130,12 @@ abstract class ApiController extends Controller
             'errors' => $errors
         ], 401);
     }
+
+    public function userUnauthorized($errors = ['User Unauthorized'])
+    {
+        return response()->json([
+            'status' => 401,
+            'errors' => $errors
+        ], 401);
+    }
 }

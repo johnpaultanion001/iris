@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
+use App\Rules\MatchOldPassword;
 
 class UserController extends ApiController
 {
@@ -63,5 +64,51 @@ class UserController extends ApiController
 
       return new UserResource($profile);
     }
+
+    public function account_status(Request $request)
+    {
+      $user = User::where('id',request('user_id'))->first();
+      if(auth("api")->user()->role == "SUPER_ADMIN"){
+        $user->update([
+          "status" => request('status'),
+        ]);
+      }else{
+        if (auth("api")->user()->agency_id == $user->agency_id) {
+          $user->update([
+            "status" => request('status'),
+          ]);
+        }else{
+          return $this->userUnauthorized();
+        }
+      }
+      return new UserResource($user);
+    }
+
+    public function change_password(Request $request)
+    {
+        date_default_timezone_set('Asia/Manila');
+        $validated =  Validator::make($request->all(), [
+            'current_password' => ['required',new MatchOldPassword],
+            'new_password' => [
+                                  'required','string','min:8','max:32',
+                                  'regex:/[a-z]/',
+                                  'regex:/[A-Z]/',
+                                  'regex:/[0-9]/',
+                                  'regex:/[@$!%*#?&]/',
+                              ],
+            'confirm_password' => ['required','same:new_password'],
+
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json(['errors' => $validated->errors()]);
+        }
+
+        User::find(auth("api")->user()->id)->update([
+            'password' => Hash::make($request->input('new_password')),
+        ]);
+        return response()->json(['success' => 'Password Successfully Changed.']);
+    }
+
 
 }
