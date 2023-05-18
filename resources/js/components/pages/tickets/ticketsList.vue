@@ -119,7 +119,7 @@
                         <tbody v-for="(ticket, index) in orderedTickets()" ref="tickets">
                             <tr class="border-b border-light relative">
                                 <td class="w-12 min-w-44">
-                                    <router-link :to="'tickets/'+ticket.ticket_no"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></router-link>
+                                    <router-link :to="'/ticket-information/'+ticket.ticket_no"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></router-link>
                                 </td>
                                 <td class="w-12 min-w-44">
                                     <img @click.prevent="modalTicketID = ticket.ticket_no; ticket.isFollow ? openModal('unfollow') : openModal('follow')" :src="ticket.isFollow ? '/img/icon/favorite-active.png' : '/img/icon/favorite.png'" style="width: 11px; height: 17px;" class="cursor-pointer m-auto block">
