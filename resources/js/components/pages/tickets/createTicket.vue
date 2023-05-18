@@ -253,7 +253,7 @@
         <Modal modalTitle="Add Agencies" v-show="modalActive && showModal == 'modalAgencies'" @close="closeModal">
             <template v-slot:body>
                 <form class="block">
-                    <div class="grid grid-cols-2 gap-y-6 gap-x-3">
+                    <div class="grid grid-cols-2 gap-y-6 gap-x-3 mt-2">
                         <div class="col-span-2">
                             <p class="text-black font-inter-400 text-sm">Once ticket is submitted, we’ll automatically send a notification to the assigned agencies</p>
                         </div>
