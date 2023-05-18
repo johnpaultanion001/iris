@@ -61,7 +61,7 @@ const routes = [
         component: editTicket
     },
     {
-        path: '/ticket-information',
+        path: '/ticket-information/:id',
         component: ticketInformation
     },
     {
@@ -69,7 +69,7 @@ const routes = [
         component: reportedVendors
     },
     {
-        path: '/vendor-profile',
+        path: '/vendor-profile/:id',
         component: vendorProfile
     },
     {
@@ -85,7 +85,7 @@ const routes = [
         component: editUser
     },
     {
-        path: '/user-profile',
+        path: '/profile/:id',
         component: userProfile
     },
     {

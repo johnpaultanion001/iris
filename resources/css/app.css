@@ -35,6 +35,10 @@
     src: url('/fonts/OpenSans-SemiBold.ttf');
 }
 @font-face {
+    font-family: opensans-700;
+    src: url('/fonts/OpenSans-Bold.ttf');
+}
+@font-face {
     font-family: opensans-800;
     src: url('/fonts/OpenSans-ExtraBold.ttf');
 }
@@ -55,7 +59,57 @@ h1{
     border: 3px solid #8390A3;
     outline: 0;
 }
-
+.secondary-input{
+    border: 1px solid #8390A3;
+    border-radius: 4px;
+    height: 43px;
+    padding: 10px;
+}
+.secondary-input:focus, .secondary-input:focus-visible{
+    border: 1px solid #1267E5;
+    outline: 0;
+}
+.main-textarea {
+    border: 1px solid #CAD1D7;
+    border-radius: 4px;
+    height: 108px;
+    padding: 10px;
+}
+.main-textarea:focus, .main-textarea:focus-visible{
+    border: 1px solid #8390A3;
+    outline: 0;
+}
+.secondary-textarea {
+    border: 1px solid #8390A3;
+    border-radius: 4px;
+    height: 108px;
+    padding: 10px;
+}
+.secondary-textarea:focus, .secondary-textarea:focus-visible{
+    border: 1px solid #1267E5;
+    outline: 0;
+}
+.down-img {
+    top: 25px;
+    bottom: 0;
+    position: absolute;
+    right: 10px;
+}
+.date-img {
+    top: 45px;
+    bottom: 0;
+    position: absolute;
+    right: 10px;
+}
+.search-img {
+    top: 56px;
+    bottom: 0;
+    position: absolute;
+    left: 10px;
+}
+.dropdown{
+    z-index: 9;
+}
 /* Show Password */
 .show-icon{
     position: absolute;
@@ -98,6 +152,7 @@ input:focus-visible{
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 9;
 }
 .backdrop {
     position: fixed;
@@ -116,4 +171,58 @@ input:focus-visible{
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+/* Scroll */
+.scroll-style::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #F4F5F7;
+}
+.scroll-style::-webkit-scrollbar
+{
+	height: 8px;
+	width: 8px;
+	background-color: #F4F5F7;
+}
+.scroll-style::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #CED4DA;
+}
+ul[role='listbox']::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #F4F5F7;
+}
+ul[role='listbox']::-webkit-scrollbar
+{
+	height: 8px;
+	width: 8px;
+	background-color: #F4F5F7;
+}
+ul[role='listbox']::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #CED4DA;
+}
+.vs__actions:after {
+    content: url('/img/icon/down-blue.png');
+}
+.vs__actions {
+    width: 23px;
+    margin-right: 2px;
+}
+.vs--searchable .vs__dropdown-toggle {
+    cursor: text;
+    border: 0;
+}
+.vs__search::placeholder {
+    color: #9ca3c0 !important;
+}
+button.vs__clear {
+    display: none;
+    width: 0px;
+}
+ul[role='listbox'] {
+    margin-top: 7px;
 }

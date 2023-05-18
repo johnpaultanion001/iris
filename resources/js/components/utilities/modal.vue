@@ -2,12 +2,12 @@
     <Transition>
         <div class="outer-modal">
             <div class="backdrop" @click="closeModal"></div>
-            <div class="modal rounded-2xl bg-white shadow-secondary">
+            <div class="modal rounded-2xl bg-white shadow-secondary max-w-500">
                 <div v-if="modalTitle" class="modal-head border-b border-b-light py-5 px-6 flex items-center justify-between">
                     <h5 class="font-exo-600 text-blue-grey text-xl">{{ modalTitle }}</h5>
                     <img @click="closeModal" src="/img/icon/close.png" class="cursor-pointer">
                 </div>
-                <div class="modal-body p-6">
+                <div class="modal-body p-6 overflow-y-auto scroll-style" style="max-height: 584px;">
                     <slot name="body"></slot>
                 </div>
                 <div class="modal-footer border-t border-t-light pt-4 pb-6 px-6 flex items-center justify-between">

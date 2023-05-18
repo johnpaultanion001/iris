@@ -1,17 +1,351 @@
 <template>
     <PageLayout :pageName="title">
-        <h1>{{ title }}</h1>
+        <div class="grid grid-cols-12 gap-3 mb-6 pt-4">
+            <div class="col-span-12 md:col-span-6">
+                <h1>{{ title }}</h1>
+            </div>
+            <div class="col-span-12 md:col-span-6 flex items-center justify-end flex-col md:flex-row">
+                <button @click="openModal('filterModal')" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 border border-white text-white rounded-lg flex items-center justify-center">
+                    Filter
+                </button>
+                <button class="mt-1 md:mt-0 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-2 py-2.5 px-5 border border-white text-white rounded-lg flex items-center justify-center">
+                    Export <img src="/img/icon/export-white.png" class="ml-4">
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-3">
+            <div class="col-span-12">
+                <ContentCard>
+                    <div class="grid grid-cols-2 gap-2 pb-4">
+                        <div class="col-span-1 flex items-center">
+                            <div @click="filterItemNumberDropdown = !filterItemNumberDropdown" class="mr-1 py-1.5 px-2.5 cursor-pointer relative bg-white text-xxs text-black font-opensans-600 border border-light rounded flex items-center">
+                                {{ perpage }} <img src="/img/icon/filter.png" class="ml-1">
+                                <div v-if="filterItemNumberDropdown" style="top:28px;right:-1px;left:-1px;" class="z-9 dropdown absolute border border-light rounded-b-lg bg-white shadow-secondary overflow-hidden">
+                                    <div @click="perpage = 10" class="py-1.5 px-1 flex items-center hover:bg-lighter">
+                                        <p class="w-full font-inter-400 text-xxs text-center text-black">10</p>
+                                    </div>
+                                    <div @click="perpage = 15" class="py-1.5 px-1 flex items-center hover:bg-lighter">
+                                        <p class="w-full font-inter-400 text-xxs text-center text-black">15</p>
+                                    </div>
+                                    <div @click="perpage = 20" class="py-1.5 px-1 flex items-center hover:bg-lighter">
+                                        <p class="w-full font-inter-400 text-xxs text-center text-black">20</p>
+                                    </div>
+                                    <div @click="perpage = 25" class="py-1.5 px-1 flex items-center hover:bg-lighter">
+                                        <p class="w-full font-inter-250 text-xxs text-center text-black">40</p>
+                                    </div>
+                                    <div @click="perpage = 30" class="py-1.5 px-1 flex items-center hover:bg-lighter">
+                                        <p class="w-full font-inter-400 text-xxs text-center text-black">30</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xxs text-lighttext m-0">entries per page</p>
+                        </div>
+                        <div class="col-span-1 flex justify-end relative">
+                            <input v-model="filterSearch"  type="text" class="py-1.5 px-3 text-xxs rounded-lg border border-light focus-visible:border-blue-grey" placeholder="Search">
+                        </div>
+                    </div>
+                    <div class="scroll-style overflow-auto mb-4">
+                        <table class="table-auto w-full">
+                            <thead>
+                                <tr class="border-b border-light">
+                                    <th class="p-2.5">
+                                    </th>
+                                    <th class="p-2.5">
+                                        <button @click="rvendorsOrder = 'vendor_name'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn">Vendor Name<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                    </th>
+                                    <th class="p-2.5 text-center">
+                                        <button @click="rvendorsOrder = 'city'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn">City<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                    </th>
+                                    <th class="p-2.5 text-center">
+                                        <button @click="rvendorsOrder = 'no_of_tickets'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn mx-auto">No. of Tickets<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                    </th>
+                                    <th class="p-2.5 text-center">
+                                        <button @click="rvendorsOrder = 'no_of_violations'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn mx-auto">No. of Violations<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                    </th>
+                                    <th class="p-2.5 text-center">
+                                        <button @click="rvendorsOrder = 'updated_at'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn">Date Updated<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                    </th>
+                                    <th class="p-2.5 text-center">
+                                        <button @click="rvendorsOrder = 'created_at'; rvendorsASC = !rvendorsASC; orderedTickets();" class="filter-btn">Date Added<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-light relative" v-for="(rvendor, index) in orderedTickets()" ref="rvendors">
+                                    <td class="w-12 min-w-44">
+                                        <router-link :to="'/vendor-profile/'+rvendor.id"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></router-link>
+                                    </td>
+                                    <td class="p-2.5 font-opensans-600 text-xxs">
+                                        <p class="text-dark2 truncate">
+                                            {{ rvendor.vendor_name }}
+                                        </p>
+                                        <p class="text-lighttext truncate">
+                                            {{ rvendor.email }}
+                                        </p>
+                                    </td>
+                                    <td class="p-2.5 font-opensans-700 text-xxxs text-dark2 whitespace-nowrap">
+                                        {{ rvendor.city }}
+                                    </td>
+                                    <td class="p-2.5 font-opensans-600 text-xxxs text-center text-dark2">
+                                       {{ rvendor.no_of_tickets }} 
+                                    </td>
+                                    <td class="p-2.5 font-opensans-600 text-xxxs text-center text-dark2">
+                                       {{ rvendor.no_of_violations }} 
+                                    </td>
+                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2" ref="rvendors">
+                                        {{ format_date(rvendor.updated_at) }}
+                                    </td>
+                                    <td class="p-2.5 font-opensans-400 text-xxxs text-dark2" ref="rvendors">
+                                        {{ format_date(rvendor.created_at) }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-cont flex items-center justify-between">
+                        <p class="text-xxs text-lighttext m-0">Showing {{ (perpage * (pageNumber)) + 1 }} to {{ rvendors.length > (perpage * (pageNumber + 1)) ? (perpage * (pageNumber + 1)) : rvendors.length }} of {{ rvendors.length }} entries</p>
+                        <div v-if="rvendors.length > perpage" class="flex items-center justify-end">
+                            <button @click="pageNumber >  0 ? updatePageNumber(pageNumber - 1) : null" :class="pageNumber >  0 ? 'bg-white hover:bg-lightergrey' : 'opacity-40 bg-lightergrey hover:bg-lightergrey'" class="mx-1 b-white hover:bg-lightergrey w-9 h-9 border border-lightgrey flex items-center justify-center rounded-full">
+                                <img src="/img/icon/previous.png">
+                            </button>
+                            <button @click="updatePageNumber(0)" :class="pageNumber == 0 ? 'bg-blue hover:bg-blue text-white border-blue' : 'b-white hover:bg-lightergrey text-darkgrey border-lightergrey'" class="mx-1 font-inter-400 text-sm w-9 h-9 border flex items-center justify-center rounded-full">
+                                1
+                            </button>
+                            <p v-if="pageNumber > (pageRange/2)">...</p>
+                            <div v-for="pageIndex in paginateTotal" @click.prevent="updatePageNumber(pageIndex - 1)">
+                                <button v-if="(pageIndex > pageStart && pageIndex < pageEnd && pageIndex != 1 && pageIndex != paginateTotal)" :class="(pageIndex - 1) == pageNumber ? 'bg-blue hover:bg-blue text-white border-blue' : 'b-white hover:bg-lightergrey text-darkgrey border-lightergrey'" class="mx-1 font-inter-400 text-sm w-9 h-9 border flex items-center justify-center rounded-full">
+                                    {{ pageIndex }}
+                                </button>
+                            </div>
+                            <p v-if="pageNumber < (paginateTotal - (pageRange/2))">...</p>
+                            <button @click="updatePageNumber(paginateTotal - 1)" :class="pageNumber == (paginateTotal - 1) ? 'bg-blue hover:bg-blue text-white border-blue' : 'b-white hover:bg-lightergrey text-darkgrey border-lightergrey'" class="mx-1 font-inter-400 text-sm w-9 h-9 border flex items-center justify-center rounded-full">
+                                {{ paginateTotal }}
+                            </button>
+                            <button @click="(paginateTotal - 1) > pageNumber ? updatePageNumber(pageNumber + 1) : null" :class="(paginateTotal - 1) > pageNumber ? 'bg-white hover:bg-lightergrey' : 'opacity-40 bg-lightergrey hover:bg-lightergrey'" class="mx-1 b-white hover:bg-lightergrey w-9 h-9 border border-lightergrey flex items-center justify-center rounded-full">
+                                <img src="/img/icon/next.png">
+                            </button>
+                        </div>
+                    </div>
+                </ContentCard>
+            </div>
+        </div>
+        <Modal modalTitle="Filters" v-show="modalActive && showModal == 'filterModal'" @close="closeModal">
+            <template v-slot:body>
+                <form class="block">
+                    <div class="grid grid-cols-2 gap-y-6 gap-x-3">
+                        <div class="col-span-2">
+                            <label for="city" class="text-base text-blue-grey text-xs font-inter-700">City</label>
+                            <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
+                                <v-select :filter="fuseSearch" :options="cities" :get-option-label="(option) => option.name" placeholder="Choose" >
+                                    <template #option="{ name }">
+                                        {{ name }} 
+                                    </template>
+                                </v-select>
+                            </div>
+                        </div> 
+                        <div class="col-span-1">
+                            <div class="relative w-full">
+                                <label for="from" class="text-base text-blue-grey text-xs font-inter-700">From</label>
+                                <input type="text" v-model="from" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
+                                <img src="/img/icon/date-blue.png" class="date-img">
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <div class="relative w-full">
+                                <label for="to" class="text-base text-blue-grey text-xs font-inter-700">To</label>
+                                <input type="text" v-model="to" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
+                                <img src="/img/icon/date-blue.png" class="date-img">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </template>
+            <template v-slot:footer>
+                <div class="flex items-center justify-between w-full">
+                    <button class="mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline">
+                        RESET FILTERS
+                    </button>
+                    <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                        Apply
+                    </button>
+                </div>
+            </template>
+        </Modal>
     </PageLayout>
 </template>
 
 <script>
 
 import PageLayout from '../../pageLayout.vue'
+import ButtonCard from '../../utilities/buttonCard.vue'
+import ContentCard from '../../utilities/contentCard.vue'
+import Modal from '../../utilities/modal.vue'
+import clickOutSide from "@mahdikhashan/vue3-click-outside"
+import axios from 'axios'
+import moment from 'moment'
+import vSelect from 'vue-select'
 
 export default {
     setup: () => ({
-        title: 'Reported Vendors'
+        title: 'Reported Vendors',
     }),
-    components: { PageLayout },
+    directives: {
+        clickOutSide,
+    },
+    data () {
+        return{
+            //Show filters mobile
+            showFilter: true,
+            showFilterBtn: true,
+            //Filter item number
+            filterItemNumberDropdown: false,
+            filterSearch: '',
+            //Date Filter
+            reDate: null,
+            //Modal
+            showModal: '',
+            modalActive: false,
+            modalTicketID: '',
+            //Filter Modal
+            dropdownToggle: '',
+            //Tickets
+            rvendors: [],
+            rvendorsOrder: 'created_at',
+            rvendorsOrderArray: '',
+            rvendorsASC: true,
+            perpage: 10,
+            pageNumber: 0,
+            paginateTotal: 0,
+            pageRange: 6,
+            pageStart: 1,
+            pageEnd: 5,
+            //Cities
+            filteredCities: [],
+            cityDD: false,
+            cities: [{name: 'Alaminos'}, {name: 'Angeles City'}, {name: 'Antipolo'}, {name: 'Bacolod'}, {name: 'Bacoor'}, {name: 'Bago'}, {name: 'Baguio'}, {name: 'Bais'}, {name: 'Balanga'}, {name: 'Baliwag'}, {name: 'Batac'}, {name: 'Batangas City'}, {name: 'Bayawan'}, {name: 'Baybay'}, {name: 'Bayugan'}, {name: 'Biñan'}, {name: 'Bislig'}, {name: 'Bogo'}, {name: 'Borongan'}, {name: 'Butuan'}, {name: 'Cabadbaran'}, {name: 'Cabanatuan'}, {name: 'Cabuyao'}, {name: 'Cadiz'}, {name: 'Cagayan de Oro'}, {name: 'Calaca'}, {name: 'Calamba'}, {name: 'Calapan'}, {name: 'Calbayog'}, {name: 'Caloocan'}, {name: 'Candon'}, {name: 'Canlaon'}, {name: 'Carcar'}, {name: 'Catbalogan'}, {name: 'Cauayan'}, {name: 'Cavite City'}, {name: 'Cebu City'}, {name: 'Cotabato City'}, {name: 'Dagupan'}, {name: 'Danao'}, {name: 'Dapitan'}, {name: 'Dasmariñas'}, {name: 'Davao City'}, {name: 'Digos'}, {name: 'Dipolog'}, {name: 'Dumaguete'}, {name: 'El Salvador'}, {name: 'Escalante'}, {name: 'Gapan'}, {name: 'General Santos'}, {name: 'General Trias'}, {name: 'Gingoog'}, {name: 'Guihulngan'}, {name: 'Himamaylan'}, {name: 'Ilagan'}, {name: 'Iligan'}, {name: 'Iloilo City'}, {name: 'Imus'}, {name: 'Iriga'}, {name: 'Isabela'}, {name: 'Kabankalan'}, {name: 'Kidapawan'}, {name: 'Koronadal'}, {name: 'La Carlota'}, {name: 'Lamitan'}, {name: 'Laoag'}, {name: 'Lapu-Lapu City'}, {name: 'Las Piñas'}, {name: 'Legazpi'}, {name: 'Ligao'}, {name: 'Lipa'}, {name: 'Lucena'}, {name: 'Maasin'}, {name: 'Mabalacat'}, {name: 'Makati'}, {name: 'Malabon'}, {name: 'Malaybalay'}, {name: 'Malolos'}, {name: 'Mandaluyong'}, {name: 'Mandaue'}, {name: 'Manila'}, {name: 'Marawi'}, {name: 'Marikina'}, {name: 'Masbate City'}, {name: 'Mati'}, {name: 'Meycauayan'}, {name: 'Muñoz'}, {name: 'Muntinlupa'}, {name: 'Naga'}, {name: 'Naga'}, {name: 'Navotas'}, {name: 'Olongapo'}, {name: 'Ormoc'}, {name: 'Oroquieta'}, {name: 'Ozamiz'}, {name: 'Pagadian'}, {name: 'Palayan'}, {name: 'Panabo'}, {name: 'Parañaque'}, {name: 'Pasay'}, {name: 'Pasig'}, {name: 'Passi'}, {name: 'Puerto Princesa'}, {name: 'Quezon City'}, {name: 'Roxas'}, {name: 'Sagay'}, {name: 'Samal'}, {name: 'San Carlos'}, {name: 'San Carlos'}, {name: 'San Fernando'}, {name: 'San Fernando'}, {name: 'San Jose'}, {name: 'San Jose del Monte'}, {name: 'San Juan'}, {name: 'San Pablo'}, {name: 'San Pedro'}, {name: 'Santa Rosa'}, {name: 'Santo Tomas'}, {name: 'Santiago'}, {name: 'Silay'}, {name: 'Sipalay'}, {name: 'Sorsogon City'}, {name: 'Surigao City'}, {name: 'Tabaco'}, {name: 'Tabuk'}, {name: 'Tacloban'}, {name: 'Tacurong'}, {name: 'Tagaytay'}, {name: 'Tagbilaran'}, {name: 'Taguig'}, {name: 'Tagum'}, {name: 'Talisay'}, {name: 'Talisay'}, {name: 'Tanauan'}, {name: 'Tandag'}, {name: 'Tangub'}, {name: 'Tanjay'}, {name: 'Tarlac City'}, {name: 'Tayabas'}, {name: 'Toledo'}, {name: 'Trece Martires'}, {name: 'Tuguegarao'}, {name: 'Urdaneta'}, {name: 'Valencia'}, {name: 'Valenzuela'}, {name: 'Victorias'}, {name: 'Vigan'}, {name: 'Zamboanga City'}], 
+        };
+    },
+    components: { PageLayout, ButtonCard, ContentCard, Modal, vSelect},
+    async mounted() {
+        //Get Tickets
+        this.getRvendors(0);
+    },
+    watch: {
+        filterSearch: function() {
+            this.getRvendors(0);
+            this.reDate = this.reformat_date(this.filterSearch);
+        },
+        perpage: function() {
+            this.getRvendors(0);
+        }
+    },
+    methods: {
+        //Get Tickets
+        async getRvendors(page){
+            this.pageNumber = page;
+            const response = await axios.get('api/v1/reported_vendors');
+            //Filter Search Ticket
+            const responseFiltered = response.data.data.filter((a) => {
+                const theFilter = (
+                    a.vendor_name.includes(this.filterSearch) || a.vendor_name.toLowerCase().includes(this.filterSearch) ||
+                    a.email.includes(this.filterSearch) || a.email.toLowerCase().includes(this.filterSearch) ||
+                    a.city.includes(this.filterSearch) || a.city.toLowerCase().includes(this.filterSearch) ||
+                    a.no_of_tickets == this.filterSearch || a.no_of_violations == this.filterSearch ||
+                    a.created_at.includes(this.reDate) || a.created_at.includes(this.filterSearch)||
+                    a.updated_at.includes(this.reDate) || a.updated_at.includes(this.filterSearch)
+                )
+                return theFilter
+            });
+            this.rvendors = responseFiltered;
+            //Pagination
+            this.paginateTotal = Math.ceil(this.rvendors.length/this.perpage);
+        },
+        //Display Sorted Tickets
+        orderedTickets() {
+            if(this.rvendorsOrder == 'user'){
+                if(this.rvendorsASC){
+                    return this.rvendors.sort((a, b) => (a[this.rvendorsOrderArray]['0'][this.rvendorsOrder] > b[this.rvendorsOrderArray]['0'][this.rvendorsOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                }else{
+                    return this.rvendors.sort((a, b) => (a[this.rvendorsOrderArray]['0'][this.rvendorsOrder] < b[this.rvendorsOrderArray]['0'][this.rvendorsOrder] ? -1 : 1) ).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                }
+            }
+            else if(this.rvendorsOrder == 'assigned_agencies'){
+                if(this.rvendorsASC){
+                    return this.rvendors.sort((a, b) => (a[this.rvendorsOrder]['0'] > b[this.rvendorsOrder]['0'] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                }else{
+                    return this.rvendors.sort((a, b) => (a[this.rvendorsOrder]['0'] < b[this.rvendorsOrder]['0'] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                }
+            }
+            else{
+                //normal sorting
+                if(this.rvendorsASC){
+                    return this.rvendors.sort((a, b) => (a[this.rvendorsOrder] > b[this.rvendorsOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                }else{
+                    return this.rvendors.sort((a, b) => (a[this.rvendorsOrder] < b[this.rvendorsOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                }
+            }
+        },
+        //Format Display Settings
+        format_date(value){
+            if (value) {
+                return moment(String(value)).format('LL')
+            }
+        },
+        reformat_date(value){
+            if (value) {
+                return moment(String(value)).format('YYYY-MM-DD')
+            }
+        },
+        //Modals
+        openModal(itemID){
+            document.querySelector('body').style.overflow = 'hidden';
+            this.showModal = itemID;
+            this.modalActive = true;
+        },
+        closeModal() {
+            if(this.modalActive == true){
+                document.querySelector('body').style.overflow = 'auto';
+                this.modalActive = false;
+            }
+        },
+        //Dropdown
+        dropdownToggle(name){
+            this.dropdownToggle = name;
+        },
+        //Pagination
+        setPaginate(i) {
+            if (this.pageNumber == 1) {
+                return i < this.perpage;
+            }
+            else {
+                return (i >= (this.perpage * (this.pageNumber - 1)) && i < (this.pageNumber * this.perpage));
+            }
+        },
+        setStatus(status) {
+            this.status_filter = status;
+            this.$nextTick(function () {
+                this.updatePaginate();
+            });
+        },
+        updatePageNumber(i) {
+            this.pageNumber = i;
+            this.pageStart = i - this.pageRange/2;
+            this.pageEnd = i + this.pageRange/2;
+        },
+        updatePaginate() {
+            this.pageNumber = 1;
+            this.paginateTotal = Math.ceil(this.rvendors.length/this.perpage);
+        },
+        //Cities Search
+        fuseSearch(options, search) {
+        const fuse = new Fuse(options, {
+            keys: ['0'],
+            shouldSort: true,
+        })
+        return search.length
+            ? fuse.search(search).map(({ item }) => item)
+            : fuse.list
+        },
+    },
 }
 </script>
