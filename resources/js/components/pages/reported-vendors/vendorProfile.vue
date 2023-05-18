@@ -5,7 +5,7 @@
                 <h1>Vendor Name {{ id }} </h1>
             </div>
             <div class="col-span-12 md:col-span-6 flex items-center justify-end flex-col md:flex-row">
-                <button @click="openModal('filterModal')" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 border border-white text-white rounded-lg flex items-center justify-center">
+                <button @click="openModal('updateModal')" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 border border-white text-white rounded-lg flex items-center justify-center">
                     Update
                 </button>
             </div>
@@ -13,26 +13,28 @@
         <div class="grid grid-cols-5 gap-3 py-4">
             <div class="col-span-5 md:col-span-3 lg:col-span-4">
                 <ContentCard cardTitle="Vendor Information">
-                    <table class="table-fixed w-full">
-                        <tbody>
-                            <tr class="border-b border-light relative">
-                                <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Vendor Name</td>
-                                <td class="py-3 text-black text-xl font-exo-400">Value</td>
-                            </tr>
-                            <tr class="border-b border-light relative">
-                                <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Email Address</td>
-                                <td class="py-3 text-black text-base font-exo-400">Value</td>
-                            </tr>
-                            <tr class="border-b border-light relative">
-                                <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Mobile Number</td>
-                                <td class="py-3 text-black text-base font-exo-400">Value</td>
-                            </tr>
-                            <tr class="border-b border-light relative">
-                                <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">City</td>
-                                <td class="py-3 text-black text-base font-exo-400">Value</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="px-3 pb-2">
+                        <table class="table-fixed w-full">
+                            <tbody>
+                                <tr class="border-b border-light relative">
+                                    <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Vendor Name</td>
+                                    <td class="py-3 text-black text-xl font-exo-400">Value</td>
+                                </tr>
+                                <tr class="border-b border-light relative">
+                                    <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Email Address</td>
+                                    <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                </tr>
+                                <tr class="border-b border-light relative">
+                                    <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Mobile Number</td>
+                                    <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                </tr>
+                                <tr class="relative">
+                                    <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">City</td>
+                                    <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </ContentCard>
             </div>
             <div class="col-span-5 md:col-span-2 lg:col-span-1">
@@ -66,25 +68,120 @@
         </div>
         <TicketsList :vendorID="id" colVendor="off" colSeverity="off" />
     </PageLayout>
+    <Modal modalTitle="Vendor Information" v-show="modalActive && showModal == 'updateModal'" @close="closeModal">
+        <template v-slot:body>
+            <form class="block">
+                <div class="grid grid-cols-2 gap-y-6 gap-x-3">
+                    <div class="col-span-2">
+                        <div class="relative w-full">
+                            <label for="vendorname" class="text-base text-blue-grey text-xs font-inter-700">Vendor Name</label>
+                            <input type="text" v-model="vendorname" placeholder="Month DD, YYYY" name="vendorname" id="vendorname" class="mt-2 w-full secondary-input"/>
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                        <div class="relative w-full">
+                            <label for="email" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
+                            <input type="email" v-model="email" placeholder="Email" name="email" id="email" class="mt-2 w-full secondary-input"/>
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                        <div class="relative w-full">
+                            <label for="mobile" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
+                            <input type="number" v-model="mobile" placeholder="Mobile Number" name="mobile" id="mobile" class="mt-2 w-full secondary-input"/>
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                        <label for="city" class="text-base text-blue-grey text-xs font-inter-700">City</label>
+                        <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
+                            <v-select :filter="fuseSearch" :options="cities" :get-option-label="(option) => option.name" placeholder="Choose" >
+                                <template #option="{ name }">
+                                    {{ name }} 
+                                </template>
+                            </v-select>
+                        </div>
+                    </div> 
+                </div>
+            </form>
+        </template>
+        <template v-slot:footer>
+            <div class="flex items-center justify-end w-full">
+                <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-4 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+                    Close
+                </button>
+                <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Update
+                </button>
+            </div>
+        </template>
+    </Modal>
 </template>
 
 
 <script>
 
 import PageLayout from '../../pageLayout.vue'
-import TicketsList from '../tickets/ticketsList.vue'
 import ContentCard from '../../utilities/contentCard.vue'
+import Modal from '../../utilities/modal.vue'
+import axios from 'axios'
+import 'vue-select/dist/vue-select.css';
+import AlertTop from '../../utilities/alertTop.vue'
+import vSelect from 'vue-select'
+import TicketsList from '../tickets/ticketsList.vue'
 import ButtonCard from '../../utilities/buttonCard.vue'
 
 export default {
     setup: () => ({
         title: 'Vendor Profile'
     }),
-    components: { PageLayout, TicketsList, ContentCard, ButtonCard },
+    components: { PageLayout, TicketsList, ContentCard, ButtonCard, Modal, vSelect },
     data(){
         return {
-            id: this.$route.params.id
+            id: this.$route.params.id,
+            //Modal
+            showModal: '',
+            modalActive: false,
+            modalTicketID: '',
+            successAlert: false,
+            successMessage: '',
+            successIcon: null,
+            //Cities
+            filteredCities: [],
+            cityDD: false,
+            cities: [{name: 'Alaminos'}, {name: 'Angeles City'}, {name: 'Antipolo'}, {name: 'Bacolod'}, {name: 'Bacoor'}, {name: 'Bago'}, {name: 'Baguio'}, {name: 'Bais'}, {name: 'Balanga'}, {name: 'Baliwag'}, {name: 'Batac'}, {name: 'Batangas City'}, {name: 'Bayawan'}, {name: 'Baybay'}, {name: 'Bayugan'}, {name: 'Biñan'}, {name: 'Bislig'}, {name: 'Bogo'}, {name: 'Borongan'}, {name: 'Butuan'}, {name: 'Cabadbaran'}, {name: 'Cabanatuan'}, {name: 'Cabuyao'}, {name: 'Cadiz'}, {name: 'Cagayan de Oro'}, {name: 'Calaca'}, {name: 'Calamba'}, {name: 'Calapan'}, {name: 'Calbayog'}, {name: 'Caloocan'}, {name: 'Candon'}, {name: 'Canlaon'}, {name: 'Carcar'}, {name: 'Catbalogan'}, {name: 'Cauayan'}, {name: 'Cavite City'}, {name: 'Cebu City'}, {name: 'Cotabato City'}, {name: 'Dagupan'}, {name: 'Danao'}, {name: 'Dapitan'}, {name: 'Dasmariñas'}, {name: 'Davao City'}, {name: 'Digos'}, {name: 'Dipolog'}, {name: 'Dumaguete'}, {name: 'El Salvador'}, {name: 'Escalante'}, {name: 'Gapan'}, {name: 'General Santos'}, {name: 'General Trias'}, {name: 'Gingoog'}, {name: 'Guihulngan'}, {name: 'Himamaylan'}, {name: 'Ilagan'}, {name: 'Iligan'}, {name: 'Iloilo City'}, {name: 'Imus'}, {name: 'Iriga'}, {name: 'Isabela'}, {name: 'Kabankalan'}, {name: 'Kidapawan'}, {name: 'Koronadal'}, {name: 'La Carlota'}, {name: 'Lamitan'}, {name: 'Laoag'}, {name: 'Lapu-Lapu City'}, {name: 'Las Piñas'}, {name: 'Legazpi'}, {name: 'Ligao'}, {name: 'Lipa'}, {name: 'Lucena'}, {name: 'Maasin'}, {name: 'Mabalacat'}, {name: 'Makati'}, {name: 'Malabon'}, {name: 'Malaybalay'}, {name: 'Malolos'}, {name: 'Mandaluyong'}, {name: 'Mandaue'}, {name: 'Manila'}, {name: 'Marawi'}, {name: 'Marikina'}, {name: 'Masbate City'}, {name: 'Mati'}, {name: 'Meycauayan'}, {name: 'Muñoz'}, {name: 'Muntinlupa'}, {name: 'Naga'}, {name: 'Naga'}, {name: 'Navotas'}, {name: 'Olongapo'}, {name: 'Ormoc'}, {name: 'Oroquieta'}, {name: 'Ozamiz'}, {name: 'Pagadian'}, {name: 'Palayan'}, {name: 'Panabo'}, {name: 'Parañaque'}, {name: 'Pasay'}, {name: 'Pasig'}, {name: 'Passi'}, {name: 'Puerto Princesa'}, {name: 'Quezon City'}, {name: 'Roxas'}, {name: 'Sagay'}, {name: 'Samal'}, {name: 'San Carlos'}, {name: 'San Carlos'}, {name: 'San Fernando'}, {name: 'San Fernando'}, {name: 'San Jose'}, {name: 'San Jose del Monte'}, {name: 'San Juan'}, {name: 'San Pablo'}, {name: 'San Pedro'}, {name: 'Santa Rosa'}, {name: 'Santo Tomas'}, {name: 'Santiago'}, {name: 'Silay'}, {name: 'Sipalay'}, {name: 'Sorsogon City'}, {name: 'Surigao City'}, {name: 'Tabaco'}, {name: 'Tabuk'}, {name: 'Tacloban'}, {name: 'Tacurong'}, {name: 'Tagaytay'}, {name: 'Tagbilaran'}, {name: 'Taguig'}, {name: 'Tagum'}, {name: 'Talisay'}, {name: 'Talisay'}, {name: 'Tanauan'}, {name: 'Tandag'}, {name: 'Tangub'}, {name: 'Tanjay'}, {name: 'Tarlac City'}, {name: 'Tayabas'}, {name: 'Toledo'}, {name: 'Trece Martires'}, {name: 'Tuguegarao'}, {name: 'Urdaneta'}, {name: 'Valencia'}, {name: 'Valenzuela'}, {name: 'Victorias'}, {name: 'Vigan'}, {name: 'Zamboanga City'}], 
         }
+    },
+    methods: {
+        //Scroll to Div
+        scrollToDiv(section) {
+            this.$refs[section].scrollIntoView({ behavior: "smooth" });
+            this.sectionName = section;
+        },
+        //Alert
+        async closeAlert() {
+            this.successAlert = false
+        },
+        //Modals
+        openModal(itemID){
+            document.querySelector('body').style.overflow = 'hidden';
+            this.showModal = itemID;
+            this.modalActive = true;
+        },
+        closeModal() {
+            if(this.modalActive == true){
+                document.querySelector('body').style.overflow = 'auto';
+                this.modalActive = false;
+            }
+        },
+        //Cities Search
+        fuseSearch(options, search) {
+        const fuse = new Fuse(options, {
+            keys: ['0'],
+            shouldSort: true,
+        })
+        return search.length
+            ? fuse.search(search).map(({ item }) => item)
+            : fuse.list
+        },
     },
 }
 </script>
