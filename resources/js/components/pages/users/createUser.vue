@@ -1,4 +1,5 @@
 <template>
+    <AlertTop :alertIcon="'/img/icon/'+successIcon" :active="successAlert" :content="successMessage" v-if="successAlert" @close="closeAlert" />
     <PageLayout :pageName="title">
         <div class="grid grid-cols-12 gap-3 mb-6 pt-4">
             <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
@@ -35,8 +36,8 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
-                                        <v-select :filter="fuseSearch" :options="roles" :get-option-label="(option) => option.name" placeholder="Choose" >
-                                            <template #option="{ name }">
+                                        <v-select :filter="fuseSearch" :options="roles" :get-option-label="(option) => option.name" placeholder="Choose" v-model="userrole" :reduce="roles => roles.name" >
+                                            <template #option="{ name }" >
                                                 {{ name }} 
                                             </template>
                                         </v-select>
@@ -59,7 +60,7 @@
                                 </div>
                                 <div v-for="(agency, index) in agencies" ref="agencies" class="my-4">
                                     <label class="flex items-center">
-                                        <input type="radio" v-model="filterAgencyValue" :value="agency.id" name="filterAgencyValue">
+                                        <input type="radio" v-model="useragency" :value="''+agency.id+''" name="filterAgencyValue">
                                         <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
                                         <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                                     </label>
@@ -70,7 +71,7 @@
                 </ContentCard>
             </div>
             <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2 mt-5 flex items-center justify-end">
-                <button @click="openModal('modalSubmit')" class="mt-1 md:mt-0 w-full md:w-40 bg-blue text-sm font-opensans-600 mx-0 py-2.5 px-5 shadow-main text-white rounded-lg">
+                <button @click="createUser()" class="mt-1 md:mt-0 w-full md:w-40 bg-blue text-sm font-opensans-600 mx-0 py-2.5 px-5 shadow-main text-white rounded-lg">
                     Create User
                 </button>
             </div>
@@ -87,10 +88,11 @@ import axios from 'axios'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 import Fuse from 'fuse.js'
+import AlertTop from '../../utilities/alertTop.vue'
 
 export default {
     setup: () => ({
-        title: 'Create Ticket'
+        title: 'Create User'
     }),
     data () {
         return{
@@ -104,6 +106,17 @@ export default {
             //Modal
             showModal: '',
             modalActive: false,
+            modalTicketID: '',
+            successAlert: false,
+            successMessage: '',
+            successIcon: null,
+            //User info
+            firtname: null,
+            lastname: null,
+            useremail: null,
+            usermobile: null,
+            useragency: null,
+            userrole: null
         };
     },
     watch: {
@@ -111,11 +124,39 @@ export default {
             this.getAgencies();
         }
     },
-    components: { PageLayout, ContentCard, vSelect, Modal },
+    components: { PageLayout, ContentCard, vSelect, Modal, AlertTop },
     async mounted(){
         this.getAgencies()
     },
     methods: {
+        //Create User
+        async createUser(){
+            const inputs =  {
+                name: this.firstname + ' ' + this.lastname,
+                email: this.useremail,
+                mobile_number: ''+this.usermobile+'',
+                role: this.userrole.toUpperCase(),
+                agency_id: this.useragency,
+                profile: '/img/profile.jpg',
+                password: 'password',
+                password_confirmation: 'password',
+            };
+
+            await axios.post('api/v1/register', inputs, {
+                header: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json', 
+                },
+            })
+            .then((res) => {
+                this.successAlert = true;
+                this.successMessage = 'New user created';
+                this.successIcon = 'like.png';
+            })
+            .catch((error) => {
+                console.log(inputs)
+            })
+        },
         //Get Agencies
         async getAgencies(){
             this.pageNumber = 0;
@@ -144,6 +185,10 @@ export default {
                 document.querySelector('body').style.overflow = 'auto';
                 this.modalActive = false;
             }
+        },
+        //Alert
+        async closeAlert() {
+            this.successAlert = false
         },
     },
 }

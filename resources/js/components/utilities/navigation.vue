@@ -30,21 +30,34 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     setup: () => ({
         title: 'Navigation'
     }),
     data() {
         return {
-            userFirstName: "Jesse",
-            userImg: "/img/user-photo.png",
+            userFirstName: "",
+            userImg: "",
             dropdown: false
         };
     },
     emits: ["menu"],
+    async mounted() {
+        this.getUser();
+    },
     methods: {
         setMenu() {
             this.$emit("menu", true);
+        },
+        //Get User
+        async getUser(){
+            this.pageNumber = 0;
+            const response = await axios.get('api/v1/profile');
+            //Filter User Data
+            this.userFirstName = response.data.data.name;
+            this.userImg = response.data.data.profile;
         },
     },
 }

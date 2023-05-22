@@ -977,12 +977,6 @@ video {
 .gap-y-6 {
   row-gap: 1.5rem;
 }
-.self-end {
-  align-self: flex-end;
-}
-.justify-self-end {
-  justify-self: end;
-}
 .overflow-auto {
   overflow: auto;
 }
@@ -1451,6 +1445,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
+.text-green {
+  --tw-text-opacity: 1;
+  color: rgb(18 178 178 / var(--tw-text-opacity));
+}
 .text-lighttext {
   --tw-text-opacity: 1;
   color: rgb(173 181 189 / var(--tw-text-opacity));
@@ -1462,10 +1460,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.text-green {
-  --tw-text-opacity: 1;
-  color: rgb(18 178 178 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;
@@ -1745,9 +1739,17 @@ button.vs__clear {
 ul[role='listbox'] {
     margin-top: 7px;
 }
+.hover\:border-red:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(245 54 92 / var(--tw-border-opacity));
+}
 .hover\:bg-blue:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(18 103 229 / var(--tw-bg-opacity));
+}
+.hover\:bg-green:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(18 178 178 / var(--tw-bg-opacity));
 }
 .hover\:bg-lighter:hover {
   --tw-bg-opacity: 1;
@@ -1764,9 +1766,9 @@ ul[role='listbox'] {
 .hover\:bg-white-25:hover {
   background-color: #ffffff40;
 }
-.hover\:bg-green:hover {
+.hover\:bg-red:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(18 178 178 / var(--tw-bg-opacity));
+  background-color: rgb(245 54 92 / var(--tw-bg-opacity));
 }
 .hover\:text-blue:hover {
   --tw-text-opacity: 1;
@@ -1775,6 +1777,10 @@ ul[role='listbox'] {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.hover\:text-red:hover {
+  --tw-text-opacity: 1;
+  color: rgb(245 54 92 / var(--tw-text-opacity));
 }
 .hover\:underline:hover {
   text-decoration-line: underline;

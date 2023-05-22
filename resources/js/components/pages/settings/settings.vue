@@ -55,7 +55,7 @@
                             <div class="block md:flex justify-start p-3.5">
                                 <div class="cursor-pointer mx-0 mb-4 md:my-0 md:mr-4">
                                     <div class="w-36 h-36">
-                                        <img src="/img/icon/search.png" class="rounded-2xl w-full h-full object-cover">
+                                        <img :src="userInfo.profile" class="rounded-2xl w-full h-full object-cover">
                                     </div>
                                     <div class="flex items-center justify-center mt-2">
                                         <img src="/img/icon/photo-blue.png" class="mr-1.5">
@@ -67,27 +67,27 @@
                                         <tbody>
                                             <tr class="border-b border-light relative">
                                                 <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Name</td>
-                                                <td class="py-3 text-black text-xl font-exo-400">Value</td>
+                                                <td class="py-3 text-black text-xl font-exo-400">{{ userInfo.name }}</td>
                                             </tr>
                                             <tr class="border-b border-light relative">
                                                 <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Username</td>
-                                                <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                                <td class="py-3 text-black text-base font-exo-400">{{ userInfo.email }}</td>
                                             </tr>
                                             <tr class="border-b border-light relative">
                                                 <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Email Address</td>
-                                                <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                                <td class="py-3 text-black text-base font-exo-400">{{ userInfo.email }}</td>
                                             </tr>
                                             <tr class="border-b border-light relative">
                                                 <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Mobile Number</td>
-                                                <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                                <td class="py-3 text-black text-base font-exo-400">{{ userInfo.mobile_number }}</td>
                                             </tr>
                                             <tr class="border-b border-light relative">
                                                 <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Agency</td>
-                                                <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                                <td class="py-3 text-black text-base font-exo-400">{{ userInfo.agency }}</td>
                                             </tr>
                                             <tr class="border-b border-light relative">
                                                 <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Date Created</td>
-                                                <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                                <td class="py-3 text-black text-base font-exo-400">{{ userInfo.created_at }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -160,11 +160,11 @@
                                         </tr>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Email Address</td>
-                                            <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                            <td class="py-3 text-black text-base font-exo-400">{{ userInfo.email }}</td>
                                         </tr>
                                         <tr class="relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Mobile Number</td>
-                                            <td class="py-3 text-black text-base font-exo-400">Value</td>
+                                            <td class="py-3 text-black text-base font-exo-400">{{ userInfo.mobile_number }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -244,11 +244,22 @@ export default {
             verOneLower: false,
             verOneUpper: false,
             verUniqueMatche: false,
-            validPassword: false
+            validPassword: false.valueOf,
+            //User info
+            userInfo: []
         };
     },
     components: { PageLayout, ContentCard, Modal },
+    async mounted() {
+        this.getUser();
+    },
     methods: {
+        //Get User
+        async getUser(){
+            const response = await axios.get('api/v1/profile');
+            //Filter User Data
+            this.userInfo = response.data.data;
+        },
         //Scroll to Div
         scrollToDiv(section) {
             this.$refs[section].scrollIntoView({ behavior: "smooth" });

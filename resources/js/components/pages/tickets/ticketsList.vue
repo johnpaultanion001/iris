@@ -448,7 +448,9 @@ export default {
             pageEnd: 5,
             //Update Status
             currentTicketStatus: null,
-            statusComment: null
+            statusComment: null,
+            //User
+            userAgencyCode: ""
         };
     },
     components: { ButtonCard, ContentCard, Modal, AlertTop},
@@ -458,6 +460,8 @@ export default {
 
         //Get Tickets
         this.getTickets(this.activeStatus, 0);
+        //Get current user
+        this.getUser();
     },
     watch: {
         filterSearch: function() {
@@ -478,6 +482,12 @@ export default {
         }
     },
     methods: {
+        async getUser(){
+            this.pageNumber = 0;
+            const response = await axios.get('api/v1/profile');
+            //Filter User Data
+            this.userAgencyCode = response.data.data.assigned_agencies.code;
+        },
         //Get Tickets
         async getTickets(val, page){
             this.pageNumber = page;
@@ -487,23 +497,26 @@ export default {
             const responseFiltered = response.data.data.filter((a) => {
                 const theFilter = (
                     a['ticket_no'] == this.filterSearch ||
-                    a.severity.includes(this.filterSearch) || a.severity.toLowerCase().includes(this.filterSearch) ||
-                    a.product_service.toLowerCase().includes(this.filterSearch) || a.complaint.toLowerCase().includes(this.filterSearch) ||
-                    a['reported_by']['0']['first_name'].toLowerCase().includes(this.filterSearch) || a['reported_by']['0']['last_name'].toLowerCase().includes(this.filterSearch) ||
-                    a['reported_by']['0']['first_name'].includes(this.filterSearch) || a['reported_by']['0']['last_name'].includes(this.filterSearch) ||
-                    a['vendor']['0']['vendor_name'].toLowerCase().includes(this.filterSearch) || a['vendor']['0']['email'].toLowerCase().includes(this.filterSearch) ||
-                    a['vendor']['0']['vendor_name'].includes(this.filterSearch) || a['vendor']['0']['email'].includes(this.filterSearch) ||
+                    a.severity.toLowerCase().includes(this.filterSearch.toLowerCase()) ||
+                    a.product_service.toLowerCase().includes(this.filterSearch.toLowerCase()) || 
+                    a.complaint.toLowerCase().includes(this.filterSearch.toLowerCase()) ||
+                    a['reported_by']['0']['first_name'].toLowerCase().includes(this.filterSearch.toLowerCase()) || 
+                    a['reported_by']['0']['last_name'].toLowerCase().includes(this.filterSearch.toLowerCase()) ||
+                    a['vendor']['0']['vendor_name'].toLowerCase().includes(this.filterSearch.toLowerCase()) || 
+                    a['vendor']['0']['email'].toLowerCase().includes(this.filterSearch.toLowerCase()) ||
+                    a['agencies'].toLowerCase().includes(this.filterSearch.toLowerCase()) ||
+                    // a['assigned_agencies']['0']['code'].toLowerCase().includes(this.filterSearch.toLowerCase()) ||
                     a.date_submitted.includes(this.reDate) || a.date_submitted.includes(this.filterSearch)
                 )
                 return theFilter
             });
             
-            // console.log( responseFiltered)
+            // console.log( this.tickets = responseFiltered.filter((a) => (a.agencies.data == "DA")))
             //Filter Tab and Status
             if(this.activeTab == 'All'){
                 this.tickets = responseFiltered.filter((a) => (a.status == this.activeStatus && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
             }else if(this.activeTab == 'My Agency'){
-                this.tickets = responseFiltered.filter((a) => (a.status == this.activeStatus && a.assigned_agencies['0'].data.code == "DENR" && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
+                this.tickets = responseFiltered.filter((a) => (a.status == this.activeStatus && a.agencies.includes(this.userAgencyCode) && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
             }else if(this.activeTab == 'Following'){
                 this.tickets = responseFiltered.filter((a) => (a.status == this.activeStatus && a.isFollow == 1 && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
             }
@@ -595,9 +608,9 @@ export default {
             }
             else if(this.ticketsOrder == 'assigned_agencies'){
                 if(this.ticketsASC){
-                    return this.tickets.sort((a, b) => (a[this.ticketsOrder]['0'] > b[this.ticketsOrder]['0'] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.tickets.sort((a, b) => (a[this.ticketsOrder] > b[this.ticketsOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }else{
-                    return this.tickets.sort((a, b) => (a[this.ticketsOrder]['0'] < b[this.ticketsOrder]['0'] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.tickets.sort((a, b) => (a[this.ticketsOrder] < b[this.ticketsOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }
             }
             else{
