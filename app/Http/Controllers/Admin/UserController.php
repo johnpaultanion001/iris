@@ -110,5 +110,19 @@ class UserController extends ApiController
         return response()->json(['success' => 'Password Successfully Changed.']);
     }
 
+    public function show(User $user)
+    {
+        if(auth("api")->user()->role == "SUPER_ADMIN"){
+          return new UserResource($user);
+        }else{
+        if (auth("api")->user()->agency_id == $user->agency_id) {
+          return new UserResource($user);
+        }else{
+          return $this->userUnauthorized();
+        }
+      }
+
+    }
+
 
 }

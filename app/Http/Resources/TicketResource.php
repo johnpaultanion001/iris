@@ -39,7 +39,7 @@ class TicketResource extends ApiResource
             'additional_documents_file' => $this->additional_documents_file,
             'remarks' => $this->remarks,
             'vendor' => [
-              new VendorResource($this->vendor),
+              new VendorTicketResource($this->vendor),
             ],
             'violations' => [
               new ViolationResource($this->violations()->get()),

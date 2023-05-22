@@ -17,6 +17,7 @@ class CommentResource extends ApiResource
       return [
         'id' => $this->id,
         'profile' => $this->user->profile,
+        'author' => $this->user->name,
         'agency' => $this->user->agency->code,
         'comment' => $this->comment,
 

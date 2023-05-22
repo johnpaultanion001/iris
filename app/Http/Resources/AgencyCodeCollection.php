@@ -22,10 +22,8 @@ class AgencyCodeResource extends ApiResource
      */
     public function toArray($request)
     {
-      return [
-        $this->agency->code ?? $this->code,
-
-      ];
+      return
+        $this->agency->code ?? $this->code;
 
     }
 }

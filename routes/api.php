@@ -40,6 +40,7 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   Route::get('all_users', 'UserController@index')->name('users.index');
   Route::post('user/account_status', 'UserController@account_status')->name('users.account_status');
   Route::post('user/change_password', 'UserController@change_password')->name('users.change_password');
+  Route::get('user/{user}', 'UserController@show')->name('users.show');
 
   //PROFILE
   Route::get('profile', 'UserController@profile')->name('users.profile');

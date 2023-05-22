@@ -22,7 +22,7 @@ class UserResource extends ApiResource
             'mobile_number' => $this->mobile_number,
             'role' => $this->role,
             'status' => $this->status,
-            'agency' => [$this->agency->code ?? ''] ,
+            'agency' => $this->agency->code ?? '' ,
             'assigned_agencies' => new AgencyResource($this->agency),
 
             'created_at' => (string)$this->created_at->toDateTimeString(),
