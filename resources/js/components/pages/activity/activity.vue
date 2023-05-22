@@ -79,11 +79,10 @@
                                         <p class="ellipsis-2">{{ act.activity }}</p> 
                                     </td>
                                     <td class="p-2.5 font-opensans-600 text-xxxs text-white flex items-center whitespace-nowrap">
-                                        DTI
                                         <div class="flex items-center whitespace-nowrap" v-for="(item, index) in act.assigned_agencies" ref="activities">
-                                            <div class="whitespace-nowrap" v-for="(agency, index) in item" ref="activities">
-                                                <span v-if="index <= 3" :style="'background-color:'+ agency.color +';'" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">{{ agency.code }}</span>
-                                                <span v-if="index == 3" style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+{{ item.length - 4 }}</span>
+                                            <div class="whitespace-nowrap" ref="activities">
+                                                <span v-if="index <= 3" :style="'background-color:'+ item.color +';'" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">{{ item.code }}</span>
+                                                <span v-if="index == 3" style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+{{ act.assigned_agencies.length - 4 }}</span>
                                             </div>
                                         </div>
                                     </td>
@@ -227,18 +226,18 @@ export default {
         },
         //Display Sorted Tickets
         orderedTickets() {
-            if(this.activityOrder == 'user'){
+            if(this.activityOrder == 'name'){
                 if(this.activityASC){
-                    return this.activities.sort((a, b) => (a[this.activityOrderArray]['0'][this.activityOrder] > b[this.activityOrderArray]['0'][this.activityOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.activities.sort((a, b) => (a[this.activityOrderArray][this.activityOrder] > b[this.activityOrderArray][this.activityOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }else{
-                    return this.activities.sort((a, b) => (a[this.activityOrderArray]['0'][this.activityOrder] < b[this.activityOrderArray]['0'][this.activityOrder] ? -1 : 1) ).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.activities.sort((a, b) => (a[this.activityOrderArray][this.activityOrder] < b[this.activityOrderArray][this.activityOrder] ? -1 : 1) ).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }
             }
-            else if(this.activityOrder == 'assigned_agencies'){
+            else if(this.activityOrder == 'agency'){
                 if(this.activityASC){
-                    return this.activities.sort((a, b) => (a[this.activityOrder]['0'] > b[this.activityOrder]['0'] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.activities.sort((a, b) => (a[this.activityOrder] > b[this.activityOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }else{
-                    return this.activities.sort((a, b) => (a[this.activityOrder]['0'] < b[this.activityOrder]['0'] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.activities.sort((a, b) => (a[this.activityOrder] < b[this.activityOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }
             }
             else{

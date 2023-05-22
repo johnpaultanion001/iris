@@ -6,8 +6,8 @@
             </div>
             <div class="sidebar-body bg-white py-0 px-2.5 h-full">  
                 <div class="agency-title w-full flex items-center pt-4 pb-3">
-                    <div class="rounded-full border mr-3">
-                        <img :src="agencyImg" class="w-15 h-15"> 
+                    <div class="rounded-full border mr-3 block">
+                        <img :src="'/img/'+agencyImg"> 
                     </div>
                     <p class="text-sm text-blue-grey font-opensans-600">{{ agencyName }}</p>
                 </div>
@@ -73,17 +73,31 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
     setup: () => ({
         title: 'Sidebar'
     }),
     props: ['pageName', 'show'],
+    async mounted() {
+        this.getUser();
+    },
     data() {
         return {
-            agencyName: "Department of Trade & Industry",
-            agencyImg: "/img/dti-logo.png",
+            agencyName: "",
+            agencyImg: "",
         };
+    },
+    methods: {
+        //Get User
+        async getUser(){
+            this.pageNumber = 0;
+            const response = await axios.get('api/v1/profile');
+            //Filter User Data
+            this.agencyName = response.data.data.assigned_agencies.agency;
+            this.agencyImg = response.data.data.assigned_agencies.logo;
+        },
     },
 }
 </script>
