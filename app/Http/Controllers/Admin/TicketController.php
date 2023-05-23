@@ -8,6 +8,8 @@ use App\Http\Controllers\ApiController;
 use App\Http\Resources\TicketResource;
 use App\Http\Resources\TicketCollection;
 use App\Http\Resources\CommentCollection;
+use App\Http\Resources\AgencyCollection;
+use App\Http\Resources\ViolationResource;
 use App\Models\Ticket;
 use App\Models\Vendor;
 use App\Models\ReportedBy;
@@ -125,9 +127,6 @@ class TicketController extends ApiController
     public function show(Request $request, Ticket $ticket)
     {
 
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
-      }
 
       return new TicketResource($ticket);
     }
@@ -196,9 +195,6 @@ class TicketController extends ApiController
       if ($ticket == null) {
         return $this->ticketNotFound();
       }
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
-      }
 
       $ticket->update([
         'severity' => request('severity'),
@@ -227,9 +223,6 @@ class TicketController extends ApiController
       $ticket = Ticket::where('id',  request('ticket_id'))->first();
       if ($ticket == null) {
         return $this->ticketNotFound();
-      }
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
       }
 
       $ticket->update([
@@ -267,9 +260,6 @@ class TicketController extends ApiController
       if ($ticket == null) {
         return $this->ticketNotFound();
       }
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
-      }
 
       $ticket->update([
         'isFollow' => request('isFollow'),
@@ -299,9 +289,6 @@ class TicketController extends ApiController
       if ($ticket == null) {
         return $this->ticketNotFound();
       }
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
-      }
 
 
       $ticket_comment = TicketComment::create([
@@ -321,6 +308,71 @@ class TicketController extends ApiController
       ], 200);
     }
 
+    public function assigned_agencies(Request $request){
+      $ticket = Ticket::where('id',  request('ticket_id'))->first();
+      if ($ticket == null) {
+        return $this->ticketNotFound();
+      }
+      TicketAssignAgency::where('ticket_id', $ticket->id)
+                        ->whereNotIn('agency_id', request('agencies'))
+                        ->delete();
+      foreach(request('agencies') as $agency){
+        TicketAssignAgency::updateOrCreate(
+          [
+          'ticket_id' => $ticket->id,
+          'agency_id' => $agency['agency_id'],
+          ],
+          [
+          'ticket_id' => $ticket->id,
+          'agency_id' => $agency['agency_id'],
+          ]
+        );
+      }
+      $data = [
+        'tiket_id' => $ticket->id,
+        'tiket_no' => $ticket->id,
+        'assigned_agencies' =>
+        new AgencyCollection($ticket->agencies()->get()),
+      ];
+
+
+
+      return $this->responseResourceUpdated('Updated successfully',$data);
+    }
+
+    public function violations(Request $request){
+      $ticket = Ticket::where('id',  request('ticket_id'))->first();
+      if ($ticket == null) {
+        return $this->ticketNotFound();
+      }
+
+      Violation::where('ticket_id', $ticket->id)->delete();
+      foreach(request('violations') as $vio){
+
+        Violation::updateOrCreate(
+          [
+            'ticket_id' => $ticket->id,
+            'violation' => $vio['violation'],
+          ],
+          [
+            'ticket_id' => $ticket->id,
+            'violation' => $vio['violation'],
+            'amount' => $vio['amount'],
+          ]
+        );
+      }
+      $data = [
+        'tiket_id' => $ticket->id,
+        'tiket_no' => $ticket->id,
+        'violations' =>
+          new ViolationResource($ticket->violations()->get()),
+
+      ];
+
+
+
+      return $this->responseResourceUpdated('Updated successfully',$data);
+    }
 
 
 
