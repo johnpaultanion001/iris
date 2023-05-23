@@ -27,7 +27,7 @@ class ReportedVendorsController extends ApiController
   {
       $validator = Validator::make($request->all(), [
         'vendor_name' => 'required',
-        'email_address' => ['required', 'email', 'max:255' , 'unique:vendors,email_address,'.$reported_vendor->id],
+        'email' => ['required', 'email', 'max:255' , 'unique:vendors,email,'.$reported_vendor->id],
         'mobile_number' => ['required', 'string', 'min:8','max:11'],
         'city' => 'required',
       ]);
@@ -38,14 +38,14 @@ class ReportedVendorsController extends ApiController
 
       $reported_vendor->update([
         'vendor_name' => request('vendor_name'),
-        'email' => request('email_address'),
+        'email' => request('email'),
         'mobile_number' => request('mobile_number'),
         'city' => request('city'),
       ]);
 
       $data = [
         'vendor_name' => $reported_vendor->vendor_name,
-        'email_address' => $reported_vendor->email,
+        'email' => $reported_vendor->email,
         'mobile_number' => $reported_vendor->mobile_number,
         'city' => $reported_vendor->city,
       ];
