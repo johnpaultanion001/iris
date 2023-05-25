@@ -11,17 +11,19 @@ use App\Http\Resources\UserCollection;
 use App\Models\Ticket;
 use App\Models\Vendor;
 use App\Models\User;
+use App\Models\Agency;
+
 
 class FilterController extends ApiController
 {
   public function filter_tickets(Request $request)
   {
     $collection = Ticket::whereHas('agencies', function ($query) {
-                    return $query->whereIn('agency_id', request('agencies') ?? []);
+                    return $query->whereIn('agency_id', request('agencies') ?? Agency::select('id'));
                 })
                 ->where('product_service', 'LIKE', '%' . request('product_service') . '%')
                 ->where('severity', 'LIKE', '%' . request('severity') . '%')
-                ->whereBetween('created_at', [request('from'), request('till')])
+                ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])
                 ->latest()->get();
 
     return new TicketCollection($collection);
@@ -30,17 +32,19 @@ class FilterController extends ApiController
   public function filter_vendors(Request $request)
   {
     $collection = Vendor::where('city', 'LIKE', '%' . request('city') . '%')
-                        ->whereBetween('created_at', [request('from'), request('till')])
+                        ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])
                         ->latest()->get();
     return new VendorCollection($collection);
   }
 
   public function filter_users(Request $request)
   {
-    $collection = User::whereIn('agency_id', request('agencies') ?? [])
-                ->where('role',  request('user_type'))
+    $collection = User::whereIn('agency_id', request('agencies') ?? Agency::select('id'))
+                ->where('role', request('user_type'))
+                ->orWhereNull('role')
                 ->where('status', request('account_status'))
-                ->whereBetween('created_at', [request('from'), request('till')])
+                ->orWhereNull('status')
+                ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])
                 ->latest()->get();
 
     return new UserCollection($collection);

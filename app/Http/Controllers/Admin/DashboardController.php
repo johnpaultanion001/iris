@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Models\Ticket;
+use App\Models\Violation;
+
 
 class DashboardController extends ApiController
 {
@@ -28,5 +30,19 @@ class DashboardController extends ApiController
             ],
         ], 200);
   }
+
+  public function dashboard_violation(Request $request)
+  {
+    $vios = Violation::select('violation')
+              ->selectRaw('count(violation) as frequency')
+              ->groupBy('violation')
+              ->orderBy('frequency', 'DESC')->get();
+
+      return response()->json([
+        'status' => 200,
+            'data' => $vios,
+        ], 200);
+  }
+
 
 }
