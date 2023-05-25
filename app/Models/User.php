@@ -20,6 +20,7 @@ class User extends Authenticatable
         'id',
         'agency_id',
         'name',
+        'last_name',
         'email',
         'mobile_number',
         'role',

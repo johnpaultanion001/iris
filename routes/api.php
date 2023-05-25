@@ -67,6 +67,9 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   Route::post('filter/vendors', 'FilterController@filter_vendors')->name('filter.vendors');
   Route::post('filter/users', 'FilterController@filter_users')->name('filter.users');
 
+  //Dashboard
+  Route::get('count_ticket_status', 'DashboardController@count_ticket_status')->name('dashboard.count_ticket_status');
+
 
 });
 

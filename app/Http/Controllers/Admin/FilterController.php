@@ -17,7 +17,7 @@ class FilterController extends ApiController
   public function filter_tickets(Request $request)
   {
     $collection = Ticket::whereHas('agencies', function ($query) {
-                    return $query->whereIn('agency_id', request('agencies'));
+                    return $query->whereIn('agency_id', request('agencies') ?? []);
                 })
                 ->where('product_service', 'LIKE', '%' . request('product_service') . '%')
                 ->where('severity', 'LIKE', '%' . request('severity') . '%')
