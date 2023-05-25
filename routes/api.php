@@ -62,6 +62,11 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   //Reports
   Route::get('reports', 'ReportController@index')->name('reports.index');
 
+  //Filter
+  Route::post('filter/tickets', 'FilterController@filter_tickets')->name('filter.tickets');
+  Route::post('filter/vendors', 'FilterController@filter_vendors')->name('filter.vendors');
+  Route::post('filter/users', 'FilterController@filter_users')->name('filter.users');
+
 
 });
 
