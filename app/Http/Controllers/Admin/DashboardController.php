@@ -19,14 +19,41 @@ class DashboardController extends ApiController
       $RESOLVED = Ticket::where('status','RESOLVED')->count();
       $INVALID = Ticket::where('status','INVALID')->count();
 
+      $dti = Ticket::whereHas('agencies', function ($query) {
+                return $query->where('agency_id', '=', 1);
+            })->count();
+      $doh = Ticket::whereHas('agencies', function ($query) {
+                return $query->where('agency_id', '=', 2);
+            })->count();
+
+      $da = Ticket::whereHas('agencies', function ($query) {
+                return $query->where('agency_id', '=', 2);
+            })->count();
+
+      $denr = Ticket::whereHas('agencies', function ($query) {
+              return $query->where('agency_id', '=', 4);
+          })->count();
+
+      $others = Ticket::whereHas('agencies', function ($query) {
+            return $query->whereNotIn('agency_id', [1,2,3,4]);
+        })->count();
+
+
       return response()->json([
         'status' => 200,
-            'data' => [
-              "FOR_REVIEW" => $FOR_REVIEW,
-              "ACKNOWLEDGED" => $ACKNOWLEDGED,
-              "ON_GOING" => $ON_GOING,
-              "RESOLVED" => $RESOLVED,
-              "INVALID" => $INVALID,
+            'status' => [
+              "for_review" => $FOR_REVIEW,
+              "acknowledged" => $ACKNOWLEDGED,
+              "on_going" => $ON_GOING,
+              "resolved" => $RESOLVED,
+              "invalid" => $INVALID,
+            ],
+            'agencies' => [
+              "dti" => $dti,
+              "doh" => $doh,
+              "da" => $da,
+              "denr" => $denr,
+              "others" => $others,
             ],
         ], 200);
   }

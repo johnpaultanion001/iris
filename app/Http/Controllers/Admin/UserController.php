@@ -124,5 +124,30 @@ class UserController extends ApiController
 
     }
 
+    public function update (User $user, Request $request){
+      $validator = Validator::make($request->all(), [
+          'agency_id' => 'required',
+          'profile' => 'required',
+          'name' => 'required',
+          'last_name' => 'required',
+          'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+          'mobile_number' => ['required', 'string', 'min:8','max:11'],
+      ]);
+
+      if ($validator->fails()) {
+          return $this->responseUnprocessable($validator->errors());
+      }
+
+      $user->update([
+        'agency_id' => $request['agency_id'],
+        'profile' => $request['profile'],
+        'name' => $request['name'],
+        'last_name' => $request['last_name'],
+        'email' => $request['email'],
+        'mobile_number' => $request['mobile_number'],
+      ]);
+      return response()->json(['success' => 'User updated.']);
+    }
+
 
 }
