@@ -37,7 +37,7 @@ class FilterController extends ApiController
 
   public function filter_users(Request $request)
   {
-    $collection = User::whereIn('agency_id', request('agencies'))
+    $collection = User::whereIn('agency_id', request('agencies') ?? [])
                 ->where('role',  request('user_type'))
                 ->where('status', request('account_status'))
                 ->whereBetween('created_at', [request('from'), request('till')])
