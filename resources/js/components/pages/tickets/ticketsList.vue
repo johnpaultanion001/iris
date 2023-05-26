@@ -3,14 +3,14 @@
     <div class="grid grid-cols-12 gap-3 mb-6 pt-4">
         <div class="col-span-11 md:col-span-12 xl:col-span-6">
             <div class="ticket-tabs bg-grey p-1 rounded-xl flex">
-                <div @click="activeTab = 'All'; getTickets(activeStatus, 0)" :class="activeTab === 'All' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
+                <div @click="activeTab = 'All'; getTickets(activeStatus, 0); getAllTickets();" :class="activeTab === 'All' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
                     <p class="text-xs sm:text-base truncate text-blue-grey font-inter-400 px-1 py-1.5">All</p>
                 </div>
-                <div @click="activeTab = 'My Agency'; getTickets(activeStatus, 0)" :class="activeTab === 'My Agency' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
+                <div @click="activeTab = 'My Agency'; getTickets(activeStatus, 0); getAllTickets();" :class="activeTab === 'My Agency' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
                     <p class="text-xs sm:text-base truncate text-blue-grey font-inter-400 px-1 py-1.5">My Agency</p>
                 </div>
-                <div @click="activeTab = 'Following'; getTickets(activeStatus, 0)" :class="activeTab === 'Following' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
-                    <p class="text-xs sm:text-base truncate text-blue-grey font-inter-400 px-1 py-1.5">Following (3)</p>
+                <div @click="activeTab = 'Following'; getTickets(activeStatus, 0); getAllTickets();" :class="activeTab === 'Following' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
+                    <p class="text-xs sm:text-base truncate text-blue-grey font-inter-400 px-1 py-1.5">Following ({{ alltickets.filter((a) => (a.isFollow == 1)).length }})</p>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 Filter
             </button>
             <button :class="vendorID ?  'border-blue text-blue' : 'border-white text-white'" class="border mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 rounded-lg flex items-center justify-center">
-                Export <img src="/img/icon/export-white.png" class="ml-4">
+                Export <img :src="vendorID ? '/img/icon/export-blue.png' : '/img/icon/export-white.png'"  class="ml-4">
             </button>
             <router-link to="/create-ticket" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                 <img src="/img/icon/add-white.png" class="mr-2"> Create
@@ -36,19 +36,19 @@
     </div>
     <div class="scroll-style w-full overflow-auto flex items-center justify-start pb-3">
         <div :class="activeStatus == 'FOR_REVIEW' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('FOR_REVIEW', 0)" link="" arrow="false" cardTitle="For Review" value="10" icon="/img/icon/eye-active.png" />
+            <ButtonCard @click="getTickets('FOR_REVIEW', 0)" link="" arrow="false" cardTitle="For Review" :value="alltickets.filter((a) => (a.status == 'FOR_REVIEW')).length" icon="/img/icon/eye-active.png" />
         </div>
         <div :class="activeStatus == 'ACKNOWLEDGED' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('ACKNOWLEDGED', 0)" link="" arrow="false" cardTitle="Acknowledged" value="10" icon="/img/icon/like-active.png" />
+            <ButtonCard @click="getTickets('ACKNOWLEDGED', 0)" link="" arrow="false" cardTitle="Acknowledged" :value="alltickets.filter((a) => (a.status == 'ACKNOWLEDGED')).length" icon="/img/icon/like-active.png" />
         </div>
         <div :class="activeStatus == 'ON_GOING' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('ON_GOING', 0)" link="" arrow="false" cardTitle="On-going" value="10" icon="/img/icon/clock-active.png" />
+            <ButtonCard @click="getTickets('ON_GOING', 0)" link="" arrow="false" cardTitle="On-going" :value="alltickets.filter((a) => (a.status == 'ON_GOING')).length" icon="/img/icon/clock-active.png" />
         </div>
         <div :class="activeStatus == 'RESOLVED' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('RESOLVED', 0)" link="" arrow="false" cardTitle="Resolved" value="10" icon="/img/icon/party-active.png" />
+            <ButtonCard @click="getTickets('RESOLVED', 0)" link="" arrow="false" cardTitle="Resolved" :value="alltickets.filter((a) => (a.status == 'RESOLVED')).length" icon="/img/icon/party-active.png" />
         </div>
         <div :class="activeStatus == 'INVALID' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('INVALID', 0)" link="" arrow="false" cardTitle="Invalid" value="10" icon="/img/icon/warning-active.png" />
+            <ButtonCard @click="getTickets('INVALID', 0)" link="" arrow="false" cardTitle="Invalid" :value="alltickets.filter((a) => (a.status == 'INVALID')).length" icon="/img/icon/warning-active.png" />
         </div>
     </div>
     <div class="grid grid-cols-12 gap-3">
@@ -135,7 +135,7 @@
                                         {{ item.email }}
                                     </p>
                                 </td>
-                                <td class="p-2.5 font-opensans-600 text-xxxs text-dark2 ellipsis-2">
+                                <td class="p-2.5 font-opensans-600 text-xxxs text-dark2 ellipsis-2" style="height: 41px">
                                     {{ ticket.product_service }}
                                 </td>
                                 <td v-if="colVendor != 'off'" class="p-2.5 font-opensans-600 text-xxxs text-dark2" v-for="(item, index) in ticket.vendor" ref="tickets">
@@ -259,47 +259,38 @@
                     <div class="col-span-2">
                         <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">Product/Service</label>
                         <div class="relative w-full">
-                            <input v-model="productServiceDD" type="text" placeholder="All products/services" name="productservice" id="productservice" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/down-blue.png" class="down-img">
-                            <div v-if="productServiceDD" class="dropdown absolute inset-x-0 top-12 border border-white rounded bg-white shadow-third overflow-hidden">
-                                <div to="/user-profile" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">Sample Product</p>
-                                </div>
-                                <div to="/" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">Sample Product</p>
-                                </div>
+                            <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
+                                <v-select :filter="fuseSearch" :options="products" :get-option-label="option => option" placeholder="Choose" v-model="fProductSevice" :reduce="products => products.product_service">
+                                    <template #option="{ product_service }" >
+                                        {{ product_service }} 
+                                    </template>
+                                </v-select>
                             </div>
                         </div>
                     </div>
                     <div class="col-span-2">
                         <label for="seveirty" class="text-base text-blue-grey text-xs font-inter-700">Product/Service</label>
                         <div class="relative w-full">
-                            <input v-model="severityDD" type="text" placeholder="Severity" name="seveirty" id="seveirty" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/down-blue.png" class="down-img">
-                            <div v-if="severityDD" class="dropdown absolute inset-x-0 top-12 border border-white rounded bg-white shadow-third overflow-hidden">
-                                <div to="/user-profile" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">LOW</p>
-                                </div>
-                                <div to="/" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">MEDIUM</p>
-                                </div>
-                                <div to="/" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">HIGH</p>
-                                </div>
+                            <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
+                                <v-select :filter="fuseSearch" :options="severities" :get-option-label="option => option.name" placeholder="Choose" v-model="fSeverity" :reduce="severities => severities.name">
+                                    <template #option="{ name }" >
+                                        {{ name }} 
+                                    </template>
+                                </v-select>
                             </div>
                         </div>
                     </div> 
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="from" class="text-base text-blue-grey text-xs font-inter-700">From</label>
-                            <input type="text" v-model="from" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
+                            <input type="text" v-model="fFrom" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
                             <img src="/img/icon/date-blue.png" class="date-img">
                         </div>
                     </div>
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="to" class="text-base text-blue-grey text-xs font-inter-700">To</label>
-                            <input type="text" v-model="to" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
+                            <input type="text" v-model="fTo" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
                             <img src="/img/icon/date-blue.png" class="date-img">
                         </div>
                     </div>
@@ -310,7 +301,7 @@
                             <img src="/img/icon/search.png" class="search-img">
                         </div>
                         <div v-for="(agency, index) in agencies" ref="agencies" class="my-4 flex items-center">
-                            <input type="checkbox" v-model="filterAgencyValue" :value="agency.id">
+                            <input type="checkbox" v-model="fAgencyValue" :value="agency.id">
                             <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
                             <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                         </div>
@@ -320,10 +311,10 @@
         </template>
         <template v-slot:footer>
             <div class="flex items-center justify-between w-full">
-                <button class="mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline">
+                <button @click="resetFilter()" class="mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline">
                     RESET FILTERS
                 </button>
-                <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                <button @click="filterList()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                     Apply
                 </button>
             </div>
@@ -395,6 +386,8 @@ import clickOutSide from "@mahdikhashan/vue3-click-outside"
 import axios from 'axios'
 import moment from 'moment'
 import AlertTop from '../../utilities/alertTop.vue'
+import Fuse from 'fuse.js'
+import vSelect from 'vue-select'
 
 export default {
     setup: () => ({
@@ -408,6 +401,7 @@ export default {
         return{
             //Filter Buttons
             activeStatus: 'FOR_REVIEW',
+            filterStatus: this.$route.params.status,
             //Show filters mobile
             showFilter: true,
             showFilterBtn: true,
@@ -418,6 +412,7 @@ export default {
             filterItemNumberDropdown: false,
             filterSearch: '',
             reDate: null,
+            responseFiltered: '',
             //Actions
             showAction: '',
             actionActive: false,
@@ -430,12 +425,18 @@ export default {
             successIcon: null,
             //Filter Modal
             dropdownToggle: '',
-            severityDD: null,
-            productServiceDD: null,
+            fProductSevice: '',
+            fSeverity: '',
+            severities: [{name: 'Low', value: 'LOW'}, {name: 'Medium', value: 'MEDIUM'}, {name: 'High', value: 'HIGH'}], 
+            fAgencyValue: '',
+            fFrom: '',
+            fTo: '',
+            isFiltering: '',
             //Agencies
             agencies: [],
             filterSearchAgency: '',
             //Tickets
+            alltickets: [],
             tickets: [],
             ticketsOrder: 'ticket_no',
             ticketsOrderArray: '',
@@ -450,10 +451,12 @@ export default {
             currentTicketStatus: null,
             statusComment: null,
             //User
-            userAgencyCode: ""
+            userAgencyCode: "",
+            //Products Services
+            products: [],
         };
     },
-    components: { ButtonCard, ContentCard, Modal, AlertTop},
+    components: { ButtonCard, ContentCard, Modal, AlertTop, vSelect},
     async mounted() {
         this.isMobile(); //hides filter menu on mobile
         window.addEventListener("resize", this.isMobile); //hides filter menu on mobile when resized
@@ -462,6 +465,15 @@ export default {
         this.getTickets(this.activeStatus, 0);
         //Get current user
         this.getUser();
+        //Get All Tickets for getting length
+        this.getAllTickets();
+        //Get All Products Services
+        this.getProducts();
+
+        //if has ticket status on URL 
+        if(this.filterStatus){
+            this.activeStatus = this.filterStatus
+        }
     },
     watch: {
         filterSearch: function() {
@@ -473,12 +485,6 @@ export default {
         },
         perpage: function() {
             this.getTickets(this.activeStatus, 0);
-        },
-        severityDD: function() {
-            console.log(this.severityDD)
-        },
-        productServiceDD: function() {
-            console.log(this.productServiceDD)
         }
     },
     methods: {
@@ -488,13 +494,45 @@ export default {
             //Filter User Data
             this.userAgencyCode = response.data.data.assigned_agencies.code;
         },
+        resetFilter(){
+            this.isFiltering = false
+            this.fProductSevice = ''
+            this.fSeverity = ''
+            this.fAgencyValue = ''
+            this.fFrom = ''
+            this.fTo = ''
+        },
+        async filterList(){
+            this.getTickets(this.activeStatus, 0)
+            this.isFiltering = true
+
+            await axios.post('api/v1/filter/tickets', {
+                product_service: this.fProductSevice,
+                severity: this.fSeverity,
+                from: this.reformat_date(this.fFrom),
+                till: this.reformat_date(this.fTill)
+            })
+            .then((success) => {
+                this.responseFiltered = success.data.data
+                this.closeModal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
         //Get Tickets
         async getTickets(val, page){
             this.pageNumber = page;
             this.activeStatus = val;
             const response = await axios.get('api/v1/tickets');
+
+            //Filter Modal
+            if(!this.isFiltering){
+                this.responseFiltered = response.data.data
+            }
+
             //Filter Search Ticket
-            const responseFiltered = response.data.data.filter((a) => {
+            const ticketsdata = this.responseFiltered.filter((a) => {
                 const theFilter = (
                     a['ticket_no'] == this.filterSearch ||
                     a.severity.toLowerCase().includes(this.filterSearch.toLowerCase()) ||
@@ -514,14 +552,27 @@ export default {
             // console.log( this.tickets = responseFiltered.filter((a) => (a.agencies.data == "DA")))
             //Filter Tab and Status
             if(this.activeTab == 'All'){
-                this.tickets = responseFiltered.filter((a) => (a.status == this.activeStatus && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
+                this.tickets = ticketsdata.filter((a) => (a.status == this.activeStatus && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
             }else if(this.activeTab == 'My Agency'){
-                this.tickets = responseFiltered.filter((a) => (a.status == this.activeStatus && a.agencies.includes(this.userAgencyCode) && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
+                this.tickets = ticketsdata.filter((a) => (a.status == this.activeStatus && a.agencies.includes(this.userAgencyCode) && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
             }else if(this.activeTab == 'Following'){
-                this.tickets = responseFiltered.filter((a) => (a.status == this.activeStatus && a.isFollow == 1 && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
+                this.tickets = ticketsdata.filter((a) => (a.status == this.activeStatus && a.isFollow == 1 && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
             }
             //Pagination
             this.paginateTotal = Math.ceil(this.tickets.length/this.perpage);
+        },
+        async getAllTickets(){
+            const response = await axios.get('api/v1/tickets');
+            const ticketdata = response.data.data;
+
+            
+            if(this.activeTab == 'All'){
+                this.alltickets = ticketdata.filter((a) => (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true));
+            }else if(this.activeTab == 'My Agency'){
+                this.alltickets = ticketdata.filter((a) => (a.agencies.includes(this.userAgencyCode) && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
+            }else if(this.activeTab == 'Following'){
+                this.alltickets = ticketdata.filter((a) => (a.isFollow == 1 && (this.vendorID ? a['vendor']['0']['id'] == this.vendorID : true)));
+            }
         },
         //Get Agencies
         async getAgencies(){
@@ -529,6 +580,13 @@ export default {
             const response = await axios.get('api/v1/agencies');
             //Filter Agencies Ticket
             this.agencies = response.data.data.filter((a) => (a.agency.includes(this.filterSearchAgency) ||  a.agency.toLowerCase().includes(this.filterSearchAgency)));
+        },
+        //Get Product Services
+        async getProducts(){
+            this.pageNumber = 0;
+            const response = await axios.get('api/v1/ticket/product_service');
+            //Filter Products
+            this.products = response.data.data;
         },
         //Follow Ticket
         async followTicket(ticketID, page) {
@@ -693,6 +751,14 @@ export default {
             this.pageNumber = 1;
             this.paginateTotal = Math.ceil(this.tickets.length/this.perpage);
         },
+        //Roles Search
+        fuseSearch(options, search) {
+            const fuse = new Fuse(options, {
+                keys: ['name', 'product_service'],
+                shouldSort: true,
+            })
+            return search.length ? fuse.search(search).map(({ item }) => item): fuse.list
+        }
     },
 }
 </script>

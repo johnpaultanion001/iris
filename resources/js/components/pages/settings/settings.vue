@@ -1,5 +1,6 @@
 <template>
     <div ref="Profile"></div>
+    <AlertTop :alertIcon="'/img/icon/'+successIcon" :active="successAlert" :content="successMessage" v-if="successAlert" @close="closeAlert" />
     <PageLayout :pageName="title">
         <div class="grid grid-cols-8 gap-y-3 gap-x-7 mb-6 pt-4">
             <div class="col-span-8">
@@ -99,7 +100,7 @@
 
                     <div class="col-span-12">
                         <ContentCard cardTitle="Change Password">
-                            <form class="block p-2">
+                            <div class="block p-2">
                                 <div class="block relative pb-2">
                                     <label for="currentpassword" class="text-base text-blue-grey text-xs font-inter-700">Current password</label>
                                     <input @input="checkPassword" v-if="showCurrentPassword" type="text" name="currentpassword" id="currentpassword" class="mt-1 w-full main-input" v-model="currentpassword"/>
@@ -124,7 +125,7 @@
                                 </div>
                                 <div class="block relative py-2">
                                     <label for="password" class="text-base text-blue-grey text-xs font-inter-700">Re-enter new password</label>
-                                    <input @input="checkPassword" v-if="showPCassword" type="text" name="c-password" id="c-password" class="mt-1 w-full main-input" v-model="cPassword"/>
+                                    <input @input="checkPassword" v-if="showCPassword" type="text" name="c-password" id="c-password" class="mt-1 w-full main-input" v-model="cPassword"/>
                                     <input @input="checkPassword" v-else type="password" name="c-password" id="c-password" class="mt-1 w-full main-input" v-model="cPassword"/>
                                     <button type="button" class="show-icon" @click="{this.showCPassword = !this.showCPassword;}">
                                         <img src="/img/icon/show.png" class="w-5">
@@ -142,9 +143,9 @@
                                     <p class="flex items-center mb-4.5 font-inter-400 text-xs" :class="{ 'opacity-40': !verUniqueMatche }"><img src="/img/icon/check-active.png" class="w-3.5 h-2.5 mr-2.5"> New & confirm password matches</p>
                                 </div>
                                 <div class="flex pt-2">
-                                    <input type="submit" id="" value="Update password" class="w-fit cursor-pointer shadow-main rounded-full min-w-160 p-3 bg-blue text-white font-opensans-600 text-sm">
+                                    <button @click="changePassword()" :class="validPassword ? 'opacity-100' : 'opacity-50'" class="w-fit cursor-pointer shadow-main rounded-full min-w-160 p-3 bg-blue text-white font-opensans-600 text-sm">Update Password</button>
                                 </div>
-                            </form>
+                            </div>
                             <div ref="Contact Us"></div>
                         </ContentCard>
                     </div>
@@ -213,7 +214,7 @@ import PageLayout from '../../pageLayout.vue'
 import ContentCard from '../../utilities/contentCard.vue'
 import Modal from '../../utilities/modal.vue'
 import axios from 'axios'
-import 'vue-select/dist/vue-select.css';
+import 'vue-select/dist/vue-select.css'
 import AlertTop from '../../utilities/alertTop.vue'
 
 export default {
@@ -244,12 +245,12 @@ export default {
             verOneLower: false,
             verOneUpper: false,
             verUniqueMatche: false,
-            validPassword: false.valueOf,
+            validPassword: false,
             //User info
             userInfo: []
         };
     },
-    components: { PageLayout, ContentCard, Modal },
+    components: { PageLayout, ContentCard, Modal, AlertTop },
     async mounted() {
         this.getUser();
     },
@@ -307,12 +308,39 @@ export default {
             }
 
             //Check if all verifications are true
-            if (this.verCharacters === true && this.verOneNumber === true && this.verOneSymbol === true && this.verOneLower === true) {
+            if (this.verCharacters === true && this.verOneNumber === true && this.verOneSymbol === true && this.verOneLower === true && this.verOneUpper === true && this.verUniqueMatche === true) {
                 this.validPassword = true;			
             } else {
                 this.validPassword = false;
             }
-        }
+        },
+        //Change Password
+        async changePassword() {
+            if(this.validPassword == true){
+                await axios.post('/api/v1/user/change_password', {
+                    current_password: this.currentpassword,
+                    new_password: this.password,
+                    confirm_password: this.cPassword
+                })
+                .then((success) => {
+                    //Alert Content
+                    if(success.data.success){
+                        this.successAlert = true;
+                        this.successMessage = 'Password successfully updated';
+                        this.successIcon = 'like.png';
+                    }else{
+                        this.successAlert = true;
+                        this.successMessage = success.data.errors.current_password['0'];
+                        this.successIcon = 'warning-red.png';
+                    }
+                })
+                .catch((error) => {
+                    this.successAlert = true;
+                    this.successMessage = error;
+                    this.successIcon = 'warning-red.png';
+                })
+            }
+        },
     },
 }
 </script>

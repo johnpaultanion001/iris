@@ -36,7 +36,7 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
-                                        <v-select :filter="fuseSearch" :options="roles" :get-option-label="(option) => option.name" placeholder="Choose" v-model="userrole" :reduce="roles => roles.name" >
+                                        <v-select :filter="fuseSearch" :options="roles" :get-option-label="(option) => option.name" placeholder="Choose" v-model="userrole" :reduce="roles => roles.value" >
                                             <template #option="{ name }" >
                                                 {{ name }} 
                                             </template>
@@ -102,7 +102,7 @@ export default {
             //Roles
             filteredRoles: [],
             roleDD: false,
-            roles: [{name: 'Super Admin'}, {name: 'Admin'}, {name: 'Moderator'}], 
+            roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}], 
             //Modal
             showModal: '',
             modalActive: false,
@@ -132,7 +132,8 @@ export default {
         //Create User
         async createUser(){
             const inputs =  {
-                name: this.firstname + ' ' + this.lastname,
+                name: this.firstname,
+                last_name: this.lastname,
                 email: this.useremail,
                 mobile_number: ''+this.usermobile+'',
                 role: this.userrole.toUpperCase(),

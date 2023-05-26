@@ -89,6 +89,17 @@ h1{
     border: 1px solid #1267E5;
     outline: 0;
 }
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+span.vs__selected {
+    width: 400px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .down-img {
     top: 25px;
     bottom: 0;
