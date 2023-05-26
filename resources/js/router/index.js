@@ -36,7 +36,7 @@ const routes = [
         component: resetPassword
     },
     {
-        path: '/new-password',
+        path: '/forgot-password/:token',
         component: newPassword
     },
     //Pages
@@ -49,7 +49,11 @@ const routes = [
         component: inbox
     },
     {
-        path: '/tickets',
+        path: '/tickets/:status',
+        component: tickets
+    },
+    {
+        path: '/tickets/',
         component: tickets
     },
     {
@@ -81,7 +85,7 @@ const routes = [
         component: createUser
     },
     {
-        path: '/edit-user',
+        path: '/edit-user/:id',
         component: editUser
     },
     {

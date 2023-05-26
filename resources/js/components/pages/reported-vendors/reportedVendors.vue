@@ -136,7 +136,7 @@
                         <div class="col-span-2">
                             <label for="city" class="text-base text-blue-grey text-xs font-inter-700">City</label>
                             <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
-                                <v-select :filter="fuseSearch" :options="cities" :get-option-label="(option) => option.name" placeholder="Choose" >
+                                <v-select :filter="fuseSearch" :options="cities" :get-option-label="(option) => option.name" placeholder="Choose" v-model="fCity" :reduce="cities => cities.name">
                                     <template #option="{ name }">
                                         {{ name }} 
                                     </template>
@@ -146,14 +146,14 @@
                         <div class="col-span-1">
                             <div class="relative w-full">
                                 <label for="from" class="text-base text-blue-grey text-xs font-inter-700">From</label>
-                                <input type="text" v-model="from" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
+                                <input type="date" v-model="from" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
                                 <img src="/img/icon/date-blue.png" class="date-img">
                             </div>
                         </div>
                         <div class="col-span-1">
                             <div class="relative w-full">
                                 <label for="to" class="text-base text-blue-grey text-xs font-inter-700">To</label>
-                                <input type="text" v-model="to" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
+                                <input type="date" v-model="to" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
                                 <img src="/img/icon/date-blue.png" class="date-img">
                             </div>
                         </div>
@@ -162,10 +162,10 @@
             </template>
             <template v-slot:footer>
                 <div class="flex items-center justify-between w-full">
-                    <button class="mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline">
+                    <button @click="resetFilter()" class="mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline">
                         RESET FILTERS
                     </button>
-                    <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    <button @click="filterList()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                         Apply
                     </button>
                 </div>
@@ -184,6 +184,7 @@ import clickOutSide from "@mahdikhashan/vue3-click-outside"
 import axios from 'axios'
 import moment from 'moment'
 import vSelect from 'vue-select'
+import Fuse from 'fuse.js'
 
 export default {
     setup: () => ({
@@ -200,6 +201,7 @@ export default {
             //Filter item number
             filterItemNumberDropdown: false,
             filterSearch: '',
+            responseFiltered: '',
             //Date Filter
             reDate: null,
             //Modal
@@ -208,6 +210,10 @@ export default {
             modalTicketID: '',
             //Filter Modal
             dropdownToggle: '',
+            isFiltering: false,
+            fCity: '',
+            fFrom: '',
+            fTill: '',
             //Tickets
             rvendors: [],
             rvendorsOrder: 'created_at',
@@ -221,6 +227,7 @@ export default {
             pageEnd: 5,
             //Cities
             filteredCities: [],
+            vCity: null,
             cityDD: false,
             cities: [{name: 'Alaminos'}, {name: 'Angeles City'}, {name: 'Antipolo'}, {name: 'Bacolod'}, {name: 'Bacoor'}, {name: 'Bago'}, {name: 'Baguio'}, {name: 'Bais'}, {name: 'Balanga'}, {name: 'Baliwag'}, {name: 'Batac'}, {name: 'Batangas City'}, {name: 'Bayawan'}, {name: 'Baybay'}, {name: 'Bayugan'}, {name: 'Biñan'}, {name: 'Bislig'}, {name: 'Bogo'}, {name: 'Borongan'}, {name: 'Butuan'}, {name: 'Cabadbaran'}, {name: 'Cabanatuan'}, {name: 'Cabuyao'}, {name: 'Cadiz'}, {name: 'Cagayan de Oro'}, {name: 'Calaca'}, {name: 'Calamba'}, {name: 'Calapan'}, {name: 'Calbayog'}, {name: 'Caloocan'}, {name: 'Candon'}, {name: 'Canlaon'}, {name: 'Carcar'}, {name: 'Catbalogan'}, {name: 'Cauayan'}, {name: 'Cavite City'}, {name: 'Cebu City'}, {name: 'Cotabato City'}, {name: 'Dagupan'}, {name: 'Danao'}, {name: 'Dapitan'}, {name: 'Dasmariñas'}, {name: 'Davao City'}, {name: 'Digos'}, {name: 'Dipolog'}, {name: 'Dumaguete'}, {name: 'El Salvador'}, {name: 'Escalante'}, {name: 'Gapan'}, {name: 'General Santos'}, {name: 'General Trias'}, {name: 'Gingoog'}, {name: 'Guihulngan'}, {name: 'Himamaylan'}, {name: 'Ilagan'}, {name: 'Iligan'}, {name: 'Iloilo City'}, {name: 'Imus'}, {name: 'Iriga'}, {name: 'Isabela'}, {name: 'Kabankalan'}, {name: 'Kidapawan'}, {name: 'Koronadal'}, {name: 'La Carlota'}, {name: 'Lamitan'}, {name: 'Laoag'}, {name: 'Lapu-Lapu City'}, {name: 'Las Piñas'}, {name: 'Legazpi'}, {name: 'Ligao'}, {name: 'Lipa'}, {name: 'Lucena'}, {name: 'Maasin'}, {name: 'Mabalacat'}, {name: 'Makati'}, {name: 'Malabon'}, {name: 'Malaybalay'}, {name: 'Malolos'}, {name: 'Mandaluyong'}, {name: 'Mandaue'}, {name: 'Manila'}, {name: 'Marawi'}, {name: 'Marikina'}, {name: 'Masbate City'}, {name: 'Mati'}, {name: 'Meycauayan'}, {name: 'Muñoz'}, {name: 'Muntinlupa'}, {name: 'Naga'}, {name: 'Naga'}, {name: 'Navotas'}, {name: 'Olongapo'}, {name: 'Ormoc'}, {name: 'Oroquieta'}, {name: 'Ozamiz'}, {name: 'Pagadian'}, {name: 'Palayan'}, {name: 'Panabo'}, {name: 'Parañaque'}, {name: 'Pasay'}, {name: 'Pasig'}, {name: 'Passi'}, {name: 'Puerto Princesa'}, {name: 'Quezon City'}, {name: 'Roxas'}, {name: 'Sagay'}, {name: 'Samal'}, {name: 'San Carlos'}, {name: 'San Carlos'}, {name: 'San Fernando'}, {name: 'San Fernando'}, {name: 'San Jose'}, {name: 'San Jose del Monte'}, {name: 'San Juan'}, {name: 'San Pablo'}, {name: 'San Pedro'}, {name: 'Santa Rosa'}, {name: 'Santo Tomas'}, {name: 'Santiago'}, {name: 'Silay'}, {name: 'Sipalay'}, {name: 'Sorsogon City'}, {name: 'Surigao City'}, {name: 'Tabaco'}, {name: 'Tabuk'}, {name: 'Tacloban'}, {name: 'Tacurong'}, {name: 'Tagaytay'}, {name: 'Tagbilaran'}, {name: 'Taguig'}, {name: 'Tagum'}, {name: 'Talisay'}, {name: 'Talisay'}, {name: 'Tanauan'}, {name: 'Tandag'}, {name: 'Tangub'}, {name: 'Tanjay'}, {name: 'Tarlac City'}, {name: 'Tayabas'}, {name: 'Toledo'}, {name: 'Trece Martires'}, {name: 'Tuguegarao'}, {name: 'Urdaneta'}, {name: 'Valencia'}, {name: 'Valenzuela'}, {name: 'Victorias'}, {name: 'Vigan'}, {name: 'Zamboanga City'}], 
         };
@@ -240,12 +247,41 @@ export default {
         }
     },
     methods: {
-        //Get Tickets
+        async filterList(){
+            this.getRvendors(0)
+            this.isFiltering = true
+
+            await axios.post('api/v1/filter/vendors', {
+                city: this.fCity,
+                from: this.reformat_date(this.fFrom),
+                till: this.reformat_date(this.fTill)
+            })
+            .then((success) => {
+                this.responseFiltered = success.data.data
+                this.closeModal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
+        resetFilter(){
+            this.isFiltering = false
+            this.fCity = ''
+            this.fFrom = ''
+            this.fTo = ''
+        },
+        //Get Vendors
         async getRvendors(page){
             this.pageNumber = page;
             const response = await axios.get('api/v1/reported_vendors');
+            
+            //Filter Modal
+            if(!this.isFiltering){
+                this.responseFiltered = response.data.data
+            }
+        
             //Filter Search Ticket
-            const responseFiltered = response.data.data.filter((a) => {
+            const vendorsdata = this.responseFiltered.filter((a) => {
                 const theFilter = (
                     a.vendor_name.includes(this.filterSearch) || a.vendor_name.toLowerCase().includes(this.filterSearch) ||
                     a.email.includes(this.filterSearch) || a.email.toLowerCase().includes(this.filterSearch) ||
@@ -256,7 +292,8 @@ export default {
                 )
                 return theFilter
             });
-            this.rvendors = responseFiltered;
+
+            this.rvendors = vendorsdata;
             //Pagination
             this.paginateTotal = Math.ceil(this.rvendors.length/this.perpage);
         },
@@ -338,13 +375,11 @@ export default {
         },
         //Cities Search
         fuseSearch(options, search) {
-        const fuse = new Fuse(options, {
-            keys: ['0'],
-            shouldSort: true,
-        })
-        return search.length
-            ? fuse.search(search).map(({ item }) => item)
-            : fuse.list
+            const fuse = new Fuse(options, {
+                keys: ['name'],
+                shouldSort: true,
+            })
+            return search.length ? fuse.search(search).map(({ item }) => item): fuse.list
         },
     },
 }

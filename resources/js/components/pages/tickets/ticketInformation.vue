@@ -253,19 +253,20 @@
                                 <div class="grid grid-cols-2 gap-y-5 gap-x-3">
                                     <div class="col-span-2">
                                         <div class="scroll-style overflow-auto mb-4">
-                                            <table class="table-auto w-full" v-for="item in ticketInfo.violations">
+                                            <table class="table-auto w-full">
                                                 <tbody>
-                                                    <tr class="border-b border-light relative" v-for="(violation, index) in item">
+                                                    <tr class="border-b border-light relative" v-for="(violation, index) in selectedViolations">
                                                         <td>
                                                             <div class="flex items-center flex-nowrap h-15">
                                                                 <p class="font-inter-400 text-base text-blue-grey w-fit mr-4">{{ index + 1 }}</p>
                                                                 <p class="font-inter-400 text-base text-black">{{ violation.violation }}</p>
                                                             </div>
                                                         </td>
-                                                        <td @click="openModal('modalEditAmount')" class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                            <img v-if="!violation.amount" src="/img/icon/edit-blue.png" class="mr-2">
+                                                        <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
+                                                            <img v-if="!violation.amount" @click="openModal('modalAddAmount')" src="/img/icon/edit-blue.png" class="mr-2">
+                                                            <img v-if="violation.amount" @click="openModal('modalEditAmount')" src="/img/icon/edit-blue.png" class="mr-2">
                                                             <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
-                                                            <p v-if="!violation.amount" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
+                                                            <p v-if="!violation.amount" @click="openModal('modalAddAmount')" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
                                                         </td>
                                                     </tr>
                                                     <tr class="relative">
@@ -300,7 +301,7 @@
                         <ContentCard cardTitle="Assigned Agencies">
                             <div class="block px-2 py-4">
                                 <div class="grid grid-cols-5 gap-y-5 gap-x-5 mt-2">
-                                    <div v-for="item in currentAgencies" class="col-span-1">
+                                    <div v-for="item in selectedAgencies" class="col-span-1">
                                         <div>
                                             <img :src="'/img/' + item.logo" class="w-full mx-auto max-w-30 rounded-full">
                                             <p class="text-blue-grey font-opensans-600 text-xxs text-center my-3 ellipsis-2" style="height: 34px;">{{ item.agency }}</p>
@@ -434,7 +435,7 @@
                         </div>
                         <div v-for="(agency, index) in allAgencies" ref="allAgencies" class="py-2">
                             <label class="cursor-pointer flex items-center">
-                                <input type="checkbox" @change.prevent="agencyChecked(agency.code, agency.index, $event)">
+                                <input type="checkbox" @change.prevent="agencyChecked(agency.code, agency.index, $event)" :value="agency.id" v-model="chosenAgencies">
                                 <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
                                 <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                             </label>
@@ -465,33 +466,9 @@
                             <img src="/img/icon/search.png" class="search-img" style="top: 23px;">
                         </div>
                         <div class="py-2">
-                            <label class="cursor-pointer flex items-start">
-                                <input type="checkbox" class="mt-1">
-                                <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
-                            </label>
-                        </div>
-                        <div class="py-2">
-                            <label class="cursor-pointer flex items-start">
-                                <input type="checkbox" class="mt-1">
-                                <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
-                            </label>
-                        </div>
-                        <div class="py-2">
-                            <label class="cursor-pointer flex items-start">
-                                <input type="checkbox" class="mt-1">
-                                <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
-                            </label>
-                        </div>
-                        <div class="py-2">
-                            <label class="cursor-pointer flex items-start">
-                                <input type="checkbox" class="mt-1">
-                                <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
-                            </label>
-                        </div>
-                        <div class="py-2">
-                            <label class="cursor-pointer flex items-start">
-                                <input type="checkbox" class="mt-1">
-                                <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
+                            <label class="cursor-pointer flex items-start" v-for="(violation, index) in allViolations">
+                                <input type="checkbox" class="mt-1" @change.prevent="violationChecked(violation.id, violation.index, $event)" :value="violation.id" v-model="chosenViolations">
+                                <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">{{ violation.violation }}</p>
                             </label>
                         </div>
                     </div>
@@ -516,7 +493,7 @@
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2">
                         <div class="relative w-full">
-                            <input type="text" v-model="filterSearchViolation" placeholder="Search" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
+                            <input type="text" v-model="violationAmount" placeholder="Search" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
                             <p class="php font-inter-700 text-blue-grey">Php</p>
                         </div>
                     </div>
@@ -574,7 +551,7 @@
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2">
                         <div class="relative w-full">
-                            <input type="text" v-model="filterSearchViolation" placeholder="Search" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
+                            <input type="text" v-model="violationAmount" placeholder="Enter amount" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
                             <p class="php font-inter-700 text-blue-grey">Php</p>
                         </div>
                     </div>
@@ -586,7 +563,7 @@
                 <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-2 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
                     Cancel
                 </button>
-                <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                <button @click="editAmount()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                     Save
                 </button>
             </div>
@@ -697,7 +674,7 @@ export default {
             selected: [],
             filterSearchAgency: '',
             selectedAgencies: [],
-            currentAgencies: [],
+            chosenAgencies: [],
             //Cities
             filteredCities: [],
             cityDD: false,
@@ -714,6 +691,11 @@ export default {
             followtext: 'Follow',
             //Severity
             severity: null,
+            //Violations
+            allViolations: [],
+            filterSearchViolation: '',
+            selectedViolations: [],
+            chosenViolations: [],
 
         };
     },
@@ -722,10 +704,14 @@ export default {
         filterSearchAgency: function() {
             this.getAgencies();
         },
+        filterSearchViolation: function() {
+            this.getViolations();
+        }
     },
     async mounted(){
         this.getAgencies();
         this.getTicket();
+        this.getViolations();
     },
     methods: {
         //Get Ticket
@@ -734,12 +720,26 @@ export default {
             //Filter Ticket Data
             this.ticketInfo = response.data.data;
 
-            //clone Ticket Agencies to Current Agencies
-            const currentAgencies = []
+            //clone Ticket Agencies to Selected Agencies
+            const selectedAgencies = []
+            const chosenAgencies = []
             this.ticketInfo.assigned_agencies.map(function(value, key) {
-                currentAgencies.push(value);
+                selectedAgencies.push(value);
+                chosenAgencies.push(value.id);
             });
-            this.currentAgencies = currentAgencies
+            this.chosenAgencies = chosenAgencies
+            this.selectedAgencies = selectedAgencies
+
+            
+            //clone Ticket Violations to Selected Violations
+            const selectedViolations = []
+            const chosenViolations = []
+            this.ticketInfo.violations['0'].map(function(value, key) {
+                selectedViolations.push(value);
+                chosenViolations.push(value.id);
+            });
+            this.chosenViolations = chosenViolations
+            this.selectedViolations = selectedViolations
         },
         //Get Agencies
         async getAgencies(){
@@ -761,13 +761,49 @@ export default {
         //Add checked agencies
         addChecked(){
             //clone Selected Agencies to Current Agencies
-            this.currentAgencies = this.selectedAgencies
             this.closeModal();
         },
         //Remove checked agencies
         removeChecked(code){
-            const agencies = this.currentAgencies.filter((a) => (a.code == code));
-            this.currentAgencies.splice(agencies, 1);
+            const index = this.selectedAgencies.findIndex(item => item.code === code)
+            if (index !== -1) {
+                this.selectedAgencies.splice(index, 1)
+            }
+        },
+        //Get Violations
+        async getViolations(){
+            const response = await axios.get('api/v1/list_violations');
+            //Filter Agencies Ticket
+            this.allViolations = response.data.data.filter((a) => (a.violation.includes(this.filterSearchViolation) ||  a.violation.toLowerCase().includes(this.filterSearchViolation)));
+        },
+        //Get checked Violations
+        violationChecked(id, index, $event){
+            const checked = $event.target.checked;
+            const violations = this.allViolations.filter((a) => (a.id == id));
+            
+            if(checked){
+                this.selectedViolations.push(violations['0']); 
+            }else{
+                this.selectedViolations.splice(violations['0'], 1);
+            }
+
+            console.log(this.selectedViolations)
+        },
+        async editViolation(){
+            const inputs =  {
+                ticket_id: this.id,
+            };
+
+            await axios.put('api/v1/violations', inputs)
+            .then((success) => {
+                //Alert Content
+                this.successAlert = true;
+                this.successMessage = 'Successfully updated';
+                this.successIcon = 'like.png';
+            })
+            .catch((error) => {
+                console.log(inputs)
+            })
         },
         //Cities Search
         fuseSearch(options, search) {

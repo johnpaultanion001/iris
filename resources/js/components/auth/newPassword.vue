@@ -1,6 +1,6 @@
 <template>
     <Layout headerBg="/img/background-password.png" :headerTitle="'Hi, ' + userFirstName" headerText="Secure your account by creating a new password">
-        <form class="block">
+        <div class="block">
             <div class="block relative pt-4 pb-2">
                 <label for="password" class="text-base text-blue-grey text-xs font-inter-700">New password</label>
                 <input @input="checkPassword" v-if="showPassword" type="text" name="newpassword" id="newpassword" class="mt-1 w-full main-input" v-model="password"/>
@@ -14,7 +14,7 @@
             </div>
             <div class="block relative py-2">
                 <label for="password" class="text-base text-blue-grey text-xs font-inter-700">Re-enter new password</label>
-                <input @input="checkPassword" v-if="showPassword" type="text" name="c-password" id="c-password" class="mt-1 w-full main-input" v-model="cPassword"/>
+                <input @input="checkPassword" v-if="showCPassword" type="text" name="c-password" id="c-password" class="mt-1 w-full main-input" v-model="cPassword"/>
                 <input @input="checkPassword" v-else type="password" name="c-password" id="c-password" class="mt-1 w-full main-input" v-model="cPassword"/>
                 <button type="button" class="show-icon" @click="{this.showCPassword = !this.showCPassword;}">
                     <img src="/img/icon/show.png" class="w-5">
@@ -32,14 +32,15 @@
                 <p class="flex items-center mb-4.5 font-inter-400 text-xs" :class="{ 'opacity-40': !verUniqueMatche }"><img src="/img/icon/check-active.png" class="w-3.5 h-2.5 mr-2.5"> New & confirm password matches</p>
             </div>
             <div class="block pt-4">
-                <input type="submit" id="" value="Update password" class="cursor-pointer shadow-main rounded-lg w-full p-3 bg-blue text-white font-opensans-600 text-sm">
+                <button @click="newPassword" class="cursor-pointer shadow-main rounded-lg w-full p-3 bg-blue text-white font-opensans-600 text-sm">Update password</button>
             </div>
-        </form>
+        </div>
     </Layout>
 </template>
 
 <script>
 import Layout from './layout.vue'
+import axios from 'axios'
 
 export default {
     setup: () => ({
@@ -48,7 +49,9 @@ export default {
     components: { Layout },
     data() {
         return {
+            token: this.$route.params.token,
             userFirstName: 'Juana',
+            userEmail: null,
             showPassword: false,
             showCPassword: false,
             password: null,
@@ -61,9 +64,46 @@ export default {
             verOneUpper: false,
             verUniqueMatche: false,
             validPassword: false
+            //User Data
+
         };
     },
+    async mounted() {
+        this.getUser();
+    }, 
     methods: {
+        //Get User
+        async getUser(){
+            this.pageNumber = 0;
+            const response = await axios.get('api/v1/profile');
+            //Filter User Data
+            this.userFirstName = response.data.data.name;
+            this.userImg = response.data.data.profile;
+            this.userEmail = response.data.data.email;
+        },
+        //New Pass
+        async newPassword() {
+            if(this.validPassword == true){
+                await axios.post('api/v1/password-reset', {
+                    email: this.userEmail,
+                    password:this.password,
+                    password_confirmation: this.cPassword,
+                    token: this.token
+                })
+                .then((success) => {
+                    //Alert Content
+                    this.successAlert = true;
+                    this.successMessage = 'Password successfully changed';
+                    this.successIcon = 'like.png';
+                    this.$router.push("/");
+                })
+                .catch((error) => {
+                    this.successAlert = true;
+                    this.successMessage = 'Error occured. Please try again';
+                    this.successIcon = 'warning-red.png';
+                })
+            }
+        },
         checkPassword() {
             this.passwordLength = this.password.length;
             const format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
@@ -89,7 +129,7 @@ export default {
             }
 
             //Check if all verifications are true
-            if (this.verCharacters === true && this.verOneNumber === true && this.verOneSymbol === true && this.verOneLower === true) {
+            if (this.verCharacters === true && this.verOneNumber === true && this.verOneSymbol === true && this.verOneLower === true && this.verOneUpper === true && this.verUniqueMatche === true) {
                 this.validPassword = true;			
             } else {
                 this.validPassword = false;

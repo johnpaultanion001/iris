@@ -37,40 +37,13 @@
                         <div class="col-span-12 lg:col-span-4 pr-9">
                             <table class="table-auto mb-5 w-full">
                                 <tbody>
-                                    <tr class="border-b border-light">
+                                    <tr class="border-b border-light" v-for="(dept, index) in alldept">
                                         <td class="flex items-center">
-                                            <img src="/img/dti-logo.png" class="rounded-full w-10 py-2.5">
-                                            <p class="p-2.5 text-center font-opensans-600 text-sm text-black">DTI</p>
+                                            <img :src="'/img/'+index+'.png'" class="rounded-full w-10 py-2.5">
+                                            <p v-if="index != 'others'" class="p-2.5 text-center font-opensans-600 text-sm text-black">{{ index.toUpperCase() }}</p>
+                                            <p v-else class="p-2.5 text-center font-opensans-600 text-sm text-black">Others</p>
                                         </td>
-                                        <td class="p-2.5 text-right font-opensans-600 text-sm text-blue-grey">80</td>
-                                    </tr>
-                                    <tr class="border-b border-light">
-                                        <td class="flex items-center">
-                                            <img src="/img/dti-logo.png" class="rounded-full w-10 py-2.5">
-                                            <p class="p-2.5 text-center font-opensans-600 text-sm text-black">DTI</p>
-                                        </td>
-                                        <td class="p-2.5 text-right font-opensans-600 text-sm text-blue-grey">80</td>
-                                    </tr>
-                                    <tr class="border-b border-light">
-                                        <td class="flex items-center">
-                                            <img src="/img/dti-logo.png" class="rounded-full w-10 py-2.5">
-                                            <p class="p-2.5 text-center font-opensans-600 text-sm text-black">DTI</p>
-                                        </td>
-                                        <td class="p-2.5 text-right font-opensans-600 text-sm text-blue-grey">80</td>
-                                    </tr>
-                                    <tr class="border-b border-light">
-                                        <td class="flex items-center">
-                                            <img src="/img/dti-logo.png" class="rounded-full w-10 py-2.5">
-                                            <p class="p-2.5 text-center font-opensans-600 text-sm text-black">DTI</p>
-                                        </td>
-                                        <td class="p-2.5 text-right font-opensans-600 text-sm text-blue-grey">80</td>
-                                    </tr>
-                                    <tr class="border-b border-light">
-                                        <td class="flex items-center">
-                                            <img src="/img/dti-logo.png" class="rounded-full w-10 py-2.5">
-                                            <p class="p-2.5 text-center font-opensans-600 text-sm text-black">DTI</p>
-                                        </td>
-                                        <td class="p-2.5 text-right font-opensans-600 text-sm text-blue-grey">80</td>
+                                        <td class="p-2.5 text-right font-opensans-600 text-sm text-blue-grey">{{ dept }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -84,80 +57,80 @@
                         <div class="platform py-2">
                             <div class="flex items-center justify-between mt-1.5 mb-2">
                                 <div class="flex items-center mb-1">
-                                    <img src="/img/icon/settings.png" class="">
+                                    <!-- <img src="/img/icon/settings.png" class=""> -->
                                     <p class="text-sm font-opensans-600 text-blue-grey ml-1">Facebook</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-opensans-600 text-blue-grey">80%</p>
+                                    <p class="text-sm font-opensans-600 text-blue-grey">{{ Math.round((alltickets.filter((a) => (a.platform.toLowerCase() == 'facebook')).length / alltickets.length) * 100)/1 }}%</p>
                                 </div>
                             </div>
                             <div class="progress">
                                 <div class="w-full bg-light rounded-lg h-2">
-                                    <div style="width: 50%;" class="bg-black rounded-lg h-2"></div>
+                                    <div :style="'width:'+ ((alltickets.filter((a) => (a.platform.toLowerCase() == 'facebook')).length / alltickets.length) * 100) + '%'" class="bg-black rounded-lg h-2"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="platform py-2">
                             <div class="flex items-center justify-between mt-1.5 mb-2">
                                 <div class="flex items-center mb-1">
-                                    <img src="/img/icon/settings.png" class="">
-                                    <p class="text-sm font-opensans-600 text-blue-grey ml-1">Facebook</p>
+                                    <!-- <img src="/img/icon/settings.png" class=""> -->
+                                    <p class="text-sm font-opensans-600 text-blue-grey ml-1">Twitter</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-opensans-600 text-blue-grey">80%</p>
+                                    <p class="text-sm font-opensans-600 text-blue-grey">{{ Math.round((alltickets.filter((a) => (a.platform.toLowerCase() == 'twitter')).length / alltickets.length) * 100)/1 }}%</p>
                                 </div>
                             </div>
                             <div class="progress">
                                 <div class="w-full bg-light rounded-lg h-2">
-                                    <div style="width: 50%;" class="bg-black rounded-lg h-2"></div>
+                                    <div :style="'width:'+ ((alltickets.filter((a) => (a.platform.toLowerCase() == 'twitter')).length / alltickets.length) * 100) + '%'" class="bg-black rounded-lg h-2"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="platform py-2">
                             <div class="flex items-center justify-between mt-1.5 mb-2">
                                 <div class="flex items-center mb-1">
-                                    <img src="/img/icon/settings.png" class="">
-                                    <p class="text-sm font-opensans-600 text-blue-grey ml-1">Facebook</p>
+                                    <!-- <img src="/img/icon/settings.png" class=""> -->
+                                    <p class="text-sm font-opensans-600 text-blue-grey ml-1">Reddit</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-opensans-600 text-blue-grey">80%</p>
+                                    <p class="text-sm font-opensans-600 text-blue-grey">{{ Math.round((alltickets.filter((a) => (a.platform.toLowerCase() == 'reddit')).length / alltickets.length) * 100)/1 }}%</p>
                                 </div>
                             </div>
                             <div class="progress">
                                 <div class="w-full bg-light rounded-lg h-2">
-                                    <div style="width: 50%;" class="bg-black rounded-lg h-2"></div>
+                                    <div :style="'width:'+ ((alltickets.filter((a) => (a.platform.toLowerCase() == 'reddit')).length / alltickets.length) * 100) + '%'" class="bg-black rounded-lg h-2"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="platform py-2">
                             <div class="flex items-center justify-between mt-1.5 mb-2">
                                 <div class="flex items-center mb-1">
-                                    <img src="/img/icon/settings.png" class="">
-                                    <p class="text-sm font-opensans-600 text-blue-grey ml-1">Facebook</p>
+                                    <!-- <img src="/img/icon/settings.png" class=""> -->
+                                    <p class="text-sm font-opensans-600 text-blue-grey ml-1">Youtube</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-opensans-600 text-blue-grey">80%</p>
+                                    <p class="text-sm font-opensans-600 text-blue-grey">{{ Math.round((alltickets.filter((a) => (a.platform.toLowerCase() == 'youtube')).length / alltickets.length) * 100)/1 }}%</p>
                                 </div>
                             </div>
                             <div class="progress">
                                 <div class="w-full bg-light rounded-lg h-2">
-                                    <div style="width: 50%;" class="bg-black rounded-lg h-2"></div>
+                                    <div :style="'width:'+ ((alltickets.filter((a) => (a.platform.toLowerCase() == 'youtube')).length / alltickets.length) * 100) + '%'" class="bg-black rounded-lg h-2"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="platform py-2">
                             <div class="flex items-center justify-between mt-1.5 mb-2">
                                 <div class="flex items-center mb-1">
-                                    <img src="/img/icon/settings.png" class="">
-                                    <p class="text-sm font-opensans-600 text-blue-grey ml-1">Facebook</p>
+                                    <!-- <img src="/img/icon/settings.png" class=""> -->
+                                    <p class="text-sm font-opensans-600 text-blue-grey ml-1">Testing</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-opensans-600 text-blue-grey">80%</p>
+                                    <p class="text-sm font-opensans-600 text-blue-grey">{{ Math.round((alltickets.filter((a) => (a.platform.toLowerCase() == 'testing')).length / alltickets.length) * 100)/1 }}%</p>
                                 </div>
                             </div>
                             <div class="progress">
                                 <div class="w-full bg-light rounded-lg h-2">
-                                    <div style="width: 50%;" class="bg-black rounded-lg h-2"></div>
+                                    <div :style="'width:'+ ((alltickets.filter((a) => (a.platform.toLowerCase() == 'testing')).length / alltickets.length) * 100) + '%'" class="bg-black rounded-lg h-2"></div>
                                 </div>
                             </div>
                         </div>
@@ -178,33 +151,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b border-light">
-                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">1. Violation will be placed here</td>
-                                <td class="p-2.5 text-center font-opensans-600 text-xxs">80</td>
-                            </tr>
-                            <tr class="border-b border-light">
-                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">2. Violation will be placed here</td>
-                                <td class="p-2.5 text-center font-opensans-600 text-xxs">80</td>
-                            </tr>
-                            <tr class="border-b border-light">
-                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">3. Violation will be placed here</td>
-                                <td class="p-2.5 text-center font-opensans-600 text-xxs">60</td>
-                            </tr>
-                            <tr class="border-b border-light">
-                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">4. Violation will be placed here</td>
-                                <td class="p-2.5 text-center font-opensans-600 text-xxs">80</td>
-                            </tr>
-                            <tr class="border-b border-light">
-                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">5. Violation will be placed here</td>
-                                <td class="p-2.5 text-center font-opensans-600 text-xxs">70</td>
-                            </tr>
-                            <tr class="border-b border-light">
-                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">6. Violation will be placed here</td>
-                                <td class="p-2.5 text-center font-opensans-600 text-xxs">90</td>
-                            </tr>
-                            <tr class="border-b border-light">
-                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">7. Violation will be placed here</td>
-                                <td class="p-2.5 text-center font-opensans-600 text-xxs">80</td>
+                            <tr class="border-b border-light" v-for="items in allviolations">
+                                <td class="p-2.5 font-opensans-600 text-xxs text-dark2">{{ items.violation }}</td>
+                                <td class="p-2.5 text-center font-opensans-600 text-xxs">{{ items.frequency }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -216,19 +165,19 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets" arrow="true" cardTitle="For Review" value="10" icon="/img/icon/eye-active.png" />
+                <ButtonCard link="/tickets/FOR_REVIEW" arrow="true" cardTitle="For Review" :value="alltickets.filter((a) => (a.status == 'FOR_REVIEW')).length"  icon="/img/icon/eye-active.png" />
             </div>
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets" arrow="true" cardTitle="Acknowledged" value="10" icon="/img/icon/like-active.png" />
+                <ButtonCard link="/tickets/ACKNOWLEDGED" arrow="true" cardTitle="Acknowledged" :value="alltickets.filter((a) => (a.status == 'ACKNOWLEDGED')).length"  icon="/img/icon/like-active.png" />
             </div>
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets" arrow="true" cardTitle="On-going" value="10" icon="/img/icon/clock-active.png" />
+                <ButtonCard link="/tickets/ON_GOING" arrow="true" cardTitle="On-going" :value="alltickets.filter((a) => (a.status == 'ON_GOING')).length"  icon="/img/icon/clock-active.png" />
             </div>
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets" arrow="true" cardTitle="Resolved" value="10" icon="/img/icon/party-active.png" />
+                <ButtonCard link="/tickets/RESOLVED" arrow="true" cardTitle="Resolved" :value="alltickets.filter((a) => (a.status == 'RESOLVED')).length"  icon="/img/icon/party-active.png" />
             </div>
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets" arrow="true" cardTitle="Invalid" value="10" icon="/img/icon/warning-active.png" />
+                <ButtonCard link="/tickets/INVALID" arrow="true" cardTitle="Invalid" :value="alltickets.filter((a) => (a.status == 'INVALID')).length"  icon="/img/icon/warning-active.png" />
             </div>
         </div>
     </PageLayout>
@@ -247,6 +196,7 @@
 import PageLayout from '../../pageLayout.vue'
 import ContentCard from '../../utilities/contentCard.vue'
 import ButtonCard from '../../utilities/buttonCard.vue'
+import axios from 'axios'
 
 export default {
     setup: () => ({
@@ -255,9 +205,35 @@ export default {
     data () {
         return{
             filterDays: 'Last 30 Days',
-            filterDaysDropdown: false
+            filterDaysDropdown: false,
+            alltickets: [],
+            allviolations: [],
+            alldept: null,
         };
     },
+    async mounted() {
+        //Get All Tickets for getting length
+        this.getAllTickets();
+        this.getAllViolations();
+        this.getAllDepartment();
+    },
     components: { PageLayout, ContentCard, ButtonCard },
+    methods: {
+        //Tickets
+        async getAllTickets(){
+            const response = await axios.get('api/v1/tickets');
+            this.alltickets = response.data.data;
+        },
+        //Violations
+        async getAllViolations(){
+            const response = await axios.get('api/v1/dashboard_violation');
+            this.allviolations = response.data.data;
+        },
+        //Department
+        async getAllDepartment(){
+            const response = await axios.get('api/v1/count_ticket_status');
+            this.alldept = response.data.agencies;
+        },
+    }
 }
 </script>

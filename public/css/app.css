@@ -503,9 +503,6 @@ video {
 .top-11 {
   top: 2.75rem;
 }
-.top-12 {
-  top: 3rem;
-}
 .top-14 {
   top: 3.5rem;
 }
@@ -1598,6 +1595,17 @@ h1{
     border: 1px solid #1267E5;
     outline: 0;
 }
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+span.vs__selected {
+    width: 400px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .down-img {
     top: 25px;
     bottom: 0;
@@ -1747,10 +1755,6 @@ ul[role='listbox'] {
   --tw-bg-opacity: 1;
   background-color: rgb(18 103 229 / var(--tw-bg-opacity));
 }
-.hover\:bg-green:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(18 178 178 / var(--tw-bg-opacity));
-}
 .hover\:bg-lighter:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(242 247 255 / var(--tw-bg-opacity));
@@ -1766,17 +1770,9 @@ ul[role='listbox'] {
 .hover\:bg-white-25:hover {
   background-color: #ffffff40;
 }
-.hover\:bg-red:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 54 92 / var(--tw-bg-opacity));
-}
 .hover\:text-blue:hover {
   --tw-text-opacity: 1;
   color: rgb(18 103 229 / var(--tw-text-opacity));
-}
-.hover\:text-white:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 .hover\:text-red:hover {
   --tw-text-opacity: 1;

@@ -8,7 +8,7 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">Product/Service</label>
-                                    <input type="text" v-model="productservice" placeholder="" name="productservice" id="productservice" class="mt-2 w-full secondary-input"/>
+                                    <input type="text" v-model="product_service" placeholder="" name="productservice" id="productservice" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -76,10 +76,13 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="documents" class="text-base text-blue-grey text-xs font-inter-700">Upload Additional Documents</label>
-                                    <label class="cursor-pointer w-fit mt-4 bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
-                                        <img src="/img/icon/upload.png" class="mr-3.5"> Upload
-                                        <input type="file" name="documents" id="documents" hidden>
-                                    </label>
+                                    <div class="flex items-center mt-4 ">
+                                        <label class="cursor-pointer w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                                            <img src="/img/icon/upload.png" class="mr-3.5"> Upload
+                                            <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden>
+                                        </label>
+                                        <p class="text-blue-grey text-base ml-2 font-inter-400">{{ additional_documents_file }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -92,26 +95,26 @@
                         <div class="grid grid-cols-2 gap-y-5 gap-x-3">
                             <div class="col-span-2">
                                 <div class="relative w-full">
-                                    <label for="vendorname" class="text-base text-blue-grey text-xs font-inter-700">Vendor Name</label>
-                                    <input type="text" v-model="vendorname" placeholder="" name="vendorname" id="vendorname" class="mt-2 w-full secondary-input"/>
+                                    <label for="vendor_name" class="text-base text-blue-grey text-xs font-inter-700">Vendor Name</label>
+                                    <input type="text" v-model="vendor_name" placeholder="" name="vendor_name" id="vendor_name" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
-                                    <label for="vendoremail" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
-                                    <input type="email" v-model="vendoremail" placeholder="Write comment" name="vendoremail" id="vendoremail" class="mt-2 w-full secondary-input">
+                                    <label for="email_address" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
+                                    <input type="email" v-model="email_address" placeholder="Write comment" name="email_address" id="email_address" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
-                                    <label for="vendormobilenumber" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
-                                    <input type="number" v-model="vendormobilenumber" name="vendormobilenumber" id="vendormobilenumber" class="mt-2 w-full secondary-input">
+                                    <label for="mobile_number" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
+                                    <input type="text" v-model="mobile_number" name="mobile_number" id="mobile_number" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
-                                        <v-select :filter="fuseSearch" :options="cities" :get-option-label="(option) => option.name" placeholder="Choose" >
+                                        <v-select :filter="fuseSearch" :options="cities" :get-option-label="(option) => option.name" placeholder="Choose" v-model="city"  :reduce="cities => cities.name">
                                             <template #option="{ name }">
                                                 {{ name }} 
                                             </template>
@@ -129,26 +132,26 @@
                         <div class="grid grid-cols-2 gap-y-5 gap-x-3">
                             <div class="col-span-1">
                                 <div class="relative w-full">
-                                    <label for="firstname" class="text-base text-blue-grey text-xs font-inter-700">First Name</label>
-                                    <input type="text" v-model="firstname" placeholder="" name="firstname" id="firstname" class="mt-2 w-full secondary-input"/>
+                                    <label for="reported_first_name" class="text-base text-blue-grey text-xs font-inter-700">First Name</label>
+                                    <input type="text" v-model="reported_first_name" placeholder="" name="reported_first_name" id="reported_first_name" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
-                                    <label for="lastname" class="text-base text-blue-grey text-xs font-inter-700">Last Name</label>
-                                    <input type="text" v-model="lastname" placeholder="Write comment" name="lastname" id="lastname" class="mt-2 w-full secondary-input">
+                                    <label for="reported_last_name" class="text-base text-blue-grey text-xs font-inter-700">Last Name</label>
+                                    <input type="text" v-model="reported_last_name" placeholder="Write comment" name="reported_last_name" id="reported_last_name" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
-                                    <label for="reporteremail" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
-                                    <input type="email" v-model="reporteremail" placeholder="Write comment" name="reporteremail" id="reporteremail" class="mt-2 w-full secondary-input">
+                                    <label for="reported_email_address" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
+                                    <input type="email" v-model="reported_email_address" placeholder="Write comment" name="reported_email_address" id="reported_email_address" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
-                                    <label for="reportermobilenumber" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
-                                    <input type="number" v-model="reportermobilenumber" name="reportermobilenumber" id="reportermobilenumber" class="mt-2 w-full secondary-input">
+                                    <label for="reported_mobile_number" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
+                                    <input type="text" v-model="reported_mobile_number" name="reported_mobile_number" id="reported_mobile_number" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                         </div>
@@ -213,7 +216,7 @@
             </div>
             <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
                 <ContentCard cardTitle="Assigned Agencies">
-                    <div class="block p-2">
+                    <div class="block p-2 py-4 ">
                         <div class="grid grid-cols-5 gap-y-5 gap-x-5">
                             <div v-for="agency in currentAgencies" class="col-span-1">
                                 <div v-for="item in agency">
@@ -401,7 +404,7 @@
                     <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
                         Cancel
                     </button>
-                    <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    <button @click="createTicket()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                         Submit
                     </button>
                 </div>
@@ -427,7 +430,20 @@ export default {
     data () {
         return{
             vendorcity: null,
-
+            //Create Ticket
+            product_service: '',
+            complaint: '',
+            platform: '',
+            link: '',
+            additional_documents_file: '',
+            vendor_name: '',
+            email_address: '',
+            city: '',
+            reported_first_name: '',
+            reported_last_name: '',
+            reported_email_address: '',
+            reported_mobile_number: '',
+            remarks: '',
             //Agencies
             allAgencies: [],
             filterSearchAgency: '',
@@ -495,6 +511,67 @@ export default {
                 document.querySelector('body').style.overflow = 'auto';
                 this.modalActive = false;
             }
+        },
+        //Input File
+        onFileChange($event) {
+            var files = $event.target.files || $event.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.additional_documents_file = files['0']['name'];
+        },
+        //Create
+        async createTicket() {
+            await axios.post('api/v1/tickets', {
+                // product_service: this.product_service,
+                // complaint: this.complaint,
+                // platform: this.platform,
+                // link: this.link,
+                // additional_documents_file: this.additional_documents_file,
+                // vendor_name: this.vendor_name,
+                // email_address: this.email_address,
+                // mobile_number: this.mobile_number,
+                // city: this.city,
+                // reported_first_name: this.reported_first_name,
+                // reported_last_name: this.reported_last_name,
+                // reported_email_address: this.reported_email_address,
+                // reported_mobile_number: this.reported_mobile_number,
+                // remarks: this.remarks,
+                // agencies: [{'agency_id': '1'}],
+                // violations: [{'violation': 'test'}],
+                // violations: [{'amount': '1oo'}],
+                
+                // product_service: 'testing',
+                // complaint: 'testing',
+                // platform: 'testing',
+                // link: 'testing.com',
+                // additional_documents_file: 'testing.pndf',
+                // vendor_name: 'testing',
+                // email_address: 'testing@testing.com',
+                // mobile_number: '09064563728',
+                // city: 'city',
+                // reported_first_name: 'testing',
+                // reported_last_name: 'testing',
+                // reported_email_address: 'testing@testing.com',
+                // reported_mobile_number: '09064563728',
+                // remarks: 'testing',
+                // violations[0][violation]: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                // violations[0][amount]: '100',
+                // agencies[0][agency_id]: '1'
+
+            })
+            .then((success) => {
+                //Alert Content
+                this.successAlert = true;
+                this.successMessage = 'Ticket submitted & assigned agencies notified';
+                this.successIcon = 'like.png';
+                this.closeModal();
+                console.log(success)
+            })
+            .catch((error) => {
+                this.successAlert = true;
+                this.successMessage = 'Error occured. Please try again';
+                this.successIcon = 'warning-red.png';
+            })
         },
     },
 }
