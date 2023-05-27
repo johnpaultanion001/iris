@@ -334,7 +334,7 @@ export default {
             roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}], 
             fStatus: '',
             status: [{name: 'Active', value: 'ACTIVE'}, {name: 'Inactive', value: 'INACTIVE'}], 
-            fAgencyValue: '',
+            fAgencyValue: [],
             fFrom: '',
             fTo: '',
             responseFiltered: '',
@@ -384,7 +384,8 @@ export default {
                 user_type: this.fRole,
                 account_status: this.fStatus,
                 from: this.reformat_date(this.fFrom),
-                till: this.reformat_date(this.fTill)
+                till: this.reformat_date(this.fTill),
+                agencies: this.fAgencyValue
             })
             .then((success) => {
                 this.responseFiltered = success.data.data
@@ -398,7 +399,7 @@ export default {
             this.isFiltering = false
             this.fRole = ''
             this.fStatus = ''
-            this.fAgencyValue = ''
+            this.fAgencyValue = []
             this.fFrom = ''
             this.fTo = ''
         },

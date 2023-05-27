@@ -8,7 +8,13 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">Product/Service</label>
-                                    <input type="text" v-model="product_service" placeholder="" name="productservice" id="productservice" class="mt-2 w-full secondary-input"/>
+                                    <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
+                                        <v-select :filter="fuseSearch" :options="products" :get-option-label="option => option" placeholder="Product/Service" v-model="product_service" :reduce="products => products.product_service">
+                                            <template #option="{ product_service }" >
+                                                {{ product_service }} 
+                                            </template>
+                                        </v-select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -22,47 +28,47 @@
                                 <div class="grid grid-rows-3 grid-flow-col">
                                     <div class="flex items-center justify-start my-1">
                                         <label for="facebook" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="checkbox" v-model="platform" value="Facebook" id="facebook" class="mr-2.5"/> Facebook
+                                            <input type="radio" v-model="platform" value="Facebook" id="facebook" class="mr-2.5"/> Facebook
                                         </label>
                                     </div>
                                     <div class="flex items-center justify-start my-1">
                                         <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="checkbox" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
+                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
                                         </label>
                                     </div>
                                     <div class="flex items-center justify-start my-1">
                                         <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="checkbox" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
+                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
                                         </label>
                                     </div>
                                     <div class="flex items-center justify-start my-1">
                                         <label for="lazada" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="checkbox" v-model="platform" value="Lazada" id="lazada" class="mr-2.5"/> Lazada
+                                            <input type="radio" v-model="platform" value="Lazada" id="lazada" class="mr-2.5"/> Lazada
                                         </label>
                                     </div>
                                     <div class="flex items-center justify-start my-1">
                                         <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="checkbox" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
+                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
                                         </label>
                                     </div>
                                     <div class="flex items-center justify-start my-1">
                                         <label for="facebook" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="checkbox" v-model="platform" value="Facebook" id="facebook" class="mr-2.5"/> Facebook
+                                            <input type="radio" v-model="platform" value="Facebook" id="facebook" class="mr-2.5"/> Facebook
                                         </label>
                                     </div>
                                     <div class="flex items-center justify-start my-1">
                                         <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="checkbox" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
+                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
                                         </label>
                                     </div>
                                     <div class="flex items-center justify-start my-1">
                                         <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="checkbox" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
+                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
                                         </label>
                                     </div>
                                     <div class="flex items-center justify-start my-1">
                                         <label for="lazada" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="checkbox" v-model="platform" value="Lazada" id="lazada" class="mr-2.5"/> Lazada
+                                            <input type="radio" v-model="platform" value="Lazada" id="lazada" class="mr-2.5"/> Lazada
                                         </label>
                                     </div>
                                 </div>
@@ -166,46 +172,38 @@
                                 <div class="scroll-style overflow-auto mb-4">
                                     <table class="table-auto w-full">
                                         <tbody>
-                                            <tr class="border-b border-light relative">
-                                                <td class="flex items-start h-15">
-                                                    <p class="font-inter-400 text-base text-blue-grey w-fit">1</p>
-                                                </td>
+                                            <tr class="border-b border-light relative" v-for="(violation, index) in selectedViolations">
                                                 <td>
                                                     <div class="flex items-center flex-nowrap h-15">
-                                                        <p class="font-inter-400 text-sm text-black ellipsis-2" style="height: 40px">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
+                                                        <p class="font-inter-400 text-base text-blue-grey w-fit mr-4">{{ index + 1 }}</p>
+                                                        <p class="font-inter-400 text-base text-black">{{ violation.violation }}</p>
                                                     </div>
                                                 </td>
-                                                <td @click="openModal('modalEditAmount')"  class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                    <img src="/img/icon/edit-blue.png" class="mr-2">
-                                                    <p class="font-inter-400 text-base text-black whitespace-nowrap">Php 5,000.00</p>
+                                                <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
+                                                    <img v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
+                                                    <img v-if="violation.amount" @click.prevent="openModal('modalEditAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
+                                                    <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
+                                                    <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
                                                 </td>
                                             </tr>
-                                            <tr class="border-b border-light relative">
-                                                <td class="flex items-start h-15">
-                                                    <p class="font-inter-400 text-base text-blue-grey w-5">1</p>
-                                                </td>
+                                            <tr class="relative">
                                                 <td>
                                                     <div class="flex items-center flex-nowrap h-15">
-                                                        <p class="font-inter-400 text-sm text-black ellipsis-2" style="height: 40px">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
+                                                        <p class="font-inter-700 text-base text-black">Total Fine</p>
                                                     </div>
                                                 </td>
-                                                <td @click="openModal('modalAddAmount')" class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                    <img src="/img/icon/edit-blue.png" class="mr-2">
-                                                    <p class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
+                                                <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
+                                                    <p class="font-inter-700 text-base text-black">Php {{ total }}</p>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="flex items-center justify-between h-15">
-                                        <p class="font-inter-700 text-base text-black">Total Fine</p>
-                                        <p class="font-inter-700 text-base text-black">Php 10,000.00</p>
-                                    </div>
                                 </div>
                                 <div class="flex items-center justify-start w-full">
-                                    <button @click="openModal('modalViolation')" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
+                                    <button @click="openModal('modalViolation');" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
                                         Add
                                     </button>
-                                    <button class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
+                                    <button @click="updateViolation()" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
                                         Update
                                     </button>
                                 </div>
@@ -298,33 +296,9 @@
                                 <img src="/img/icon/search.png" class="search-img" style="top: 23px;">
                             </div>
                             <div class="py-2">
-                                <label class="cursor-pointer flex items-start">
-                                    <input type="checkbox" class="mt-1">
-                                    <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
-                                </label>
-                            </div>
-                            <div class="py-2">
-                                <label class="cursor-pointer flex items-start">
-                                    <input type="checkbox" class="mt-1">
-                                    <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
-                                </label>
-                            </div>
-                            <div class="py-2">
-                                <label class="cursor-pointer flex items-start">
-                                    <input type="checkbox" class="mt-1">
-                                    <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
-                                </label>
-                            </div>
-                            <div class="py-2">
-                                <label class="cursor-pointer flex items-start">
-                                    <input type="checkbox" class="mt-1">
-                                    <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
-                                </label>
-                            </div>
-                            <div class="py-2">
-                                <label class="cursor-pointer flex items-start">
-                                    <input type="checkbox" class="mt-1">
-                                    <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit elit, eu dignissim vitae cras. </p>
+                                <label class="cursor-pointer flex items-start" v-for="(violation, index) in allViolations">
+                                    <input type="checkbox" class="mt-1" @change.prevent="violationChecked(violation.id, violation.index, $event)" :value="violation.id" v-model="chosenViolations">
+                                    <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">{{ violation.violation }}</p>
                                 </label>
                             </div>
                         </div>
@@ -336,7 +310,7 @@
                     <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-2 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
                         Close
                     </button>
-                    <button @click="addChecked()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    <button @click="addCheckedViolation()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                         Update
                     </button>
                 </div>
@@ -349,7 +323,7 @@
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <div class="relative w-full">
-                                <input type="text" v-model="filterSearchViolation" placeholder="Search" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
+                                <input type="text" v-model="violationAmount" placeholder="Search" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
                                 <p class="php font-inter-700 text-blue-grey">Php</p>
                             </div>
                         </div>
@@ -368,13 +342,14 @@
             </template>
         </Modal>
         
+        
         <Modal modalTitle="Edit Amount" v-show="modalActive && showModal == 'modalEditAmount'" @close="closeModal">
             <template v-slot:body>
                 <form class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <div class="relative w-full">
-                                <input type="text" v-model="filterSearchViolation" placeholder="Search" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
+                                <input type="text" v-model="violationAmount" placeholder="Enter amount" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
                                 <p class="php font-inter-700 text-blue-grey">Php</p>
                             </div>
                         </div>
@@ -386,7 +361,7 @@
                     <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-2 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
                         Cancel
                     </button>
-                    <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    <button @click="editAmount()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                         Save
                     </button>
                 </div>
@@ -449,6 +424,7 @@ export default {
             filterSearchAgency: '',
             selectedAgencies: [],
             currentAgencies: [],
+            arrayAgencies: [],
             //Cities
             filteredCities: [],
             cityDD: false,
@@ -456,18 +432,46 @@ export default {
             //Modal
             showModal: '',
             modalActive: false,
+            //Products Services
+            products: [],
+            //Violations
+            allViolations: [],
+            filterSearchViolation: '',
+            checkedViolations: [],
+            selectedViolations: [],
+            chosenViolations: [],
+            arrayViolations: [],
         };
     },
     watch: {
         filterSearchAgency: function() {
             this.getAgencies();
+        },
+        filterSearchViolation: function() {
+            this.getViolations();
         }
     },
     components: { PageLayout, ContentCard, vSelect, Modal },
     async mounted(){
         this.getAgencies()
+        this.getProducts()
+        this.getViolations()
+    },
+    computed: {
+        total: function(){
+            return this.selectedViolations.reduce(function(total, item){
+                return total + parseInt(item.amount); 
+            },0);
+        },
     },
     methods: {
+        //Get Product Services
+        async getProducts(){
+            this.pageNumber = 0;
+            const response = await axios.get('api/v1/ticket/product_service');
+            //Filter Products
+            this.products = response.data.data;
+        },
         //Get Agencies
         async getAgencies(){
             const response = await axios.get('api/v1/agencies');
@@ -487,7 +491,71 @@ export default {
         },
         //Add checked agencies
         addChecked(){
+            const arrayAgencies = []
+            this.selectedAgencies.map(function(value, key) {
+                value.map(function(value, key) {
+                    arrayAgencies.push({agency_id: value.id});
+                });
+            });
+            this.arrayAgencies = arrayAgencies
+            console.log(this.arrayAgencies)
+            console.log(this.selectedAgencies)
             this.currentAgencies = this.selectedAgencies;
+            this.closeModal();
+        },//Get Violations
+        async getViolations(){
+            const response = await axios.get('api/v1/list_violations');
+            //Filter Agencies Ticket
+            this.allViolations = response.data.data.filter((a) => (a.violation.includes(this.filterSearchViolation) ||  a.violation.toLowerCase().includes(this.filterSearchViolation)));
+        },
+        //Get checked Violations
+        violationChecked(id, index, $event){
+            const checked = $event.target.checked;
+            const violations = this.allViolations.filter((a) => (a.id == id));
+            
+            if(checked){
+                this.checkedViolations.push(violations['0']); 
+            }else{
+                this.checkedViolations.splice(violations['0'], 1);
+            }
+
+            console.log(this.checkedViolations)
+            console.log(this.selectedViolations)
+        },
+        //Add checked Violations
+        addCheckedViolation(){
+            const arrayViolations = []
+            this.selectedViolations.map(function(value, key) {
+                arrayViolations.push({violation: value.violation, amount: value.amount});
+            });
+            this.arrayViolations = arrayViolations
+
+            this.selectedViolations = this.checkedViolations
+            
+            this.closeModal();
+        },
+        editAmount(){
+            const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
+            violation['0'].amount = this.violationAmount
+
+            const arrayViolations = []
+            this.selectedViolations.map(function(value, key) {
+                arrayViolations.push({violation: value.violation, amount: value.amount});
+            });
+            this.arrayViolations = arrayViolations
+
+            this.closeModal();
+        },
+        addAmount(){
+            const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
+            violation['0'].amount = this.violationAmount
+            
+            const arrayViolations = []
+            this.selectedViolations.map(function(value, key) {
+                arrayViolations.push({violation: value.violation, amount: value.amount});
+            });
+            this.arrayViolations = arrayViolations
+            
             this.closeModal();
         },
         //Cities Search
@@ -522,41 +590,22 @@ export default {
         //Create
         async createTicket() {
             await axios.post('api/v1/tickets', {
-                // product_service: this.product_service,
-                // complaint: this.complaint,
-                // platform: this.platform,
-                // link: this.link,
-                // additional_documents_file: this.additional_documents_file,
-                // vendor_name: this.vendor_name,
-                // email_address: this.email_address,
-                // mobile_number: this.mobile_number,
-                // city: this.city,
-                // reported_first_name: this.reported_first_name,
-                // reported_last_name: this.reported_last_name,
-                // reported_email_address: this.reported_email_address,
-                // reported_mobile_number: this.reported_mobile_number,
-                // remarks: this.remarks,
-                // agencies: [{'agency_id': '1'}],
-                // violations: [{'violation': 'test'}],
-                // violations: [{'amount': '1oo'}],
-                
-                // product_service: 'testing',
-                // complaint: 'testing',
-                // platform: 'testing',
-                // link: 'testing.com',
-                // additional_documents_file: 'testing.pndf',
-                // vendor_name: 'testing',
-                // email_address: 'testing@testing.com',
-                // mobile_number: '09064563728',
-                // city: 'city',
-                // reported_first_name: 'testing',
-                // reported_last_name: 'testing',
-                // reported_email_address: 'testing@testing.com',
-                // reported_mobile_number: '09064563728',
-                // remarks: 'testing',
-                // violations[0][violation]: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                // violations[0][amount]: '100',
-                // agencies[0][agency_id]: '1'
+                product_service: this.product_service,
+                complaint: this.complaint,
+                platform: this.platform,
+                link: this.link,
+                additional_documents_file: this.additional_documents_file,
+                vendor_name: this.vendor_name,
+                email_address: this.email_address,
+                mobile_number: this.mobile_number,
+                city: this.city,
+                reported_first_name: this.reported_first_name,
+                reported_last_name: this.reported_last_name,
+                reported_email_address: this.reported_email_address,
+                reported_mobile_number: this.reported_mobile_number,
+                remarks: this.remarks,
+                agencies: this.arrayAgencies,
+                violations: this.arrayViolations,
 
             })
             .then((success) => {

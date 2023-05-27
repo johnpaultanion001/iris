@@ -256,7 +256,7 @@
         <template v-slot:body>
             <form class="block">
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
-                    <div class="col-span-2">
+                    <div class="col-span-2"> 
                         <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">Product/Service</label>
                         <div class="relative w-full">
                             <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
@@ -428,7 +428,7 @@ export default {
             fProductSevice: '',
             fSeverity: '',
             severities: [{name: 'Low', value: 'LOW'}, {name: 'Medium', value: 'MEDIUM'}, {name: 'High', value: 'HIGH'}], 
-            fAgencyValue: '',
+            fAgencyValue: [],
             fFrom: '',
             fTo: '',
             isFiltering: '',
@@ -498,7 +498,7 @@ export default {
             this.isFiltering = false
             this.fProductSevice = ''
             this.fSeverity = ''
-            this.fAgencyValue = ''
+            this.fAgencyValue = []
             this.fFrom = ''
             this.fTo = ''
         },
@@ -510,7 +510,8 @@ export default {
                 product_service: this.fProductSevice,
                 severity: this.fSeverity,
                 from: this.reformat_date(this.fFrom),
-                till: this.reformat_date(this.fTill)
+                till: this.reformat_date(this.fTill),
+                agencies: this.fAgencyValue
             })
             .then((success) => {
                 this.responseFiltered = success.data.data

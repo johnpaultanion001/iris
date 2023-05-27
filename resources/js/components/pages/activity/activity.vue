@@ -236,7 +236,7 @@ export default {
             dropdownToggle: '',
             fRole: '',
             roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}], 
-            fAgencyValue: '',
+            fAgencyValue: [],
             fFrom: '',
             fTo: '',
             fTFrom: '',
@@ -299,7 +299,7 @@ export default {
             this.isFiltering = false
             this.fRole = ''
             this.fStatus = ''
-            this.fAgencyValue = ''
+            this.fAgencyValue = []
             this.fFrom = ''
             this.fTo = ''
             this.fTFrom = ''

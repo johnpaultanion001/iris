@@ -154,7 +154,7 @@
                                     <tbody>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Product/Service</td>
-                                            <td class="py-3 text-black text-base font-exo-400">{{ ticketInfo.product_service }}</td>
+                                            <td class="py-3 text-black text-lg font-exo-600">{{ ticketInfo.product_service }}</td>
                                         </tr>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Complaint</td>
@@ -166,7 +166,7 @@
                                         </tr>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Link</td>
-                                            <td class="py-3 text-black text-base font-exo-400">{{ ticketInfo.link }}</td>
+                                            <td class="py-3 text-blue text-base font-exo-400"><a :href="ticketInfo.link" download>{{ ticketInfo.link }}</a></td>
                                         </tr>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Created By</td>
@@ -202,7 +202,11 @@
                                         </tr>
                                         <tr class="relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Attatched Documents</td>
-                                            <td class="py-3 text-black text-base font-exo-400">Slider</td>
+                                            <td class="py-3 text-black text-base font-exo-400">
+                                                <div class="rounded w-30 h-30 bg-light flex items-center justify-center" style="background: #D9D9D">
+                                                    <img :src="ticketInfo.additional_documents_file">
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -263,10 +267,10 @@
                                                             </div>
                                                         </td>
                                                         <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                            <img v-if="!violation.amount" @click="openModal('modalAddAmount')" src="/img/icon/edit-blue.png" class="mr-2">
-                                                            <img v-if="violation.amount" @click="openModal('modalEditAmount')" src="/img/icon/edit-blue.png" class="mr-2">
+                                                            <img v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
+                                                            <img v-if="violation.amount" @click.prevent="openModal('modalEditAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
                                                             <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
-                                                            <p v-if="!violation.amount" @click="openModal('modalAddAmount')" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
+                                                            <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
                                                         </td>
                                                     </tr>
                                                     <tr class="relative">
@@ -276,17 +280,17 @@
                                                             </div>
                                                         </td>
                                                         <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                            <p class="font-inter-700 text-base text-black">Php {{ ticketInfo.total_fine }}</p>
+                                                            <p class="font-inter-700 text-base text-black">Php {{ total }}</p>
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="flex items-center justify-start w-full">
-                                            <button @click="openModal('modalViolation')" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
+                                            <button @click="openModal('modalViolation');" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
                                                 Add
                                             </button>
-                                            <button class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
+                                            <button @click="updateViolation()" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
                                                 Update
                                             </button>
                                         </div>
@@ -314,7 +318,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-start w-full pt-5">
-                                    <button class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
+                                    <button @click="updateAgency()" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
                                         Update
                                     </button>
                                 </div>
@@ -449,7 +453,7 @@
                 <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-2 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
                     Close
                 </button>
-                <button @click="addChecked()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                <button @click="addCheckedAgencies()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                     Add
                 </button>
             </div>
@@ -480,7 +484,7 @@
                 <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-2 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
                     Close
                 </button>
-                <button @click="addChecked()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                <button @click="addCheckedViolation()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                     Update
                 </button>
             </div>
@@ -673,8 +677,10 @@ export default {
             allAgencies: [],
             selected: [],
             filterSearchAgency: '',
+            checkedAgencies: [],
             selectedAgencies: [],
             chosenAgencies: [],
+            arrayAgencies: [],
             //Cities
             filteredCities: [],
             cityDD: false,
@@ -694,8 +700,11 @@ export default {
             //Violations
             allViolations: [],
             filterSearchViolation: '',
+            checkedViolations: [],
             selectedViolations: [],
             chosenViolations: [],
+            arrayViolations: [],
+            violationAmount: ''
 
         };
     },
@@ -707,6 +716,13 @@ export default {
         filterSearchViolation: function() {
             this.getViolations();
         }
+    },
+    computed: {
+        total: function(){
+            return this.selectedViolations.reduce(function(total, item){
+                return total + parseInt(item.amount); 
+            },0);
+        },
     },
     async mounted(){
         this.getAgencies();
@@ -722,22 +738,34 @@ export default {
 
             //clone Ticket Agencies to Selected Agencies
             const selectedAgencies = []
+            const checkedAgencies = []
             const chosenAgencies = []
+            const arrayAgencies = []
             this.ticketInfo.assigned_agencies.map(function(value, key) {
                 selectedAgencies.push(value);
+                checkedAgencies.push(value);
                 chosenAgencies.push(value.id);
+                arrayAgencies.push({agency_id: value.id});
             });
             this.chosenAgencies = chosenAgencies
+            this.arrayAgencies = arrayAgencies
+            this.checkedAgencies = checkedAgencies
             this.selectedAgencies = selectedAgencies
 
             
             //clone Ticket Violations to Selected Violations
             const selectedViolations = []
+            const checkedViolations = []
             const chosenViolations = []
+            const arrayViolations = []
             this.ticketInfo.violations['0'].map(function(value, key) {
                 selectedViolations.push(value);
                 chosenViolations.push(value.id);
+                checkedViolations.push(value);
+                arrayViolations.push({violation: value.violation, amount: value.amount});
             });
+            this.checkedViolations = checkedViolations
+            this.arrayViolations = arrayViolations
             this.chosenViolations = chosenViolations
             this.selectedViolations = selectedViolations
         },
@@ -753,15 +781,40 @@ export default {
             const agencies = this.allAgencies.filter((a) => (a.code == code));
             
             if(checked){
-                this.selectedAgencies.push(agencies['0']); 
+                this.checkedAgencies.push(agencies['0']); 
             }else{
-                this.selectedAgencies.splice(agencies['0'], 1);
+                this.checkedAgencies.splice(agencies['0'], 1);
             }
         },
         //Add checked agencies
-        addChecked(){
-            //clone Selected Agencies to Current Agencies
+        addCheckedAgencies(){
+            //clone checked Agencies to selected Agencies
+            this.selectedAgencies = this.checkedAgencies
             this.closeModal();
+        },
+        //Update Agencies
+        async updateAgency(){
+            //clone Ticket Agencies to Selected Agencies
+            const arrayAgencies = []
+            this.selectedAgencies.map(function(value, key) {
+                arrayAgencies.push({agency_id: value.id});
+            });
+            this.arrayAgencies = arrayAgencies
+
+            //Post
+            await axios.post('api/v1/ticket/assigned_agencies', {
+                ticket_id: this.id,
+                agencies: this.arrayAgencies
+            })
+            .then((success) => {
+                //Alert Content
+                this.successAlert = true;
+                this.successMessage = 'Successfully updated';
+                this.successIcon = 'like.png';
+            })
+            .catch((error) => {
+                console.log(error)
+            })
         },
         //Remove checked agencies
         removeChecked(code){
@@ -769,6 +822,16 @@ export default {
             if (index !== -1) {
                 this.selectedAgencies.splice(index, 1)
             }
+
+            //clone
+            const checkedAgencies = []
+            const chosenAgencies = []
+            this.selectedAgencies.map(function(value, key) {
+                checkedAgencies.push(value);
+                chosenAgencies.push(value.id);
+            });
+            this.chosenAgencies = chosenAgencies
+            this.checkedAgencies = checkedAgencies
         },
         //Get Violations
         async getViolations(){
@@ -782,19 +845,32 @@ export default {
             const violations = this.allViolations.filter((a) => (a.id == id));
             
             if(checked){
-                this.selectedViolations.push(violations['0']); 
+                this.checkedViolations.push(violations['0']); 
             }else{
-                this.selectedViolations.splice(violations['0'], 1);
+                this.checkedViolations.splice(violations['0'], 1);
             }
 
+            console.log(this.checkedViolations)
             console.log(this.selectedViolations)
         },
-        async editViolation(){
-            const inputs =  {
-                ticket_id: this.id,
-            };
+        //Add checked agencies
+        addCheckedViolation(){
+            this.selectedViolations = this.checkedViolations
+            this.closeModal();
+        },
+        //Update Violations
+        async updateViolation(){
+            const arrayViolations = []
+            this.selectedViolations.map(function(value, key) {
+                arrayViolations.push({violation: value.violation, amount: value.amount});
+            });
+            this.arrayViolations = arrayViolations
 
-            await axios.put('api/v1/violations', inputs)
+            //Post
+            await axios.post('api/v1/ticket/violations', {
+                ticket_id: this.id,
+                violations: this.arrayViolations
+            })
             .then((success) => {
                 //Alert Content
                 this.successAlert = true;
@@ -802,8 +878,18 @@ export default {
                 this.successIcon = 'like.png';
             })
             .catch((error) => {
-                console.log(inputs)
+                console.log(error)
             })
+        },
+        editAmount(){
+            const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
+            violation['0'].amount = this.violationAmount
+            this.closeModal();
+        },
+        addAmount(){
+            const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
+            violation['0'].amount = this.violationAmount
+            this.closeModal();
         },
         //Cities Search
         fuseSearch(options, search) {
