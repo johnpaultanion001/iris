@@ -61,7 +61,7 @@ const routes = [
         component: createTicket
     },
     {
-        path: '/edit-ticket',
+        path: '/edit-ticket/:id',
         component: editTicket
     },
     {
