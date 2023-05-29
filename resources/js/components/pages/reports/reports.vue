@@ -12,19 +12,19 @@
             <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
                 <ContentCard>
                     <div class="notifications py-2 rounded-2xl bg-white overflow-hidden">
-                        <router-link to="/" class="notification flex items-center justify-between border-b border-light py-4 pl-3.5 pr-3.5 md:pr-8 bg-white hover:bg-lighter-grey">
+                        <div class="notification flex items-center justify-between border-b border-light py-4 pl-3.5 pr-3.5 md:pr-8 bg-white hover:bg-lighter-grey" v-for="(report, index) in reports.slice(0, limit)">
                             <div class="notification flex items-center justify-between">
                                 <div class="p-3">
-                                    <p :class="read ? 'font-inter-700 ' : 'font-inter-400'" class="text-base text-black">Report title</p>
-                                    <p class="font-inter-400 text-xs" style="color: #757575">For more context, the report description will be placed here.</p>
+                                    <p :class="read ? 'font-inter-700 ' : 'font-inter-400'" class="text-base text-black">{{ report.title }}</p>
+                                    <p class="font-inter-400 text-xs" style="color: #757575">{{ report.description }}</p>
                                 </div>
                             </div>
-                            <div class="notification flex items-center hidden sm:block justify-between">
-                                <img src="/img/icon/download.png">
+                            <div v-if="report.file" class="notification flex items-center hidden sm:block justify-between">
+                                <a :href="report.file" download><img src="/img/icon/download.png"></a>
                             </div>
-                        </router-link>
-                        <div class="py-4 px-8 bg-white">
-                            <button class="text-blue font-inter-700 text-xs">LOAD MORE</button>
+                        </div>
+                        <div v-if="reports.length > limit" class="py-4 px-8 bg-white">
+                            <button @click="loadmore()" class="text-blue font-inter-700 text-xs">LOAD MORE</button>
                         </div>
                     </div>
                 </ContentCard>
@@ -36,6 +36,7 @@
 <script>
 
 import PageLayout from '../../pageLayout.vue'
+import axios from 'axios'
 
 export default {
     setup: () => ({
@@ -43,9 +44,26 @@ export default {
     }),
     data () {
         return{
-            read: true
+            read: true,
+            reports: [],
+            limit: 10
         };
     },
     components: { PageLayout },
+    async mounted() {
+        //Get Tickets
+        this.getReports();
+    },
+    methods: {
+        //Get Reports
+        async getReports(){
+            const response = await axios.get('api/v1/reports');
+            this.reports = response.data.data;
+        },
+        loadmore(){
+            this.limit = this.limit + 2
+            this.getReports();
+        }
+    }
 }
 </script>

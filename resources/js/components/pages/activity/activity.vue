@@ -160,15 +160,15 @@
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="from" class="text-base text-blue-grey text-xs font-inter-700">Time From</label>
-                            <input type="date" v-model="fTFrom" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/date-blue.png" class="date-img">
+                            <input type="time" v-model="fTFrom" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
+                            <img src="/img/icon/clock-active.png" class="date-img">
                         </div>
                     </div>
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="to" class="text-base text-blue-grey text-xs font-inter-700">Time To</label>
-                            <input type="date" v-model="fTTo" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/date-blue.png" class="date-img">
+                            <input type="time" v-model="fTTo" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
+                            <img src="/img/icon/clock-active.png" class="date-img">
                         </div>
                     </div>
                     <div class="col-span-2">
@@ -279,7 +279,7 @@ export default {
             this.getRvendors(0)
             this.isFiltering = true
 
-            await axios.post('api/v1/filter/vendors', {
+            await axios.post('api/v1/filter/activity', {
                 role: this.fRole,
                 agency: this.fAgencyValue,
                 from: this.fFrom,
