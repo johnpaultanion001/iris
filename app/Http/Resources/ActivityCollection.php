@@ -29,17 +29,16 @@ class ActivityResource extends ApiResource
     public function toArray($request)
     {
 
-      $user = \App\Models\User::where('id',$this->causer_id)->first();
       return [
           'action' => $this->event ?? '',
           'activity' => $this->description ?? '',
-          'agency' => $user->agency->code ?? '' ,
+          'agency' => $this->user->agency->code ?? '' ,
           'assigned_agencies' =>[
-            new AgencyResource($user->agency),
+            new AgencyResource($this->user->agency),
           ],
           'user' => [
-              'name' => $user->name ?? '',
-              'role' => $user->role ?? '',
+              'name' => $this->user->name ?? '',
+              'role' => $this->user->role ?? '',
           ],
           'created_at' => (string)$this->created_at->toDateTimeString(),
 

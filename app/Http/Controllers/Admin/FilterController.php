@@ -8,11 +8,12 @@ use App\Http\Controllers\ApiController;
 use App\Http\Resources\TicketCollection;
 use App\Http\Resources\VendorCollection;
 use App\Http\Resources\UserCollection;
+use App\Http\Resources\ActivityCollection;
 use App\Models\Ticket;
 use App\Models\Vendor;
 use App\Models\User;
 use App\Models\Agency;
-
+use Spatie\Activitylog\Models\Activity;
 
 class FilterController extends ApiController
 {
@@ -39,17 +40,40 @@ class FilterController extends ApiController
 
   public function filter_users(Request $request)
   {
-    $collection = User::whereIn('agency_id', request('agencies') ?? Agency::select('id'))
-                ->where('role', request('user_type'))
-                ->orWhereNull('role')
+    if(request('user_type') == null){
+      $collection = User::whereIn('agency_id', request('agencies') ?? Agency::select('id'))
+                    ->where('role', request('user_type'))
+                    ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])
+                    ->latest()->get();
+    }
+    elseif(request('account_status') == null){
+      $collection = User::whereIn('agency_id', request('agencies') ?? Agency::select('id'))
                 ->where('status', request('account_status'))
-                ->orWhereNull('status')
                 ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])
                 ->latest()->get();
+    }else{
+      $collection = User::whereIn('agency_id', request('agencies') ?? Agency::select('id'))
+      ->where('role', request('user_type'))
+      ->where('status', request('account_status'))
+      ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])
+      ->latest()->get();
+    }
+
 
     return new UserCollection($collection);
   }
 
+  public function filter_activities(Request $request)
+  {
+
+      $collection = Activity::whereHas('user', function($q) {
+                                  $q->where('role', request('user_type'));
+                                  $q->whereIn('agency_id', request('agencies') ?? Agency::select('id'));
+                              })
+                              ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])
+                              ->latest()->get();
+      return new ActivityCollection($collection);
+  }
 
 
 }
