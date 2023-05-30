@@ -1,4 +1,5 @@
 <template>
+    <AlertTop :alertIcon="'/img/icon/'+successIcon" :active="successAlert" :content="successMessage" v-if="successAlert" @close="closeAlert" />
     <PageLayout :pageName="title">
         <div class="grid grid-cols-12 gap-3 mb-6 pt-4">
             <div class="col-span-12 md:col-span-6">
@@ -166,8 +167,11 @@
                                             <span class="w-5 mr-3 text-center"><img src="/img/icon/edit.png" class="mx-auto"></span><span>Edit Profile</span>
                                         </div>
                                     </router-link>
-                                    <div class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
+                                    <div v-if="user.status == 'ACTIVE'" @click="openModal('deactivate'); modalUserID = user.id; modalUserName = user.name" class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
                                         <span class="w-5 mr-3 text-center"><img src="/img/icon/deactivate.png" class="mx-auto"></span><span>Deactivate</span>
+                                    </div>
+                                    <div v-if="user.status == 'INACTIVE'" @click="openModal('activate'); modalUserID = user.id; modalUserName = user.name" class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
+                                        <span class="w-5 mr-3 text-center"><img src="/img/icon/deactivate.png" class="mx-auto"></span><span>Activate</span>
                                     </div>
                                 </div>
                             </div>
@@ -184,47 +188,38 @@
                     <div class="col-span-2">
                         <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">User Type</label>
                         <div class="relative w-full">
-                            <input v-model="productServiceDD" type="text" placeholder="All products/services" name="productservice" id="productservice" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/down-blue.png" class="down-img">
-                            <div v-if="productServiceDD" class="dropdown absolute inset-x-0 top-12 border border-white rounded bg-white shadow-third overflow-hidden">
-                                <div to="/user-profile" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">Sample Product</p>
-                                </div>
-                                <div to="/" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">Sample Product</p>
-                                </div>
+                            <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
+                                <v-select :filter="fuseSearch" :options="roles" :get-option-label="option => option.name" placeholder="Choose" v-model="fRole" :reduce="roles => roles.value">
+                                    <template #option="{ name }" >
+                                        {{ name }} 
+                                    </template>
+                                </v-select>
                             </div>
                         </div>
                     </div>
                     <div class="col-span-2">
                         <label for="seveirty" class="text-base text-blue-grey text-xs font-inter-700">Account Status</label>
                         <div class="relative w-full">
-                            <input v-model="severityDD" type="text" placeholder="Severity" name="seveirty" id="seveirty" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/down-blue.png" class="down-img">
-                            <div v-if="severityDD" class="dropdown absolute inset-x-0 top-12 border border-white rounded bg-white shadow-third overflow-hidden">
-                                <div to="/user-profile" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">LOW</p>
-                                </div>
-                                <div to="/" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">MEDIUM</p>
-                                </div>
-                                <div to="/" class="py-3 px-5 text-sm font-opensans-600 flex items-center hover:bg-lighter">
-                                    <p class="font-inter-400 text-sm text-black">HIGH</p>
-                                </div>
+                            <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
+                                <v-select :filter="fuseSearch" :options="status" :get-option-label="(option) => option.name" placeholder="Choose" v-model="fStatus" :reduce="status => status.value">
+                                    <template #option="{ name }" >
+                                        {{ name }} 
+                                    </template>
+                                </v-select>
                             </div>
                         </div>
                     </div> 
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="from" class="text-base text-blue-grey text-xs font-inter-700">From</label>
-                            <input type="text" v-model="from" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
+                            <input type="date" v-model="fFrom" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
                             <img src="/img/icon/date-blue.png" class="date-img">
                         </div>
                     </div>
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="to" class="text-base text-blue-grey text-xs font-inter-700">To</label>
-                            <input type="text" v-model="to" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
+                            <input type="date" v-model="fTo" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
                             <img src="/img/icon/date-blue.png" class="date-img">
                         </div>
                     </div>
@@ -235,7 +230,7 @@
                             <img src="/img/icon/search.png" class="search-img">
                         </div>
                         <div v-for="(agency, index) in agencies" ref="agencies" class="my-4 flex items-center">
-                            <input type="checkbox" v-model="filterAgencyValue" :value="agency.id">
+                            <input type="checkbox" v-model="fAgencyValue" :value="agency.id">
                             <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
                             <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                         </div>
@@ -245,11 +240,47 @@
         </template>
         <template v-slot:footer>
             <div class="flex items-center justify-between w-full">
-                <button class="mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline">
+                <button @click="resetFilter()" class="mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline">
                     RESET FILTERS
                 </button>
-                <button class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                <button @click="filterList()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                     Apply
+                </button>
+            </div>
+        </template>
+    </Modal>
+    
+    <Modal v-show="modalActive && showModal == 'deactivate'" @close="closeModal">
+        <template v-slot:body>
+            <img src="/img/icon/invite-modal.png" class="mb-6">
+            <h5 class="font-exo-600 text-xl text-dark2 mb-4">Deactivate {{ modalUserName }}</h5>
+            <p class="font-inter-400 text-lg text-dark2 mb-11">Once you deactivate this account, the user can no longer access the system. Do you wish to continue?</p> 
+        </template>
+        <template v-slot:footer>
+            <div class="flex items-center justify-end w-full">
+                <button @click="closeModal()" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-4 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+                    Cancel
+                </button>
+                <button @click="deactivate(modalUserID)" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-red text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Yes, Deactive
+                </button>
+            </div>
+        </template>
+    </Modal>
+    
+    <Modal v-show="modalActive && showModal == 'activate'" @close="closeModal">
+        <template v-slot:body>
+            <img src="/img/icon/invite-modal.png" class="mb-6">
+            <h5 class="font-exo-600 text-xl text-dark2 mb-4">Activate {{ modalUserName }}</h5>
+            <p class="font-inter-400 text-lg text-dark2 mb-11">Once you activate this account, the user can access the system. Do you wish to continue?</p> 
+        </template>
+        <template v-slot:footer>
+            <div class="flex items-center justify-end w-full">
+                <button @click="closeModal()" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-4 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+                    Cancel
+                </button>
+                <button @click="activate(modalUserID)" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-green text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Yes, Active
                 </button>
             </div>
         </template>
@@ -265,6 +296,9 @@ import Modal from '../../utilities/modal.vue'
 import clickOutSide from "@mahdikhashan/vue3-click-outside"
 import axios from 'axios'
 import moment from 'moment'
+import AlertTop from '../../utilities/alertTop.vue'
+import Fuse from 'fuse.js'
+import vSelect from 'vue-select'
 
 export default {
     setup: () => ({
@@ -289,9 +323,22 @@ export default {
             //Modal
             showModal: '',
             modalActive: false,
-            modalTicketID: '',
+            modalUserID: null,
+            modalUserName: null,
+            successAlert: false,
+            successMessage: '',
+            successIcon: null,
             //Filter Modal
             dropdownToggle: '',
+            fRole: '',
+            roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}], 
+            fStatus: '',
+            status: [{name: 'Active', value: 'ACTIVE'}, {name: 'Inactive', value: 'INACTIVE'}], 
+            fAgencyValue: [],
+            fFrom: '',
+            fTo: '',
+            responseFiltered: '',
+            isFiltering: false,
             //Agencies
             agencies: [],
             filterSearchAgency: '',
@@ -308,7 +355,7 @@ export default {
             pageEnd: 5,
         };
     },
-    components: { PageLayout, ButtonCard, ContentCard, Modal},
+    components: { PageLayout, ButtonCard, ContentCard, Modal, AlertTop, vSelect},
     async mounted() {
         this.isMobile(); //hides filter menu on mobile
         window.addEventListener("resize", this.isMobile); //hides filter menu on mobile when resized
@@ -329,23 +376,58 @@ export default {
         }
     },
     methods: {
-        //Get Tickets
+        async filterList(){
+            this.getUsers(0)
+            this.isFiltering = true
+
+            await axios.post('api/v1/filter/users', {
+                user_type: this.fRole,
+                account_status: this.fStatus,
+                from: this.reformat_date(this.fFrom),
+                till: this.reformat_date(this.fTill),
+                agencies: this.fAgencyValue
+            })
+            .then((success) => {
+                this.responseFiltered = success.data.data
+                this.closeModal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
+        resetFilter(){
+            this.isFiltering = false
+            this.fRole = ''
+            this.fStatus = ''
+            this.fAgencyValue = []
+            this.fFrom = ''
+            this.fTo = ''
+        },
+        //Get Users
         async getUsers(page){
             this.pageNumber = page;
             const response = await axios.get('api/v1/all_users');
+
+            //Filter Modal
+            if(!this.isFiltering){
+                this.responseFiltered = response.data.data
+            }
+
             //Filter Search Ticket
-            const responseFiltered = response.data.data.filter((a) => {
+            const usersdata = this.responseFiltered.filter((a) => {
                 const theFilter = (
-                    a.name.includes(this.filterSearch) || a.name.toLowerCase().includes(this.filterSearch) ||
-                    a.email.includes(this.filterSearch) || a.email.toLowerCase().includes(this.filterSearch) ||
-                    a.role.includes(this.filterSearch) || a.role.toLowerCase().includes(this.filterSearch) ||
-                    a.agency.includes(this.filterSearch) || a.agency.toLowerCase().includes(this.filterSearch) ||
+                    a.name.toLowerCase().includes(this.filterSearch.toLowerCase()) ||
+                    a.email.toLowerCase().includes(this.filterSearch.toLowerCase()) ||
+                    a.role.toLowerCase().includes(this.filterSearch.toLowerCase()) ||
+                    a.agency.toLowerCase().includes(this.filterSearch.toLowerCase()) ||
                     a.updated_at.includes(this.reDate) || a.updated_at.includes(this.filterSearch) ||
                     a.created_at.includes(this.reDate) || a.created_at.includes(this.filterSearch)
                 )
                 return theFilter
             });
-            this.users = responseFiltered;
+
+            this.users = usersdata
+
             //Pagination
             this.paginateTotal = Math.ceil(this.users.length/this.perpage);
         },
@@ -402,6 +484,10 @@ export default {
                 return moment(String(value)).format('YYYY-MM-DD')
             }
         },
+        //Alert
+        async closeAlert() {
+            this.successAlert = false
+        },
         //Modals
         openAction(itemID) {
             this.showAction = itemID;
@@ -451,6 +537,53 @@ export default {
             this.pageNumber = 1;
             this.paginateTotal = Math.ceil(this.users.length/this.perpage);
         },
+        //Deactivate
+        async deactivate(id) {
+            await axios.post('api/v1/user/account_status', {
+                user_id: id,
+                status: 'INACTIVE',
+            })
+            .then((success) => {
+                //Alert Content
+                this.successAlert = true;
+                this.successMessage = 'User successfully deactivated '+this.modalUserName;
+                this.successIcon = 'like.png';
+                this.getUsers(0);
+                this.closeModal();
+            })
+            .catch((error) => {
+                this.successAlert = true;
+                this.successMessage = 'Error occured. Please try again';
+                this.successIcon = 'warning-red.png';
+            })
+        },
+        async activate(id) {
+            await axios.post('api/v1/user/account_status', {
+                user_id: id,
+                status: 'ACTIVE',
+            })
+            .then((success) => {
+                //Alert Content
+                this.successAlert = true;
+                this.successMessage = 'User successfully activated '+this.modalUserName;
+                this.successIcon = 'like.png';
+                this.getUsers(0);
+                this.closeModal();      
+            })
+            .catch((error) => {
+                this.successAlert = true;
+                this.successMessage = 'Error occured. Please try again';
+                this.successIcon = 'warning-red.png';
+            })
+        },
+        //Roles Search
+        fuseSearch(options, search) {
+            const fuse = new Fuse(options, {
+                keys: ['name', 'value'],
+                shouldSort: true,
+            })
+            return search.length ? fuse.search(search).map(({ item }) => item): fuse.list
+        }
     },
 }
 </script>

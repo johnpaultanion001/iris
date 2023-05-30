@@ -21,11 +21,16 @@
     "dependencies": {
         "@mahdikhashan/vue3-click-outside": "^0.1.2",
         "fuse.js": "^6.6.2",
+        "humanize-string": "^3.0.0",
         "moment": "^2.29.4",
         "vue": "^3.2.36",
         "vue-dataset": "^1.1.17",
+        "vue-it-bigger": "^0.3.2",
         "vue-loader": "^17.0.1",
         "vue-router": "^4.0.13",
-        "vue-select": "^4.0.0-beta.6"
+        "vue-select": "^4.0.0-beta.6",
+        "vue-simple-search-dropdown": "^1.0.1",
+        "vue3-simple-typeahead": "^1.0.11",
+        "vuex": "^4.0.2"
     }
 }

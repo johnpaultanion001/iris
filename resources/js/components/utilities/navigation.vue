@@ -18,34 +18,54 @@
                     </div>
                     <p class="font-inter-400 text-sm text-black">Profile & Settings</p>
                 </router-link>
-                <router-link to="/" class="p-5 flex items-center hover:bg-lighter">
+                <div @click="logout()" class="p-5 flex items-center hover:bg-lighter">
                     <div class="w-7 relative">
                         <img src="/img/icon/logout.png"> 
                     </div>
                     <p class="font-inter-400 text-sm text-black">Logout</p>
-                </router-link>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     setup: () => ({
         title: 'Navigation'
     }),
     data() {
         return {
-            userFirstName: "Jesse",
-            userImg: "/img/user-photo.png",
+            userFirstName: "",
+            userImg: "",
             dropdown: false
         };
     },
     emits: ["menu"],
+    async mounted() {
+        this.getUser();
+    },
     methods: {
         setMenu() {
             this.$emit("menu", true);
         },
+        //Get User
+        async getUser(){
+            this.pageNumber = 0;
+            const response = await axios.get('api/v1/profile');
+            //Filter User Data
+            this.userFirstName = response.data.data.name;
+            this.userImg = response.data.data.profile;
+        },
+        logout(){
+            // await axios.post('logout')
+            localStorage.setItem('token', '');
+            axios.defaults.headers.common['Authorization'] = ' ';
+            this.$router.push("/login");
+            
+        }
     },
 }
 </script>
