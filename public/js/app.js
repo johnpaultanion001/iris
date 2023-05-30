@@ -20065,7 +20065,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isRemember: false,
       grant_type: 'password',
       client_id: '2',
-      client_secret: '9ZL8kBFd2rQ9m9sj8pgzSYqRmUtjscpqUIqaNuC7',
+      client_secret: 'kMAUXaAjjgTPI2BJtNXZyIyRW9xYWNtEb5bIuDgZ',
       scope: '',
       username: '',
       password: ''
@@ -20106,7 +20106,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 password: _this2.password
               };
               _context2.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('oauth/token', inputs, {
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('api/v1/auth/oauth/token', inputs, {
                 withCredentials: true,
                 header: {
                   'Accept': 'application/json, multipart/form-data',
@@ -24702,7 +24702,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       showFilter: true,
       showFilterBtn: true,
       //Tabs
-      activeTab: 'All',
+      activeTab: '',
       myAgency: 'DTI',
       //Filter item number
       filterItemNumberDropdown: false,
@@ -24757,6 +24757,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       statusComment: null,
       //User
       userAgencyCode: "",
+      userRole: "",
       //Products Services
       products: []
     };
@@ -24817,14 +24818,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              _this2.pageNumber = 0;
-              _context2.next = 3;
+              _context2.next = 2;
               return axios__WEBPACK_IMPORTED_MODULE_4___default().get('api/v1/profile');
-            case 3:
+            case 2:
               response = _context2.sent;
               //Filter User Data
               _this2.userAgencyCode = response.data.data.assigned_agencies.code;
-            case 5:
+              _this2.userRole = response.data.data.role;
+              if (response.data.data.role == 'SUPER_ADMIN') {
+                _this2.activeTab = 'All';
+              } else {
+                _this2.activeTab = 'My Agency';
+              }
+            case 6:
             case "end":
               return _context2.stop();
           }
@@ -26461,7 +26467,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       userFirstName: "",
       userImg: "",
-      dropdown: false
+      dropdown: false,
+      grant_type: 'password',
+      client_id: '2',
+      client_secret: 'kMAUXaAjjgTPI2BJtNXZyIyRW9xYWNtEb5bIuDgZ',
+      scope: '',
+      username: '',
+      password: ''
     };
   },
   emits: ["menu"],
@@ -26507,10 +26519,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     logout: function logout() {
-      // await axios.post('logout')
-      localStorage.setItem('token', '');
-      (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common.Authorization) = ' ';
-      this.$router.push("/login");
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('api/v1/logout', {}, {
+                withCredentials: true,
+                header: {
+                  'Accept': 'application/json, multipart/form-data',
+                  'Content-Type': 'application/json; charset=UTF-8',
+                  'Access-Control-Allow-Origin': '*',
+                  'Access-Control-Allow-Headers': 'Content-Type, x-xsrf-token'
+                }
+              }).then(function (res) {
+                localStorage.setItem('token', '');
+                window.location.href = "/login";
+              })["catch"](function (error) {
+                console.log(error.message);
+              });
+            case 2:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3);
+      }))();
     }
   }
 });
@@ -33735,27 +33768,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     active: $data.successAlert,
     content: $data.successMessage,
     onClose: $options.closeAlert
-  }, null, 8 /* PROPS */, ["alertIcon", "active", "content", "onClose"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, null, 8 /* PROPS */, ["alertIcon", "active", "content", "onClose"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$data.userRole == 'SUPER_ADMIN' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    key: 0,
     onClick: _cache[0] || (_cache[0] = function ($event) {
       $data.activeTab = 'All';
       $options.getTickets($data.activeStatus, 0);
       $options.getAllTickets();
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.activeTab === 'All' ? 'bg-white  shadow-third' : 'bg-transparent', "rounded-lg w-1/3 text-center"])
-  }, _hoisted_5, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, _hoisted_5, 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[1] || (_cache[1] = function ($event) {
       $data.activeTab = 'My Agency';
       $options.getTickets($data.activeStatus, 0);
       $options.getAllTickets();
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.activeTab === 'My Agency' ? 'bg-white  shadow-third' : 'bg-transparent', "rounded-lg w-1/3 text-center"])
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.activeTab === 'My Agency' ? 'bg-white  shadow-third' : 'bg-transparent', $data.userRole == 'SUPER_ADMIN' ? 'w-1/3' : 'w-1/2', "rounded-lg text-center"])
   }, _hoisted_7, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[2] || (_cache[2] = function ($event) {
       $data.activeTab = 'Following';
       $options.getTickets($data.activeStatus, 0);
       $options.getAllTickets();
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.activeTab === 'Following' ? 'bg-white  shadow-third' : 'bg-transparent', "rounded-lg w-1/3 text-center"])
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.activeTab === 'Following' ? 'bg-white  shadow-third' : 'bg-transparent', $data.userRole == 'SUPER_ADMIN' ? 'w-1/3' : 'w-1/2', "rounded-lg text-center"])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, "Following (" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.alltickets.filter(function (a) {
     return a.isFollow == 1;
   }).length) + ")", 1 /* TEXT */)], 2 /* CLASS */)])]), $data.showFilterBtn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -36270,7 +36304,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     src: $data.userImg,
     "class": "mr-2 w-9 h-9 rounded-full"
   }, null, 8 /* PROPS */, _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, "Hi, " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.userFirstName) + " 👋", 1 /* TEXT */)]), $data.dropdown ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: "/user-profile",
+    to: "/settings",
     "class": "p-5 flex items-center hover:bg-lighter"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -36547,6 +36581,20 @@ __webpack_require__.r(__webpack_exports__);
 (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = 'http://dti-internal.ap-southeast-1.elasticbeanstalk.com';
 (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common.Authorization) = 'Bearer ' + localStorage.getItem('token');
 
+// axios.interceptors.response.use(resp => resp, async error =>{
+//     if(error.response.status === 401){
+//         const {status, data} = await axios.post('refresh', {}, { withCredentials: true});
+
+//         if(status === 200){
+//             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+
+//             return axios(error.config);
+//         }
+//     }
+
+//     return error;
+// })
+
 /***/ }),
 
 /***/ "./resources/js/router/index.js":
@@ -36734,7 +36782,7 @@ router.beforeEach( /*#__PURE__*/function () {
           if (!to.matched.some(function (record) {
             return record.meta.requiresAuth;
           })) {
-            _context.next = 6;
+            _context.next = 7;
             break;
           }
           _context.next = 3;
@@ -36747,10 +36795,11 @@ router.beforeEach( /*#__PURE__*/function () {
           });
         case 3:
           response = _context.sent;
-          _context.next = 9;
+          console.clear('');
+          _context.next = 11;
           break;
-        case 6:
-          _context.next = 8;
+        case 7:
+          _context.next = 9;
           return axios__WEBPACK_IMPORTED_MODULE_19___default().get('api/v1/profile').then(function (res) {
             next({
               path: '/'
@@ -36758,9 +36807,10 @@ router.beforeEach( /*#__PURE__*/function () {
           })["catch"](function (error) {
             next();
           });
-        case 8:
-          _response = _context.sent;
         case 9:
+          _response = _context.sent;
+          console.clear('');
+        case 11:
         case "end":
           return _context.stop();
       }
