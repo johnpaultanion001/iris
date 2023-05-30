@@ -170,6 +170,7 @@ router.beforeEach(async (to, from, next) => {
         .catch((error) => {
             next({ path: '/login' })
         })
+        console.clear('');
     } else {
         const response = await axios.get('api/v1/profile')
         .then((res) => {
@@ -178,6 +179,7 @@ router.beforeEach(async (to, from, next) => {
         .catch((error) => {
             next()
         })
+        console.clear('');
     }
 })
 
