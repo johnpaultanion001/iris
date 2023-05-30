@@ -79,11 +79,10 @@
                                         <p class="ellipsis-2">{{ act.activity }}</p> 
                                     </td>
                                     <td class="p-2.5 font-opensans-600 text-xxxs text-white flex items-center whitespace-nowrap">
-                                        DTI
                                         <div class="flex items-center whitespace-nowrap" v-for="(item, index) in act.assigned_agencies" ref="activities">
-                                            <div class="whitespace-nowrap" v-for="(agency, index) in item" ref="activities">
-                                                <span v-if="index <= 3" :style="'background-color:'+ agency.color +';'" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">{{ agency.code }}</span>
-                                                <span v-if="index == 3" style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+{{ item.length - 4 }}</span>
+                                            <div class="whitespace-nowrap" ref="activities">
+                                                <span v-if="index <= 3" :style="'background-color:'+ item.color +';'" class="px-2 py-1 rounded-full mr-1 inline-block text-center w-auto min-w-52">{{ item.code }}</span>
+                                                <span v-if="index == 3" style="background-color: #54A581" class="px-2 py-1 rounded-full mr-1 inline-block text-center">+{{ act.assigned_agencies.length - 4 }}</span>
                                             </div>
                                         </div>
                                     </td>
@@ -130,6 +129,74 @@
             </div>
         </div>
     </PageLayout>
+    <Modal modalTitle="Filters" v-show="modalActive && showModal == 'filterModal'" @close="closeModal">
+        <template v-slot:body>
+            <form class="block">
+                <div class="grid grid-cols-2 gap-y-6 gap-x-3">
+                    <div class="col-span-2">
+                        <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">User Type</label>
+                        <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
+                            <v-select :filter="fuseSearch" :options="roles" :get-option-label="option => option.name" placeholder="Choose" v-model="fRole" :reduce="roles => roles.value">
+                                <template #option="{ name }" >
+                                    {{ name }} 
+                                </template>
+                            </v-select>
+                        </div>
+                    </div> 
+                    <div class="col-span-1">
+                        <div class="relative w-full">
+                            <label for="from" class="text-base text-blue-grey text-xs font-inter-700">Date From</label>
+                            <input type="date" v-model="fFrom" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
+                            <img src="/img/icon/date-blue.png" class="date-img">
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <div class="relative w-full">
+                            <label for="to" class="text-base text-blue-grey text-xs font-inter-700">Date To</label>
+                            <input type="date" v-model="fTo" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
+                            <img src="/img/icon/date-blue.png" class="date-img">
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <div class="relative w-full">
+                            <label for="from" class="text-base text-blue-grey text-xs font-inter-700">Time From</label>
+                            <input type="time" v-model="fTFrom" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
+                            <img src="/img/icon/clock-active.png" class="date-img">
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <div class="relative w-full">
+                            <label for="to" class="text-base text-blue-grey text-xs font-inter-700">Time To</label>
+                            <input type="time" v-model="fTTo" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
+                            <img src="/img/icon/clock-active.png" class="date-img">
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                        <div class="relative w-full">
+                            <label for="selectagencies" class="text-base text-blue-grey text-xs font-inter-700">Agencies</label>
+                            <input type="text" v-model="filterSearchAgency" placeholder="Search" name="selectagencies" id="selectagencies" class="mt-4 w-full secondary-input" style="padding-left: 35px;"/>
+                            <img src="/img/icon/search.png" class="search-img">
+                        </div>
+                        <div v-for="(agency, index) in agencies" ref="agencies" class="my-4 flex items-center">
+                            <input type="checkbox" v-model="fAgencyValue" :value="agency.id">
+                            <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
+                            <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </template>
+        <template v-slot:footer>
+            <div class="flex items-center justify-between w-full">
+                <button @click="resetFilter()" class="mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline">
+                    RESET FILTERS
+                </button>
+                <button @click="filterList()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Apply
+                </button>
+            </div>
+        </template>
+    </Modal>
 </template>
 
 <script>
@@ -141,6 +208,8 @@ import Modal from '../../utilities/modal.vue'
 import clickOutSide from "@mahdikhashan/vue3-click-outside"
 import axios from 'axios'
 import moment from 'moment'
+import vSelect from 'vue-select'
+import Fuse from 'fuse.js'
 
 export default {
     setup: () => ({
@@ -165,6 +234,13 @@ export default {
             modalTicketID: '',
             //Filter Modal
             dropdownToggle: '',
+            fRole: '',
+            roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}], 
+            fAgencyValue: [],
+            fFrom: '',
+            fTo: '',
+            fTFrom: '',
+            fTTo: '',
             //Agencies
             agencies: [],
             filterSearchAgency: '',
@@ -181,7 +257,7 @@ export default {
             pageEnd: 5,
         };
     },
-    components: { PageLayout, ButtonCard, ContentCard, Modal},
+    components: { PageLayout, ButtonCard, ContentCard, Modal, vSelect},
     async mounted() {
         //Get Tickets
         this.getActivities(0);
@@ -199,12 +275,48 @@ export default {
         }
     },
     methods: {
-        //Get Tickets
+        async filterList(){
+            this.getRvendors(0)
+            this.isFiltering = true
+
+            await axios.post('api/v1/filter/activity', {
+                role: this.fRole,
+                agency: this.fAgencyValue,
+                from: this.fFrom,
+                to: this.fTo,
+                tfrom: this.fTFrom,
+                tto: this.fTTo,
+            })
+            .then((success) => {
+                this.responseFiltered = success.data.data
+                this.closeModal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
+        resetFilter(){
+            this.isFiltering = false
+            this.fRole = ''
+            this.fStatus = ''
+            this.fAgencyValue = []
+            this.fFrom = ''
+            this.fTo = ''
+            this.fTFrom = ''
+            this.fTTo = ''
+        },
+        //Get Activities
         async getActivities(page){
             this.pageNumber = page;
             const response = await axios.get('api/v1/activities');
+
+            //Filter Modal
+            if(!this.isFiltering){
+                this.responseFiltered = response.data.data
+            }
+
             //Filter Search Ticket
-            const responseFiltered = response.data.data.filter((a) => {
+            const activitiesdata = this.responseFiltered.filter((a) => {
                 const theFilter = (
                     a.action.includes(this.filterSearch) || a.action.toLowerCase().includes(this.filterSearch) ||
                     a.activity.includes(this.filterSearch) || a.activity.toLowerCase().includes(this.filterSearch) ||
@@ -214,7 +326,7 @@ export default {
                 )
                 return theFilter
             });
-            this.activities = responseFiltered;
+            this.activities = activitiesdata;
             //Pagination
             this.paginateTotal = Math.ceil(this.activities.length/this.perpage);
         },
@@ -227,18 +339,18 @@ export default {
         },
         //Display Sorted Tickets
         orderedTickets() {
-            if(this.activityOrder == 'user'){
+            if(this.activityOrder == 'name'){
                 if(this.activityASC){
-                    return this.activities.sort((a, b) => (a[this.activityOrderArray]['0'][this.activityOrder] > b[this.activityOrderArray]['0'][this.activityOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.activities.sort((a, b) => (a[this.activityOrderArray][this.activityOrder] > b[this.activityOrderArray][this.activityOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }else{
-                    return this.activities.sort((a, b) => (a[this.activityOrderArray]['0'][this.activityOrder] < b[this.activityOrderArray]['0'][this.activityOrder] ? -1 : 1) ).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.activities.sort((a, b) => (a[this.activityOrderArray][this.activityOrder] < b[this.activityOrderArray][this.activityOrder] ? -1 : 1) ).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }
             }
-            else if(this.activityOrder == 'assigned_agencies'){
+            else if(this.activityOrder == 'agency'){
                 if(this.activityASC){
-                    return this.activities.sort((a, b) => (a[this.activityOrder]['0'] > b[this.activityOrder]['0'] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.activities.sort((a, b) => (a[this.activityOrder] > b[this.activityOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }else{
-                    return this.activities.sort((a, b) => (a[this.activityOrder]['0'] < b[this.activityOrder]['0'] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
+                    return this.activities.sort((a, b) => (a[this.activityOrder] < b[this.activityOrder] ? -1 : 1)).slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+this.perpage)
                 }
             }
             else{
