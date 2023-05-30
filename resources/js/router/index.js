@@ -21,6 +21,7 @@ import userProfile from '../components/pages/users/userProfile.vue'
 import reports from '../components/pages/reports/reports.vue'
 import settings from '../components/pages/settings/settings.vue'
 import activity from '../components/pages/activity/activity.vue'
+import axios from 'axios'
 
 const routes = [
     {
@@ -42,73 +43,142 @@ const routes = [
     //Pages
     {
         path: '/',
-        component: dashboard
+        component: dashboard,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/inbox',
-        component: inbox
+        component: inbox,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/tickets/:status',
-        component: tickets
+        component: tickets,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/tickets/',
-        component: tickets
+        component: tickets,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/create-ticket',
-        component: createTicket
+        component: createTicket,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/edit-ticket/:id',
-        component: editTicket
+        component: editTicket,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/ticket-information/:id',
-        component: ticketInformation
+        component: ticketInformation,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/reported-vendors',
-        component: reportedVendors
+        component: reportedVendors,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/vendor-profile/:id',
-        component: vendorProfile
+        component: vendorProfile,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/users',
-        component: users
+        component: users,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/create-user',
-        component: createUser
+        component: createUser,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/edit-user/:id',
-        component: editUser
+        component: editUser,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/profile/:id',
-        component: userProfile
+        component: userProfile,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/reports',
-        component: reports
+        component: reports,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/settings',
-        component: settings
+        component: settings,
+        meta: {
+          requiresAuth: true
+        }
     },
     {
         path: '/activity',
-        component: activity
+        component: activity,
+        meta: {
+          requiresAuth: true
+        }
     },
 ]
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
+})
+
+
+router.beforeEach(async (to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        const response = await axios.get('api/v1/profile')
+        .then((res) => {
+            next()
+        })
+        .catch((error) => {
+            next({ path: '/login' })
+        })
+    } else {
+        const response = await axios.get('api/v1/profile')
+        .then((res) => {
+            next({ path: '/' })
+        })
+        .catch((error) => {
+            next()
+        })
+    }
 })
 
 export default router
