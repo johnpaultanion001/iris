@@ -111,7 +111,7 @@ export default {
             successMessage: '',
             successIcon: null,
             //User info
-            firtname: null,
+            firstname: null,
             lastname: null,
             useremail: null,
             usermobile: null,

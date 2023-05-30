@@ -146,14 +146,14 @@
                         <div class="col-span-1">
                             <div class="relative w-full">
                                 <label for="from" class="text-base text-blue-grey text-xs font-inter-700">From</label>
-                                <input type="date" v-model="from" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
+                                <input type="date" v-model="fFrom" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
                                 <img src="/img/icon/date-blue.png" class="date-img">
                             </div>
                         </div>
                         <div class="col-span-1">
                             <div class="relative w-full">
                                 <label for="to" class="text-base text-blue-grey text-xs font-inter-700">To</label>
-                                <input type="date" v-model="to" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
+                                <input type="date" v-model="fTill" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
                                 <img src="/img/icon/date-blue.png" class="date-img">
                             </div>
                         </div>
@@ -209,7 +209,6 @@ export default {
             modalActive: false,
             modalTicketID: '',
             //Filter Modal
-            dropdownToggle: '',
             isFiltering: false,
             fCity: '',
             fFrom: '',
@@ -344,10 +343,6 @@ export default {
                 document.querySelector('body').style.overflow = 'auto';
                 this.modalActive = false;
             }
-        },
-        //Dropdown
-        dropdownToggle(name){
-            this.dropdownToggle = name;
         },
         //Pagination
         setPaginate(i) {
