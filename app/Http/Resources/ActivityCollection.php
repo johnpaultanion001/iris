@@ -34,7 +34,7 @@ class ActivityResource extends ApiResource
           'activity' => $this->description ?? '',
           'agency' => $this->user->agency->code ?? '' ,
           'assigned_agencies' =>[
-            new AgencyResource($this->user->agency),
+            new AgencyResource($this->user->agency ?? ''),
           ],
           'user' => [
               'name' => $this->user->name ?? '',
