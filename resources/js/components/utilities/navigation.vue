@@ -18,12 +18,12 @@
                     </div>
                     <p class="font-inter-400 text-sm text-black">Profile & Settings</p>
                 </router-link>
-                <router-link to="/" class="p-5 flex items-center hover:bg-lighter">
+                <div @click="logout()" class="p-5 flex items-center hover:bg-lighter">
                     <div class="w-7 relative">
                         <img src="/img/icon/logout.png"> 
                     </div>
                     <p class="font-inter-400 text-sm text-black">Logout</p>
-                </router-link>
+                </div>
             </div>
         </div>
     </div>
@@ -59,6 +59,13 @@ export default {
             this.userFirstName = response.data.data.name;
             this.userImg = response.data.data.profile;
         },
+        logout(){
+            // await axios.post('logout')
+            localStorage.setItem('token', '');
+            axios.defaults.headers.common['Authorization'] = ' ';
+            this.$router.push("/login");
+            
+        }
     },
 }
 </script>

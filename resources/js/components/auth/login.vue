@@ -46,7 +46,7 @@ export default {
             isRemember: false,
             grant_type: 'password',
             client_id: '2',
-            client_secret: 'B9S5RYTa63ELppkdYc6Bv0Mh1yCWPXGgSwMjXs6i',
+            client_secret: '9ZL8kBFd2rQ9m9sj8pgzSYqRmUtjscpqUIqaNuC7',
             scope: '',
             username: '',
             password: ''
@@ -88,7 +88,8 @@ export default {
                     localStorage.setItem('iris-username', '');
                     localStorage.setItem('iris-password', '');
                 }
-                this.$router.push("/");
+                // this.$router.push("/");
+                window.location.href = "/";
             })
             .catch((error) => {
                 console.log(error.message)
