@@ -8,6 +8,8 @@ use App\Http\Controllers\ApiController;
 use App\Http\Resources\TicketResource;
 use App\Http\Resources\TicketCollection;
 use App\Http\Resources\CommentCollection;
+use App\Http\Resources\AgencyCollection;
+use App\Http\Resources\ViolationResource;
 use App\Models\Ticket;
 use App\Models\Vendor;
 use App\Models\ReportedBy;
@@ -21,9 +23,14 @@ class TicketController extends ApiController
 {
     public function index(Request $request)
     {
-      $collection = Ticket::where('user_id', auth("api")->user()->id);
-      $collection = $collection->latest()->paginate();
+      if(auth("api")->user()->role == "SUPER_ADMIN"){
+        $collection = Ticket::latest()->get();
 
+      }else{
+        $collection = Ticket::whereHas('agencies', function ($query) {
+                        return $query->where('agency_id', '=', auth("api")->user()->agency_id);
+                    })->latest()->get();
+      }
       return new TicketCollection($collection);
     }
 
@@ -54,18 +61,29 @@ class TicketController extends ApiController
         }
 
         try {
-            $vendor = Vendor::create([
-              'vendor_name' => request('vendor_name'),
-              'email' => request('email_address'),
-              'mobile_number' => request('mobile_number'),
-              'city' => request('city'),
-            ]);
-            $reportedBy = ReportedBy::create([
-              'first_name' => request('reported_first_name'),
-              'last_name' => request('reported_last_name'),
-              'email' => request('reported_email_address'),
-              'mobile_number' => request('reported_mobile_number'),
-            ]);
+            $vendor = Vendor::updateOrCreate(
+                [
+                  'email' => request('email_address'),
+                ],
+                [
+                  'vendor_name' => request('vendor_name'),
+                  'email' => request('email_address'),
+                  'mobile_number' => request('mobile_number'),
+                  'city' => request('city'),
+                ]
+            );
+            $reportedBy = ReportedBy::updateOrCreate(
+                [
+                  'email' => request('reported_email_address'),
+                ],
+                [
+                  'first_name' => request('reported_first_name'),
+                  'last_name' => request('reported_last_name'),
+                  'email' => request('reported_email_address'),
+                  'mobile_number' => request('reported_mobile_number'),
+                ]
+
+            );
 
             $ticket = Ticket::create([
                 'user_id'         => auth("api")->user()->id,
@@ -109,21 +127,56 @@ class TicketController extends ApiController
     public function show(Request $request, Ticket $ticket)
     {
 
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
-      }
 
       return new TicketResource($ticket);
     }
 
 
-    public function update(Request $request, $id)
+    public function update_ticket(Request $request, Ticket $ticket)
     {
+        // Validate all the required parameters have been sent.
+        $validator = Validator::make($request->all(), [
+          'product_service' => 'required',
+          'complaint' => 'required',
+          'platform' => 'required',
+          'link' => 'required',
+          'additional_documents_file' => 'required',
 
-    }
+          // reported by info
+          'reported_first_name' => 'required',
+          'reported_last_name' => 'required',
+          'reported_email_address' => ['required', 'email', 'max:255' , 'unique:reported_bies,email,'.$ticket->reported_by_id],
+          'reported_mobile_number' => ['required', 'string', 'min:8','max:11', 'unique:reported_bies,mobile_number,'.$ticket->reported_by_id],
+        ]);
 
-    public function destroy(Request $request, $id)
-    {
+        if ($validator->fails()) {
+          return $this->responseUnprocessable($validator->errors());
+        }
+
+        $ticket->update([
+            'product_service' => request('product_service'),
+            'complaint' => request('complaint'),
+            'platform' => request('platform'),
+            'link' => request('link'),
+            'additional_documents_file' => request('additional_documents_file'),
+            'remarks' => request('remarks'),
+        ]);
+
+        ReportedBy::find($ticket->reported_by_id)->update(
+              [
+                'first_name' => request('reported_first_name'),
+                'last_name' => request('reported_last_name'),
+                'email' => request('reported_email_address'),
+                'mobile_number' => request('reported_mobile_number'),
+              ]
+        );
+        $data = [
+          'tiket_id' => $ticket->id,
+          'tiket_no' => $ticket->id,
+        ];
+
+        return $this->responseResourceUpdated('Ticket updated successfully',$data);
+
 
     }
 
@@ -141,9 +194,6 @@ class TicketController extends ApiController
       $ticket = Ticket::where('id',  request('ticket_id'))->first();
       if ($ticket == null) {
         return $this->ticketNotFound();
-      }
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
       }
 
       $ticket->update([
@@ -163,7 +213,7 @@ class TicketController extends ApiController
     {
       $validator = Validator::make($request->all(), [
           'ticket_id' => 'required',
-          'status' => ['required', 'in:FOR_REVIEW,ACKNOWLEDGED,ON_GOING,RESOLVED,IVALID'],
+          'status' => ['required', 'in:FOR_REVIEW,ACKNOWLEDGED,ON_GOING,RESOLVED,INVALID'],
       ]);
 
       if ($validator->fails()) {
@@ -173,9 +223,6 @@ class TicketController extends ApiController
       $ticket = Ticket::where('id',  request('ticket_id'))->first();
       if ($ticket == null) {
         return $this->ticketNotFound();
-      }
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
       }
 
       $ticket->update([
@@ -213,9 +260,6 @@ class TicketController extends ApiController
       if ($ticket == null) {
         return $this->ticketNotFound();
       }
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
-      }
 
       $ticket->update([
         'isFollow' => request('isFollow'),
@@ -245,9 +289,6 @@ class TicketController extends ApiController
       if ($ticket == null) {
         return $this->ticketNotFound();
       }
-      if (auth("api")->user()->id != $ticket->user_id) {
-        return $this->ticketUnauthorized();
-      }
 
 
       $ticket_comment = TicketComment::create([
@@ -259,6 +300,78 @@ class TicketController extends ApiController
 
 
       return new CommentCollection($ticket->comments()->latest()->get());
+    }
+    public function product_service(Request $request){
+      $collection = Ticket::select('product_service')->latest()->get();
+      return response()->json([
+            'data' => $collection,
+      ], 200);
+    }
+
+    public function assigned_agencies(Request $request){
+      $ticket = Ticket::where('id',  request('ticket_id'))->first();
+      if ($ticket == null) {
+        return $this->ticketNotFound();
+      }
+      TicketAssignAgency::where('ticket_id', $ticket->id)
+                        ->whereNotIn('agency_id', request('agencies'))
+                        ->delete();
+      foreach(request('agencies') as $agency){
+        TicketAssignAgency::updateOrCreate(
+          [
+          'ticket_id' => $ticket->id,
+          'agency_id' => $agency['agency_id'],
+          ],
+          [
+          'ticket_id' => $ticket->id,
+          'agency_id' => $agency['agency_id'],
+          ]
+        );
+      }
+      $data = [
+        'tiket_id' => $ticket->id,
+        'tiket_no' => $ticket->id,
+        'assigned_agencies' =>
+        new AgencyCollection($ticket->agencies()->get()),
+      ];
+
+
+
+      return $this->responseResourceUpdated('Updated successfully',$data);
+    }
+
+    public function violations(Request $request){
+      $ticket = Ticket::where('id',  request('ticket_id'))->first();
+      if ($ticket == null) {
+        return $this->ticketNotFound();
+      }
+
+      Violation::where('ticket_id', $ticket->id)->delete();
+      foreach(request('violations') as $vio){
+
+        Violation::updateOrCreate(
+          [
+            'ticket_id' => $ticket->id,
+            'violation' => $vio['violation'],
+          ],
+          [
+            'ticket_id' => $ticket->id,
+            'violation' => $vio['violation'],
+            'amount' => $vio['amount'],
+          ]
+        );
+      }
+      $data = [
+        'tiket_id' => $ticket->id,
+        'tiket_no' => $ticket->id,
+        'violations' =>
+          new ViolationResource($ticket->violations()->get()),
+
+      ];
+
+
+
+      return $this->responseResourceUpdated('Updated successfully',$data);
     }
 
 

@@ -18,13 +18,13 @@ class UserResource extends ApiResource
             'id' => $this->id,
             'profile' => $this->profile,
             'name' => $this->name,
+            'last_name' => $this->last_name,
             'email' => $this->email,
             'mobile_number' => $this->mobile_number,
             'role' => $this->role,
             'status' => $this->status,
-            'agency' => [
-              new AgencyResource($this->agency),
-            ],
+            'agency' => $this->agency->code ?? '' ,
+            'assigned_agencies' => new AgencyResource($this->agency),
 
             'created_at' => (string)$this->created_at->toDateTimeString(),
             'updated_at' => (string)$this->updated_at->toDateTimeString(),

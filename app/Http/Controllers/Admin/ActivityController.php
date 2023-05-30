@@ -11,7 +11,7 @@ class ActivityController extends Controller
 {
   public function index(Request $request)
   {
-    $collection = Activity::latest()->paginate();
+    $collection = Activity::latest()->get();
 
     return new ActivityCollection($collection);
   }

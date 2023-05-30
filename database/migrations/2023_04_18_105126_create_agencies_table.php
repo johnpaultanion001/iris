@@ -18,6 +18,7 @@ class CreateAgenciesTable extends Migration
             $table->string('logo');
             $table->string('title');
             $table->string('code');
+            $table->string('color');
             $table->timestamps();
         });
     }

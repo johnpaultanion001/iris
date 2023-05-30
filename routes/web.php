@@ -20,3 +20,5 @@ Route::get('{any}', function () {
 Route::get('/{pathMatch}', function () {
     return view('welcome');
 })->where('/:pathMatch(.*)*');
+
+Route::view('forgot_password', 'auth.passwords.reset')->name('password.reset');
