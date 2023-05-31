@@ -13,7 +13,7 @@ use App\Models\Ticket;
 use App\Models\Vendor;
 use App\Models\User;
 use App\Models\Agency;
-use Spatie\Activitylog\Models\Activity;
+use App\Models\ActivityLog;
 
 class FilterController extends ApiController
 {
@@ -66,7 +66,7 @@ class FilterController extends ApiController
   public function filter_activities(Request $request)
   {
 
-      $collection = Activity::whereHas('user', function($q) {
+      $collection = ActivityLog::whereHas('user', function($q) {
                                   $q->where('role', request('user_type'));
                                   $q->whereIn('agency_id', request('agencies') ?? Agency::select('id'));
                               })
