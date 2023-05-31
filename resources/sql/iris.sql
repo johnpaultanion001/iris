@@ -12,7 +12,9 @@ INSERT INTO `reports` (`id`, `user_id`, `title`, `description`, `file`, `created
 INSERT INTO `users` (`id`, `agency_id`, `name`, `last_name`, `email`, `mobile_number`, `role`, `password`, `status`, `profile`, `created_at`, `updated_at`, `remember_token`) VALUES
 (1, 1, 'Admin', 'Super Admin 1', 'admin@gmail.com', '09775556620', 'SUPER_ADMIN', '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896', 'ACTIVE', 'profile.jpg', '2023-05-30 18:24:18', '2023-05-30 18:24:18', NULL),
 (2, 1, 'Admin 2', 'Super Admin 2', 'admin1@gmail.com', '09775556620', 'SUPER_ADMIN', '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896', 'ACTIVE', 'profile.jpg', '2023-05-30 18:24:18', '2023-05-30 18:24:18', NULL),
-(3, 2, 'Admin', 'Admin', 'admin2@gmail.com', '09775556621', 'ADMIN', '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896', 'ACTIVE', 'profile.jpg', '2023-05-30 18:24:18', '2023-05-30 18:24:18', NULL);
+(3, 2, 'DA Admin', 'Admin', 'da_admin@gmail.com', '09775556621', 'ADMIN', '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896', 'ACTIVE', 'profile.jpg', '2023-05-30 18:24:18', '2023-05-30 18:24:18', NULL),
+(4, 3, 'DOH Admin', 'Admin', 'doh_admin@gmail.com', '09775556622', 'ADMIN', '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896', 'ACTIVE', 'profile.jpg', '2023-05-30 18:24:18', '2023-05-30 18:24:18', NULL),
+(5, 4, 'DENR Admin', 'Admin', 'denr_admin@gmail.com', '09775556623', 'ADMIN', '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896', 'ACTIVE', 'profile.jpg', '2023-05-30 18:24:18', '2023-05-30 18:24:18', NULL);
 
 
 INSERT INTO `vendors` (`id`, `vendor_name`, `email`, `mobile_number`, `city`, `created_at`, `updated_at`) VALUES

@@ -48,9 +48,9 @@ class User extends Authenticatable
         $this->notify(new ResetPasswordNotification($token, $user->id));
     }
 
-    public function messages()
+    public function inboxs()
     {
-        return $this->hasMany(Message::class, 'user_id', 'id');
+        return $this->hasMany(Inbox::class, 'user_id', 'id');
     }
 
     public function agency()

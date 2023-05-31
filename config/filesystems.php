@@ -56,13 +56,14 @@ return [
         ],
 
         's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-        ],
+          'driver' => 's3',
+          'key' => env('AWS_ACCESS_KEY_ID', 'AKIAICIAQ6ZFYXC34DGA'),
+          'secret' => env('AWS_SECRET_ACCESS_KEY', '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'),
+          'region' => env('AWS_DEFAULT_REGION', 'ap-southeast-1'),
+          'bucket' => env('AWS_BUCKET', 'dti-internal-s3'),
+          'url' => env('AWS_URL', 'https://dti-internal-s3.s3-ap-southeast-1.amazonaws.com'),
+          'endpoint' => env('AWS_ENDPOINT'),
+      ],
 
     ],
 

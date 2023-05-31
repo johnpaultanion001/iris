@@ -14,10 +14,11 @@ use App\Models\Ticket;
 use App\Models\Vendor;
 use App\Models\ReportedBy;
 use App\Models\Violation;
+use App\Models\Inbox;
+use App\Models\Agency;
 use App\Models\TicketAssignAgency;
 use App\Models\TicketComment;
-
-
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends ApiController
 {
@@ -84,6 +85,9 @@ class TicketController extends ApiController
                 ]
 
             );
+            $docuFile = time().'.'.$request->additional_documents_file->extension();
+            $path = Storage::disk('s3')->put('documents_file', $request->additional_documents_file);
+            $path = Storage::disk('s3')->url($path);
 
             $ticket = Ticket::create([
                 'user_id'         => auth("api")->user()->id,
@@ -91,7 +95,7 @@ class TicketController extends ApiController
                 'complaint' => request('complaint'),
                 'platform' => request('platform'),
                 'link' => request('link'),
-                'additional_documents_file' => request('additional_documents_file'),
+                'additional_documents_file' => $path,
                 'vendor_id' => $vendor->id,
                 'reported_by_id' => $reportedBy->id,
                 'remarks' => request('remarks'),
@@ -109,6 +113,20 @@ class TicketController extends ApiController
                 'ticket_id' => $ticket->id,
                 'agency_id' => $agency['agency_id'],
               ]);
+              $agencies = Agency::where('id', $agency['agency_id'])->first();
+              foreach($agencies->users()->get() as $user)
+              {
+                if($user->id != auth("api")->user()->id){
+                  Inbox::create(
+                    [
+                        "user_id" => $user->id,
+                        "url" => "/api/v1/tickets/".$ticket->id,
+                        "message" => "You have been invited to collaborate on Intel#".$ticket->id." by ".auth("api")->user()->name." from ".auth("api")->user()->agency->code ?? "",
+                    ]
+                  );
+                }
+
+              }
             }
 
             $data = [

@@ -12,6 +12,7 @@ use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends ApiController
 {
@@ -138,10 +139,12 @@ class UserController extends ApiController
       if ($validator->fails()) {
           return $this->responseUnprocessable($validator->errors());
       }
+      $path = Storage::disk('s3')->put('profile', $request['profile']);
+      $path = Storage::disk('s3')->url($path);
 
       $user->update([
         'agency_id' => $request['agency_id'],
-        'profile' => $request['profile'],
+        'profile' => $path,
         'name' => $request['name'],
         'last_name' => $request['last_name'],
         'email' => $request['email'],

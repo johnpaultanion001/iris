@@ -76,6 +76,10 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   Route::get('count_ticket_status', 'DashboardController@count_ticket_status')->name('dashboard.count_ticket_status');
   Route::get('dashboard_violation', 'DashboardController@dashboard_violation')->name('dashboard.dashboard_violation');
 
+  //Reports
+  Route::get('inboxes', 'InboxesController@index')->name('inboxes.index');
+
+
 
 });
 

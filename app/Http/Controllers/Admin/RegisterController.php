@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends ApiController
 {
@@ -20,7 +21,7 @@ class RegisterController extends ApiController
 
         $validator = Validator::make($request->all(), [
             'agency_id' => 'required',
-            'profile' => 'required',
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email|max:255|unique:users',
@@ -49,9 +50,12 @@ class RegisterController extends ApiController
      */
     protected function create(array $data)
     {
+      $path = Storage::disk('s3')->put('profile', $data['profile']);
+      $path = Storage::disk('s3')->url($path);
+
         return User::create([
             'agency_id' => $data['agency_id'],
-            'profile' => $data['profile'],
+            'profile' => $path,
             'name' => $data['name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],

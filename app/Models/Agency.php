@@ -15,4 +15,11 @@ class Agency extends Model
         'color',
     ];
 
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'agency_id', 'id');
+    }
+
+
 }

@@ -1,7 +1,7 @@
 INSERT INTO `agencies` (`id`, `logo`, `title`, `code`, `color`, `created_at`, `updated_at`) VALUES
-(1, 'dti.png', 'Department of Trade and industry (DTI)', 'DTI', '#273D80', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
-(2, 'da.png', 'Department of Agriculture (DA)', 'DA', '#469F70', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
-(3, 'doh.png', 'Department of Health (DOH)', 'DOH', '#DEB813', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
-(4, 'denr.png', 'Department of Environment and Natural Resources (DENR)', 'DENR', '#0038A8', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
-(5, 'bsp.png', 'Banko Sentral ng Pilipinas (BSP)', 'BSP', '#F4DA12', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
-(6, 'pnp.png', 'Philippine National Police (PNP)', 'PNP', '#F33037', '2023-05-30 18:24:18', '2023-05-30 18:24:18');
+(1, 'https://upload.wikimedia.org/wikipedia/commons/1/14/DTI_Logo_2019.png', 'Department of Trade and industry (DTI)', 'DTI', '#273D80', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
+(2, 'https://cagayandeoro.da.gov.ph/wp-content/uploads/2018/08/cropped-da-logo-1.png', 'Department of Agriculture (DA)', 'DA', '#469F70', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
+(3, 'https://www.pngkey.com/png/full/52-529820_doh-logo-department-of-health-philippines-logo.png', 'Department of Health (DOH)', 'DOH', '#DEB813', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
+(4, 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Seal_of_the_Department_of_Environment_and_Natural_Resources.svg/1200px-Seal_of_the_Department_of_Environment_and_Natural_Resources.svg.png', 'Department of Environment and Natural Resources (DENR)', 'DENR', '#0038A8', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
+(5, 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Bangko_Sentral_ng_Pilipinas_%28BSP%29.svg/2048px-Bangko_Sentral_ng_Pilipinas_%28BSP%29.svg.png', 'Banko Sentral ng Pilipinas (BSP)', 'BSP', '#F4DA12', '2023-05-30 18:24:18', '2023-05-30 18:24:18'),
+(6, 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Philippine_National_Police_seal.svg/1200px-Philippine_National_Police_seal.svg.png', 'Philippine National Police (PNP)', 'PNP', '#F33037', '2023-05-30 18:24:18', '2023-05-30 18:24:18');
