@@ -14,7 +14,8 @@ class AgencyResource extends ApiResource
     public function toArray($request)
     {
       return [
-          'id' => $this->agency->id ?? $this->id,
+
+
           'logo' => $this->agency->logo ?? $this->logo,
           'agency' => $this->agency->title ?? $this->title,
           'code' => $this->agency->code ?? $this->code,
