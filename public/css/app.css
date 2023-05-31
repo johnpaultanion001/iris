@@ -1815,10 +1815,6 @@ ul[role='listbox'] {
   --tw-bg-opacity: 1;
   background-color: rgb(18 103 229 / var(--tw-bg-opacity));
 }
-.hover\:bg-green:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(18 178 178 / var(--tw-bg-opacity));
-}
 .hover\:bg-lighter:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(242 247 255 / var(--tw-bg-opacity));

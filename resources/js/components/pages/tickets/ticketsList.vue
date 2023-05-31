@@ -424,7 +424,6 @@ export default {
             successMessage: '',
             successIcon: null,
             //Filter Modal
-            dropdownToggle: '',
             fProductSevice: '',
             fSeverity: '',
             severities: [{name: 'Low', value: 'LOW'}, {name: 'Medium', value: 'MEDIUM'}, {name: 'High', value: 'HIGH'}], 
@@ -730,10 +729,6 @@ export default {
                 document.querySelector('body').style.overflow = 'auto';
                 this.modalActive = false;
             }
-        },
-        //Dropdown
-        dropdownToggle(name){
-            this.dropdownToggle = name;
         },
         //Pagination
         setPaginate(i) {

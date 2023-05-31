@@ -329,7 +329,6 @@ export default {
             successMessage: '',
             successIcon: null,
             //Filter Modal
-            dropdownToggle: '',
             fRole: '',
             roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}], 
             fStatus: '',
@@ -508,10 +507,6 @@ export default {
                 document.querySelector('body').style.overflow = 'auto';
                 this.modalActive = false;
             }
-        },
-        //Dropdown
-        dropdownToggle(name){
-            this.dropdownToggle = name;
         },
         //Pagination
         setPaginate(i) {
