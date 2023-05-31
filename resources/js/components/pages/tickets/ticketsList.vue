@@ -260,7 +260,7 @@
                         <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">Product/Service</label>
                         <div class="relative w-full">
                             <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
-                                <v-select :filter="fuseSearch" :options="products" :get-option-label="option => option" placeholder="Choose" v-model="fProductSevice" :reduce="products => products.product_service">
+                                <v-select :filter="fuseSearch" :options="products" :get-option-label="option => option.product_service" placeholder="Choose" v-model="fProductSevice" :reduce="products => products.product_service">
                                     <template #option="{ product_service }" >
                                         {{ product_service }} 
                                     </template>

@@ -9,7 +9,7 @@
                                 <div class="relative w-full">
                                     <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">Product/Service</label>
                                     <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
-                                        <v-select :filter="fuseSearch" :options="products" :get-option-label="option => option" placeholder="Product/Service" v-model="product_service" :reduce="products => products.product_service">
+                                        <v-select :filter="fuseSearch" :options="products" :get-option-label="option => option.product_service" placeholder="Product/Service" v-model="product_service" :reduce="products => products.product_service">
                                             <template #option="{ product_service }" >
                                                 {{ product_service }} 
                                             </template>
@@ -563,7 +563,7 @@ export default {
         //Cities Search
         fuseSearch(options, search) {
         const fuse = new Fuse(options, {
-            keys: ['0'],
+            keys: ['product_service'],
             shouldSort: true,
         })
         return search.length
