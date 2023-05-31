@@ -59,8 +59,11 @@
                                         <img :src="userInfo.profile" class="rounded-2xl w-full h-full object-cover">
                                     </div>
                                     <div class="flex items-center justify-center mt-2">
-                                        <img src="/img/icon/photo-blue.png" class="mr-1.5">
-                                        <p class="m-0 text-blue font-opensans-600 text-sm">Change</p>
+                                        <label class="cursor-pointer flex items-center justify-center">
+                                            <img src="/img/icon/photo-blue.png" class="mr-1.5">
+                                            <p class="m-0 text-blue font-opensans-600 text-sm">Change</p> 
+                                            <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden>
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="mx-0 mt-4 md:my-0 md:ml-4">
@@ -313,6 +316,36 @@ export default {
             } else {
                 this.validPassword = false;
             }
+        },
+        //Input File Photo
+        async onFileChange($event) {
+            var files = $event.target.files || $event.dataTransfer.files;
+            if (!files.length)
+            return;
+            this.additional_documents_file = files['0']['name'];
+
+            
+            await axios.post('/api/v1/user/change_photo', {
+                profile: files['0']['name'],
+            })
+            .then((success) => {
+                //Alert Content
+                if(success.data.success){
+                    this.successAlert = true;
+                    this.successMessage = 'Photo updated';
+                    this.successIcon = 'like.png';
+                    this.getUser();
+                }else{
+                    this.successAlert = true;
+                    this.successMessage = 'Error occured. Please try again';
+                    this.successIcon = 'warning-red.png';
+                }
+            })
+            .catch((error) => {
+                this.successAlert = true;
+                this.successMessage = error;
+                this.successIcon = 'warning-red.png';
+            })
         },
         //Change Password
         async changePassword() {

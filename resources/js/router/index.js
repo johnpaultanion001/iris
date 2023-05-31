@@ -161,26 +161,26 @@ const router = createRouter({
 })
 
 
-router.beforeEach(async (to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        const response = await axios.get('api/v1/profile')
-        .then((res) => {
-            next()
-        })
-        .catch((error) => {
-            next({ path: '/login' })
-        })
-        console.clear('');
-    } else {
-        const response = await axios.get('api/v1/profile')
-        .then((res) => {
-            next({ path: '/' })
-        })
-        .catch((error) => {
-            next()
-        })
-        console.clear('');
-    }
-})
+// router.beforeEach(async (to, from, next) => {
+//     if (to.matched.some(record => record.meta.requiresAuth)) {
+//         const response = await axios.get('api/v1/profile')
+//         .then((res) => {
+//             next()
+//         })
+//         .catch((error) => {
+//             next({ path: '/login' })
+//         })
+//         console.clear('');
+//     } else {
+//         const response = await axios.get('api/v1/profile')
+//         .then((res) => {
+//             next({ path: '/' })
+//         })
+//         .catch((error) => {
+//             next()
+//         })
+//         console.clear('');
+//     }
+// })
 
 export default router

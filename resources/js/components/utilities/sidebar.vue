@@ -7,7 +7,7 @@
             <div class="sidebar-body bg-white py-0 px-2.5 h-full">  
                 <div class="agency-title w-full flex items-center pt-4 pb-3">
                     <div class="rounded-full border mr-3 block">
-                        <img :src="'/img/'+agencyImg"> 
+                        <img :src="agencyImg" style="width: 50px; height: 50px;max-width: 50px;max-height: 50px;padding: 7px;"> 
                     </div>
                     <p class="text-sm text-blue-grey font-opensans-600">{{ agencyName }}</p>
                 </div>

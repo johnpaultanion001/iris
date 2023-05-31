@@ -760,6 +760,9 @@ video {
 .mt-9 {
   margin-top: 2.25rem;
 }
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
 .block {
   display: block;
 }
@@ -823,6 +826,9 @@ video {
 .h-full {
   height: 100%;
 }
+.h-14 {
+  height: 3.5rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -883,6 +889,9 @@ video {
 }
 .w-full {
   width: 100%;
+}
+.w-14 {
+  width: 3.5rem;
 }
 .min-w-0 {
   min-width: 0px;
@@ -955,6 +964,9 @@ video {
 }
 .grid-cols-8 {
   grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 .grid-rows-2 {
   grid-template-rows: repeat(2, minmax(0, 1fr));
@@ -1068,6 +1080,9 @@ video {
 }
 .border {
   border-width: 1px;
+}
+.border-0 {
+  border-width: 0px;
 }
 .border-x-0 {
   border-left-width: 0px;
@@ -1375,6 +1390,9 @@ video {
 }
 .pt-8 {
   padding-top: 2rem;
+}
+.pb-10 {
+  padding-bottom: 2.5rem;
 }
 .text-center {
   text-align: center;
@@ -1852,6 +1870,10 @@ ul[role='listbox'] {
     right: 1rem;
   }
 
+  .xs\:col-span-5 {
+    grid-column: span 5 / span 5;
+  }
+
   .xs\:w-fit {
     width: -moz-fit-content;
     width: fit-content;
@@ -1862,6 +1884,18 @@ ul[role='listbox'] {
   }
 }
 @media (min-width: 640px) {
+
+  .sm\:col-span-5 {
+    grid-column: span 5 / span 5;
+  }
+
+  .sm\:col-span-6 {
+    grid-column: span 6 / span 6;
+  }
+
+  .sm\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
 
   .sm\:mx-2 {
     margin-left: 0.5rem;
@@ -1878,6 +1912,10 @@ ul[role='listbox'] {
 
   .sm\:w-1\/3 {
     width: 33.333333%;
+  }
+
+  .sm\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .sm\:bg-transparent {

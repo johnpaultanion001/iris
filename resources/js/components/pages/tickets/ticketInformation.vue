@@ -77,7 +77,7 @@
                                     <div class="flex items-center justify-start">
                                         <h2 class="mr-5 text-black font-exo-600 text-2xl">Ticket #{{ id }}</h2>
                                         <div class="flex items-center justify-start" v-for="item in ticketInfo.assigned_agencies">
-                                            <img :src="'/img/'+item.logo" class="w-10 h-10 object-cover mr-2">
+                                            <img :src="item.logo" class="w-10 h-10 object-cover mr-2">
                                         </div>
                                     </div>
                                 </div>
@@ -303,8 +303,8 @@
                             <div class="block px-2 py-4">
                                 <div class="grid grid-cols-5 gap-y-5 gap-x-5 mt-2">
                                     <div v-for="item in selectedAgencies" class="col-span-1">
-                                        <div>
-                                            <img :src="'/img/' + item.logo" class="w-full mx-auto max-w-30 rounded-full">
+                                        <div class="">
+                                            <img :src="item.logo" class="w-full mx-auto max-w-30 rounded-full border-light border">
                                             <p class="text-blue-grey font-opensans-600 text-xxs text-center my-3 ellipsis-2" style="height: 34px;">{{ item.agency }}</p>
                                             <p @click="removeChecked(item.code)" class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">Remove</p>
                                         </div>
@@ -328,13 +328,13 @@
                         <ContentCard cardTitle="Comments">
                             <div class="block p-2">
                                 <table class="table-fixed w-full">
-                                    <tbody v-for="item in ticketInfo.comments">
-                                        <tr class="border-b border-light relative"  v-for="comment in item">
-                                            <td class="py-3">
+                                    <tbody v-for="(item, index) in ticketInfo.comments">
+                                        <tr class="relative" v-for="(comment, index) in item">
+                                            <td class="py-3" :class="item.length == index +1 ? 'pb-10 border-0' : 'border-b border-light'">
                                                 <div class="flex items-start justify-start">
                                                     <img :src="comment.profile" class="w-9 h-9 rounded-full object-cover mr-4">
                                                     <div>
-                                                        <p class="font-opensans-600 text-base" style="color: #32325D;">Name</p>
+                                                        <p class="font-opensans-600 text-base" style="color: #32325D;">{{ comment.author }}</p>
                                                         <p class="font-opensans-600 text-xs text-blue-grey">{{ comment.agency }} <span class="opacity-50">•</span> <span class="opacity-50">{{ format_date(comment.comment_at) }}</span></p>
                                                         <p class="font-inter-400 text-base text-black mt-3.5">{{ comment.comment }}</p>
                                                     </div>
@@ -343,8 +343,8 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <div class="flex items-center justify-start mt-10">
-                                    <img src="/img/user-photo.png" class="w-12 h-12 rounded-full object-cover mr-4">
+                                <div class="flex items-center justify-start">
+                                    <img :src="userImg" class="w-12 h-12 rounded-full object-cover mr-4">
                                     <input type="text" placeholder="Type comment" v-model="commentsinput" id="commentsinput" class="my-2 w-full secondary-input mr-2" />
                                     <button @click="submitComment()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 text-white rounded flex items-center justify-center" style="height: 43px">
                                         Comment
@@ -437,7 +437,7 @@
                         <div v-for="(agency, index) in allAgencies" ref="allAgencies" class="py-2">
                             <label class="cursor-pointer flex items-center">
                                 <input type="checkbox" @change.prevent="agencyChecked(agency.code, agency.index, $event)" :value="agency.id" v-model="chosenAgencies">
-                                <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
+                                <img :src="agency.logo" class="w-15 h-15 mx-4 rounded-full">
                                 <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                             </label>
                         </div>
@@ -701,8 +701,9 @@ export default {
             selectedViolations: [],
             chosenViolations: [],
             arrayViolations: [],
-            violationAmount: ''
-
+            violationAmount: '',
+            //User
+            userImg: ''
         };
     },
     components: { PageLayout, ContentCard, Modal, AlertTop },
@@ -725,8 +726,16 @@ export default {
         this.getAgencies();
         this.getTicket();
         this.getViolations();
+        this.getUser();
     },
     methods: {
+        //Get User
+        async getUser(){
+            this.pageNumber = 0;
+            const response = await axios.get('api/v1/profile');
+            //Filter User Data
+            this.userImg = response.data.data.profile;
+        },
         //Get Ticket
         async getTicket(){
             const response = await axios.get('api/v1/tickets/'+this.id);
