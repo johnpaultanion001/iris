@@ -8,19 +8,19 @@
         </div>
         <div class="col-span-3 xl:col-span-4 flex items-center relative">
             <div @click="dropdown = !dropdown" class="w-full flex items-center justify-end">
-                <img :src="userImg" class="mr-2 w-9 h-9 rounded-full"> 
+                <img :src="userImg" class="mr-2 w-9 h-9 rounded-full">
                 <p class="text-base text-white font-inter-700">Hi, {{ userFirstName }} 👋</p>
             </div>
             <div v-if="dropdown" class="dropdown absolute top-14 right-0 rounded-lg bg-white shadow-secondary overflow-hidden">
                 <router-link to="/settings" class="p-5 flex items-center hover:bg-lighter">
                     <div class="w-7 relative">
-                        <img src="/img/icon/user.png"> 
+                        <img src="/img/icon/user.png">
                     </div>
                     <p class="font-inter-400 text-sm text-black">Profile & Settings</p>
                 </router-link>
                 <div @click="logout()" class="p-5 flex items-center hover:bg-lighter">
                     <div class="w-7 relative">
-                        <img src="/img/icon/logout.png"> 
+                        <img src="/img/icon/logout.png">
                     </div>
                     <p class="font-inter-400 text-sm text-black">Logout</p>
                 </div>
@@ -43,7 +43,7 @@ export default {
             dropdown: false,
             grant_type: 'password',
             client_id: '2',
-            client_secret: 'kMAUXaAjjgTPI2BJtNXZyIyRW9xYWNtEb5bIuDgZ',
+            client_secret: 'CWPV7vp1LIoxHwjdpZUOVFdf3OoQEz8X81YO2Edz',
             scope: '',
             username: '',
             password: ''
@@ -69,8 +69,8 @@ export default {
             await axios.post('api/v1/logout', {}, {
                 withCredentials: true,
                 header: {
-                    'Accept': 'application/json, multipart/form-data', 
-                    'Content-Type': 'application/json; charset=UTF-8', 
+                    'Accept': 'application/json, multipart/form-data',
+                    'Content-Type': 'application/json; charset=UTF-8',
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Headers': 'Content-Type, x-xsrf-token'
                 },
