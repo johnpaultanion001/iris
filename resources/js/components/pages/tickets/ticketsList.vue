@@ -36,19 +36,19 @@
     </div>
     <div class="scroll-style w-full overflow-auto flex items-center justify-start pb-3">
         <div :class="activeStatus == 'FOR_REVIEW' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('FOR_REVIEW', 0)" link="" arrow="false" cardTitle="For Review" :value="alltickets.filter((a) => (a.status == 'FOR_REVIEW')).length" icon="/img/icon/eye-active.png" />
+            <ButtonCard @click="getTickets('FOR_REVIEW', 0)" link="" arrow="false" cardTitle="For Review" :value="alltickets.filter((a) => (a.status == 'FOR_REVIEW')).length" icon="/img/icon/eye-active.svg" />
         </div>
         <div :class="activeStatus == 'ACKNOWLEDGED' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('ACKNOWLEDGED', 0)" link="" arrow="false" cardTitle="Acknowledged" :value="alltickets.filter((a) => (a.status == 'ACKNOWLEDGED')).length" icon="/img/icon/like-active.png" />
+            <ButtonCard @click="getTickets('ACKNOWLEDGED', 0)" link="" arrow="false" cardTitle="Acknowledged" :value="alltickets.filter((a) => (a.status == 'ACKNOWLEDGED')).length" icon="/img/icon/like-active.svg" />
         </div>
         <div :class="activeStatus == 'ON_GOING' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('ON_GOING', 0)" link="" arrow="false" cardTitle="On-going" :value="alltickets.filter((a) => (a.status == 'ON_GOING')).length" icon="/img/icon/clock-active.png" />
+            <ButtonCard @click="getTickets('ON_GOING', 0)" link="" arrow="false" cardTitle="On-going" :value="alltickets.filter((a) => (a.status == 'ON_GOING')).length" icon="/img/icon/clock-active.svg" />
         </div>
         <div :class="activeStatus == 'RESOLVED' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('RESOLVED', 0)" link="" arrow="false" cardTitle="Resolved" :value="alltickets.filter((a) => (a.status == 'RESOLVED')).length" icon="/img/icon/party-active.png" />
+            <ButtonCard @click="getTickets('RESOLVED', 0)" link="" arrow="false" cardTitle="Resolved" :value="alltickets.filter((a) => (a.status == 'RESOLVED')).length" icon="/img/icon/party-active.svg" />
         </div>
         <div :class="activeStatus == 'INVALID' ? 'opacity-100' : 'opacity-40'" class="mr-3 min-w-160 w-1/5">
-            <ButtonCard @click="getTickets('INVALID', 0)" link="" arrow="false" cardTitle="Invalid" :value="alltickets.filter((a) => (a.status == 'INVALID')).length" icon="/img/icon/warning-active.png" />
+            <ButtonCard @click="getTickets('INVALID', 0)" link="" arrow="false" cardTitle="Invalid" :value="alltickets.filter((a) => (a.status == 'INVALID')).length" icon="/img/icon/warning-active.svg" />
         </div>
     </div>
     <div class="grid grid-cols-12 gap-3">

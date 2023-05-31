@@ -92,35 +92,35 @@
                             </div>
                             <div class="px-10 py-5 flex items-center justify-between border-b border-light mx-2">
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'FOR_REVIEW' ? '/img/icon/eye-active.png' : '/img/icon/eye-inactive.png'" class="m-auto">
+                                    <img :src="ticketInfo.status == 'FOR_REVIEW' ? '/img/icon/forreview-active.svg' : '/img/icon/forreview-inactive.svg'" class="m-auto">
                                     <p :class="ticketInfo.status == 'FOR_REVIEW' ? 'text-blue' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">For Review</p>
                                 </div>
                                 <div>
-                                    <img src="/img/icon/arrowright.png" class="">
+                                    <img src="/img/icon/arrow-right.svg" class="">
                                 </div>
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'ACKNOWLEDGED' ? '/img/icon/like-active.png' : '/img/icon/like-inactive.png'" class="m-auto">
+                                    <img :src="ticketInfo.status == 'ACKNOWLEDGED' ? '/img/icon/acknowledged-active.svg' : '/img/icon/acknowledged-inactive.svg'" class="m-auto">
                                     <p :class="ticketInfo.status == 'ACKNOWLEDGED' ? 'text-blue' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">Acknowledged</p>
                                 </div>
                                 <div>
-                                    <img src="/img/icon/arrowright.png" class="">
+                                    <img src="/img/icon/arrow-right.svg" class="">
                                 </div>
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'ON_GOING' ? '/img/icon/clock-active.png' : '/img/icon/clock-inactive.png'" class="m-auto">
+                                    <img :src="ticketInfo.status == 'ON_GOING' ? '/img/icon/ongoing-active.svg' : '/img/icon/ongoing-inactive.svg'" class="m-auto">
                                     <p :class="ticketInfo.status == 'ON_GOING' ? 'text-blue' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">On-going</p>
                                 </div>
                                 <div>
-                                    <img src="/img/icon/arrowright.png" class="">
+                                    <img src="/img/icon/arrow-right.svg" class="">
                                 </div>
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'RESOLVED' ? '/img/icon/party-active.png' : '/img/icon/party-inactive.png'" class="m-auto">
+                                    <img :src="ticketInfo.status == 'RESOLVED' ? '/img/icon/resolved-active.svg' : '/img/icon/resolved-inactive.svg'" class="m-auto">
                                     <p :class="ticketInfo.status == 'RESOLVED' ? 'text-blue' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">Resolved</p>
                                 </div>
                                 <div>
                                     <img src="/img/icon/line.png" class="">
                                 </div>
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'INVALID' ? '/img/icon/warning-red2.png' : '/img/icon/warning-inactive.png'" class="m-auto">
+                                    <img :src="ticketInfo.status == 'INVALID' ? '/img/icon/invalid-red2.svg' : '/img/icon/invalid-inactive.svg'" class="m-auto">
                                     <p :class="ticketInfo.status == 'INVALID' ? 'text-red' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">Invalid</p>
                                 </div>
                             </div>

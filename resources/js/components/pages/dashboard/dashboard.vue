@@ -165,19 +165,19 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets/FOR_REVIEW" arrow="true" cardTitle="For Review" :value="alltickets.filter((a) => (a.status == 'FOR_REVIEW')).length"  icon="/img/icon/eye-active.png" />
+                <ButtonCard link="/tickets/FOR_REVIEW" arrow="true" cardTitle="For Review" :value="alltickets.filter((a) => (a.status == 'FOR_REVIEW')).length"  icon="/img/icon/eye-active.svg" />
             </div>
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets/ACKNOWLEDGED" arrow="true" cardTitle="Acknowledged" :value="alltickets.filter((a) => (a.status == 'ACKNOWLEDGED')).length"  icon="/img/icon/like-active.png" />
+                <ButtonCard link="/tickets/ACKNOWLEDGED" arrow="true" cardTitle="Acknowledged" :value="alltickets.filter((a) => (a.status == 'ACKNOWLEDGED')).length"  icon="/img/icon/like-active.svg" />
             </div>
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets/ON_GOING" arrow="true" cardTitle="On-going" :value="alltickets.filter((a) => (a.status == 'ON_GOING')).length"  icon="/img/icon/clock-active.png" />
+                <ButtonCard link="/tickets/ON_GOING" arrow="true" cardTitle="On-going" :value="alltickets.filter((a) => (a.status == 'ON_GOING')).length"  icon="/img/icon/clock-active.svg" />
             </div>
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets/RESOLVED" arrow="true" cardTitle="Resolved" :value="alltickets.filter((a) => (a.status == 'RESOLVED')).length"  icon="/img/icon/party-active.png" />
+                <ButtonCard link="/tickets/RESOLVED" arrow="true" cardTitle="Resolved" :value="alltickets.filter((a) => (a.status == 'RESOLVED')).length"  icon="/img/icon/party-active.svg" />
             </div>
             <div class="col-span-2 md:col-span-1">
-                <ButtonCard link="/tickets/INVALID" arrow="true" cardTitle="Invalid" :value="alltickets.filter((a) => (a.status == 'INVALID')).length"  icon="/img/icon/warning-active.png" />
+                <ButtonCard link="/tickets/INVALID" arrow="true" cardTitle="Invalid" :value="alltickets.filter((a) => (a.status == 'INVALID')).length"  icon="/img/icon/warning-active.svg" />
             </div>
         </div>
     </PageLayout>

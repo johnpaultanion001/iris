@@ -28393,7 +28393,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: $data.alltickets.filter(function (a) {
           return a.status == 'FOR_REVIEW';
         }).length,
-        icon: "/img/icon/eye-active.png"
+        icon: "/img/icon/eye-active.svg"
       }, null, 8 /* PROPS */, ["value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonCard, {
         link: "/tickets/ACKNOWLEDGED",
         arrow: "true",
@@ -28401,7 +28401,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: $data.alltickets.filter(function (a) {
           return a.status == 'ACKNOWLEDGED';
         }).length,
-        icon: "/img/icon/like-active.png"
+        icon: "/img/icon/like-active.svg"
       }, null, 8 /* PROPS */, ["value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonCard, {
         link: "/tickets/ON_GOING",
         arrow: "true",
@@ -28409,7 +28409,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: $data.alltickets.filter(function (a) {
           return a.status == 'ON_GOING';
         }).length,
-        icon: "/img/icon/clock-active.png"
+        icon: "/img/icon/clock-active.svg"
       }, null, 8 /* PROPS */, ["value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonCard, {
         link: "/tickets/RESOLVED",
         arrow: "true",
@@ -28417,7 +28417,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: $data.alltickets.filter(function (a) {
           return a.status == 'RESOLVED';
         }).length,
-        icon: "/img/icon/party-active.png"
+        icon: "/img/icon/party-active.svg"
       }, null, 8 /* PROPS */, ["value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonCard, {
         link: "/tickets/INVALID",
         arrow: "true",
@@ -28425,7 +28425,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: $data.alltickets.filter(function (a) {
           return a.status == 'INVALID';
         }).length,
-        icon: "/img/icon/warning-active.png"
+        icon: "/img/icon/warning-active.svg"
       }, null, 8 /* PROPS */, ["value"])])])];
     }),
     _: 1 /* STABLE */
@@ -32138,7 +32138,7 @@ var _hoisted_45 = {
 };
 var _hoisted_46 = ["src"];
 var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/arrowright.png",
+  src: "/img/icon/arrow-right.svg",
   "class": ""
 })], -1 /* HOISTED */);
 var _hoisted_48 = {
@@ -32146,7 +32146,7 @@ var _hoisted_48 = {
 };
 var _hoisted_49 = ["src"];
 var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/arrowright.png",
+  src: "/img/icon/arrow-right.svg",
   "class": ""
 })], -1 /* HOISTED */);
 var _hoisted_51 = {
@@ -32154,7 +32154,7 @@ var _hoisted_51 = {
 };
 var _hoisted_52 = ["src"];
 var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/arrowright.png",
+  src: "/img/icon/arrow-right.svg",
   "class": ""
 })], -1 /* HOISTED */);
 var _hoisted_54 = {
@@ -32853,27 +32853,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               "width": "32px"
             }])
           }, null, 4 /* STYLE */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-            src: $data.ticketInfo.status == 'FOR_REVIEW' ? '/img/icon/eye-active.png' : '/img/icon/eye-inactive.png',
+            src: $data.ticketInfo.status == 'FOR_REVIEW' ? '/img/icon/forreview-active.svg' : '/img/icon/forreview-inactive.svg',
             "class": "m-auto"
           }, null, 8 /* PROPS */, _hoisted_46), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
             "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.ticketInfo.status == 'FOR_REVIEW' ? 'text-blue' : 'text-blue-grey', "text-xs font-opensans-600 mt-3"])
           }, "For Review", 2 /* CLASS */)]), _hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-            src: $data.ticketInfo.status == 'ACKNOWLEDGED' ? '/img/icon/like-active.png' : '/img/icon/like-inactive.png',
+            src: $data.ticketInfo.status == 'ACKNOWLEDGED' ? '/img/icon/acknowledged-active.svg' : '/img/icon/acknowledged-inactive.svg',
             "class": "m-auto"
           }, null, 8 /* PROPS */, _hoisted_49), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
             "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.ticketInfo.status == 'ACKNOWLEDGED' ? 'text-blue' : 'text-blue-grey', "text-xs font-opensans-600 mt-3"])
           }, "Acknowledged", 2 /* CLASS */)]), _hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-            src: $data.ticketInfo.status == 'ON_GOING' ? '/img/icon/clock-active.png' : '/img/icon/clock-inactive.png',
+            src: $data.ticketInfo.status == 'ON_GOING' ? '/img/icon/ongoing-active.svg' : '/img/icon/ongoing-inactive.svg',
             "class": "m-auto"
           }, null, 8 /* PROPS */, _hoisted_52), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
             "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.ticketInfo.status == 'ON_GOING' ? 'text-blue' : 'text-blue-grey', "text-xs font-opensans-600 mt-3"])
           }, "On-going", 2 /* CLASS */)]), _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-            src: $data.ticketInfo.status == 'RESOLVED' ? '/img/icon/party-active.png' : '/img/icon/party-inactive.png',
+            src: $data.ticketInfo.status == 'RESOLVED' ? '/img/icon/resolved-active.svg' : '/img/icon/resolved-inactive.svg',
             "class": "m-auto"
           }, null, 8 /* PROPS */, _hoisted_55), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
             "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.ticketInfo.status == 'RESOLVED' ? 'text-blue' : 'text-blue-grey', "text-xs font-opensans-600 mt-3"])
           }, "Resolved", 2 /* CLASS */)]), _hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-            src: $data.ticketInfo.status == 'INVALID' ? '/img/icon/warning-red2.png' : '/img/icon/warning-inactive.png',
+            src: $data.ticketInfo.status == 'INVALID' ? '/img/icon/invalid-red2.svg' : '/img/icon/invalid-inactive.svg',
             "class": "m-auto"
           }, null, 8 /* PROPS */, _hoisted_58), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
             "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.ticketInfo.status == 'INVALID' ? 'text-red' : 'text-blue-grey', "text-xs font-opensans-600 mt-3"])
@@ -34016,7 +34016,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $data.alltickets.filter(function (a) {
       return a.status == 'FOR_REVIEW';
     }).length,
-    icon: "/img/icon/eye-active.png"
+    icon: "/img/icon/eye-active.svg"
   }, null, 8 /* PROPS */, ["value"])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.activeStatus == 'ACKNOWLEDGED' ? 'opacity-100' : 'opacity-40', "mr-3 min-w-160 w-1/5"])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonCard, {
@@ -34029,7 +34029,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $data.alltickets.filter(function (a) {
       return a.status == 'ACKNOWLEDGED';
     }).length,
-    icon: "/img/icon/like-active.png"
+    icon: "/img/icon/like-active.svg"
   }, null, 8 /* PROPS */, ["value"])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.activeStatus == 'ON_GOING' ? 'opacity-100' : 'opacity-40', "mr-3 min-w-160 w-1/5"])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonCard, {
@@ -34042,7 +34042,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $data.alltickets.filter(function (a) {
       return a.status == 'ON_GOING';
     }).length,
-    icon: "/img/icon/clock-active.png"
+    icon: "/img/icon/clock-active.svg"
   }, null, 8 /* PROPS */, ["value"])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.activeStatus == 'RESOLVED' ? 'opacity-100' : 'opacity-40', "mr-3 min-w-160 w-1/5"])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonCard, {
@@ -34055,7 +34055,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $data.alltickets.filter(function (a) {
       return a.status == 'RESOLVED';
     }).length,
-    icon: "/img/icon/party-active.png"
+    icon: "/img/icon/party-active.svg"
   }, null, 8 /* PROPS */, ["value"])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.activeStatus == 'INVALID' ? 'opacity-100' : 'opacity-40', "mr-3 min-w-160 w-1/5"])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonCard, {
@@ -34068,7 +34068,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $data.alltickets.filter(function (a) {
       return a.status == 'INVALID';
     }).length,
-    icon: "/img/icon/warning-active.png"
+    icon: "/img/icon/warning-active.svg"
   }, null, 8 /* PROPS */, ["value"])], 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ContentCard, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -36548,88 +36548,88 @@ var _hoisted_9 = {
 };
 var _hoisted_10 = {
   key: 0,
-  src: "/img/icon/home-active.png",
+  src: "/img/icon/home-active.svg",
   "class": "absolute"
 };
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/home.png"
+  src: "/img/icon/home.svg"
 }, null, -1 /* HOISTED */);
 var _hoisted_12 = {
   "class": "mr-3.5 relative"
 };
 var _hoisted_13 = {
   key: 0,
-  src: "/img/icon/inbox-active.png",
+  src: "/img/icon/inbox-active.svg",
   "class": "absolute"
 };
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/inbox.png"
+  src: "/img/icon/inbox.svg"
 }, null, -1 /* HOISTED */);
 var _hoisted_15 = {
   "class": "mr-3.5 relative"
 };
 var _hoisted_16 = {
   key: 0,
-  src: "/img/icon/tickets-active.png",
+  src: "/img/icon/tickets-active.svg",
   "class": "absolute"
 };
 var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/tickets.png"
+  src: "/img/icon/tickets.svg"
 }, null, -1 /* HOISTED */);
 var _hoisted_18 = {
   "class": "mr-3.5 relative"
 };
 var _hoisted_19 = {
   key: 0,
-  src: "/img/icon/reported-vendors-active.png",
+  src: "/img/icon/reported-vendors-active.svg",
   "class": "absolute"
 };
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/reported-vendors.png"
+  src: "/img/icon/reported-vendors.svg"
 }, null, -1 /* HOISTED */);
 var _hoisted_21 = {
   "class": "mr-3.5 relative"
 };
 var _hoisted_22 = {
   key: 0,
-  src: "/img/icon/users-active.png",
+  src: "/img/icon/users-active.svg",
   "class": "absolute"
 };
 var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/users.png"
+  src: "/img/icon/users.svg"
 }, null, -1 /* HOISTED */);
 var _hoisted_24 = {
   "class": "mr-3.5 relative"
 };
 var _hoisted_25 = {
   key: 0,
-  src: "/img/icon/reports-active.png",
+  src: "/img/icon/reports-active.svg",
   "class": "absolute"
 };
 var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/reports.png"
+  src: "/img/icon/reports.svg"
 }, null, -1 /* HOISTED */);
 var _hoisted_27 = {
   "class": "mr-3.5 relative"
 };
 var _hoisted_28 = {
   key: 0,
-  src: "/img/icon/settings-active.png",
+  src: "/img/icon/settings-active.svg",
   "class": "absolute"
 };
 var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/settings.png"
+  src: "/img/icon/settings.svg"
 }, null, -1 /* HOISTED */);
 var _hoisted_30 = {
   "class": "mr-3.5 relative"
 };
 var _hoisted_31 = {
   key: 0,
-  src: "/img/icon/activity-active.png",
+  src: "/img/icon/activity-active.svg",
   "class": "absolute"
 };
 var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "/img/icon/activity.png"
+  src: "/img/icon/activity.svg"
 }, null, -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
