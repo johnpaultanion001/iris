@@ -46,7 +46,7 @@ export default {
             isRemember: false,
             grant_type: 'password',
             client_id: '2',
-            client_secret: 'kMAUXaAjjgTPI2BJtNXZyIyRW9xYWNtEb5bIuDgZ',
+            client_secret: 'CWPV7vp1LIoxHwjdpZUOVFdf3OoQEz8X81YO2Edz',
             scope: '',
             username: '',
             password: ''
@@ -73,8 +73,8 @@ export default {
             await axios.post('api/v1/auth/oauth/token', inputs, {
                 withCredentials: true,
                 header: {
-                    'Accept': 'application/json, multipart/form-data', 
-                    'Content-Type': 'application/json; charset=UTF-8', 
+                    'Accept': 'application/json, multipart/form-data',
+                    'Content-Type': 'application/json; charset=UTF-8',
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Headers': 'Content-Type, x-xsrf-token'
                 },
