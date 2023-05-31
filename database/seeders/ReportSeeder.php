@@ -13,55 +13,34 @@ class ReportSeeder extends Seeder
      */
     public function run()
     {
-      $reports = [
-          [
-              'user_id' => '1',
-              'title' => 'Report Title',
-              'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-              'file' => 'http://dti-internal.ap-southeast-1.elasticbeanstalk.com/test.pdf',
+      $file_path = resource_path('sql/agencies.sql');
 
-              'created_at' => date("Y-m-d H:i:s"),
-              'updated_at' => date("Y-m-d H:i:s"),
-          ],
-          [
-            'user_id' => '1',
-            'title' => 'Report Title',
-            'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-            'file' => 'http://dti-internal.ap-southeast-1.elasticbeanstalk.com/test.pdf',
+      \DB::unprepared(
+          file_get_contents($file_path)
+      );
 
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-        ],
-        [
-          'user_id' => '1',
-          'title' => 'Report Title',
-          'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-          'file' => 'http://dti-internal.ap-southeast-1.elasticbeanstalk.com/test.pdf',
+      $file_path = resource_path('sql/tickets.sql');
 
-          'created_at' => date("Y-m-d H:i:s"),
-          'updated_at' => date("Y-m-d H:i:s"),
-        ],
-        [
-            'user_id' => '1',
-            'title' => 'Report Title',
-            'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-            'file' => 'http://dti-internal.ap-southeast-1.elasticbeanstalk.com/test.pdf',
+      \DB::unprepared(
+          file_get_contents($file_path)
+      );
 
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-        ],
-        [
-            'user_id' => '1',
-            'title' => 'Report Title',
-            'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-            'file' => 'http://dti-internal.ap-southeast-1.elasticbeanstalk.com/test.pdf',
+      $file_path = resource_path('sql/ticket_assign_agencies.sql');
 
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-        ],
+      \DB::unprepared(
+          file_get_contents($file_path)
+      );
 
-      ];
+      $file_path = resource_path('sql/violations.sql');
 
-      Report::insert($reports);
+      \DB::unprepared(
+          file_get_contents($file_path)
+      );
+
+      $file_path = resource_path('sql/iris.sql');
+
+      \DB::unprepared(
+          file_get_contents($file_path)
+      );
     }
 }
