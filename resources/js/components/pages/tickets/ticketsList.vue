@@ -3,13 +3,13 @@
     <div class="grid grid-cols-12 gap-3 mb-6 pt-4">
         <div class="col-span-11 md:col-span-12 xl:col-span-6">
             <div class="ticket-tabs bg-grey p-1 rounded-xl flex">
-                <div @click="activeTab = 'All'; getTickets(activeStatus, 0); getAllTickets();" :class="activeTab === 'All' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
+                <div v-if="userRole == 'SUPER_ADMIN'" @click="activeTab = 'All'; getTickets(activeStatus, 0); getAllTickets();" :class="activeTab === 'All' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
                     <p class="text-xs sm:text-base truncate text-blue-grey font-inter-400 px-1 py-1.5">All</p>
                 </div>
-                <div @click="activeTab = 'My Agency'; getTickets(activeStatus, 0); getAllTickets();" :class="activeTab === 'My Agency' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
+                <div @click="activeTab = 'My Agency'; getTickets(activeStatus, 0); getAllTickets();" :class="activeTab === 'My Agency' ? 'bg-white  shadow-third' : 'bg-transparent', userRole == 'SUPER_ADMIN' ? 'w-1/3' : 'w-1/2'" class="rounded-lg text-center">
                     <p class="text-xs sm:text-base truncate text-blue-grey font-inter-400 px-1 py-1.5">My Agency</p>
                 </div>
-                <div @click="activeTab = 'Following'; getTickets(activeStatus, 0); getAllTickets();" :class="activeTab === 'Following' ? 'bg-white  shadow-third' : 'bg-transparent'" class="rounded-lg w-1/3 text-center">
+                <div @click="activeTab = 'Following'; getTickets(activeStatus, 0); getAllTickets();" :class="activeTab === 'Following' ? 'bg-white  shadow-third' : 'bg-transparent', userRole == 'SUPER_ADMIN' ? 'w-1/3' : 'w-1/2'" class="rounded-lg text-center">
                     <p class="text-xs sm:text-base truncate text-blue-grey font-inter-400 px-1 py-1.5">Following ({{ alltickets.filter((a) => (a.isFollow == 1)).length }})</p>
                 </div>
             </div>
@@ -406,7 +406,7 @@ export default {
             showFilter: true,
             showFilterBtn: true,
             //Tabs
-            activeTab: 'All',
+            activeTab: '',
             myAgency: 'DTI',
             //Filter item number
             filterItemNumberDropdown: false,
@@ -424,7 +424,6 @@ export default {
             successMessage: '',
             successIcon: null,
             //Filter Modal
-            dropdownToggle: '',
             fProductSevice: '',
             fSeverity: '',
             severities: [{name: 'Low', value: 'LOW'}, {name: 'Medium', value: 'MEDIUM'}, {name: 'High', value: 'HIGH'}], 
@@ -452,6 +451,7 @@ export default {
             statusComment: null,
             //User
             userAgencyCode: "",
+            userRole: "",
             //Products Services
             products: [],
         };
@@ -489,10 +489,16 @@ export default {
     },
     methods: {
         async getUser(){
-            this.pageNumber = 0;
             const response = await axios.get('api/v1/profile');
             //Filter User Data
             this.userAgencyCode = response.data.data.assigned_agencies.code;
+            this.userRole = response.data.data.role;
+
+            if(response.data.data.role == 'SUPER_ADMIN'){
+                this.activeTab = 'All'
+            }else{
+                this.activeTab = 'My Agency'
+            }
         },
         resetFilter(){
             this.isFiltering = false
@@ -723,10 +729,6 @@ export default {
                 document.querySelector('body').style.overflow = 'auto';
                 this.modalActive = false;
             }
-        },
-        //Dropdown
-        dropdownToggle(name){
-            this.dropdownToggle = name;
         },
         //Pagination
         setPaginate(i) {

@@ -233,7 +233,6 @@ export default {
             modalActive: false,
             modalTicketID: '',
             //Filter Modal
-            dropdownToggle: '',
             fRole: '',
             roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}], 
             fAgencyValue: [],
@@ -385,10 +384,6 @@ export default {
                 this.modalActive = false;
             }
         },
-        //Dropdown
-        dropdownToggle(name){
-            this.dropdownToggle = name;
-        },
         //Pagination
         setPaginate(i) {
             if (this.pageNumber == 1) {
@@ -413,6 +408,13 @@ export default {
             this.pageNumber = 1;
             this.paginateTotal = Math.ceil(this.activities.length/this.perpage);
         },
+        fuseSearch(options, search) {
+            const fuse = new Fuse(options, {
+                keys: ['name'],
+                shouldSort: true,
+            })
+            return search.length ? fuse.search(search).map(({ item }) => item): fuse.list
+        }
     },
 }
 </script>
