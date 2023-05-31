@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 Route::group([
     'prefix' => 'v1/auth'
 ], function ($router) {
-    Route::post('login', 'Auth\LoginController@login');
-    Route::post('logout', 'Auth\LogoutController@logout');
+    Route::post('oauth/token', 'Auth\AuthController@auth');
+
 
     Route::post('forgot-password', 'Auth\ForgotPasswordController@email');
     Route::post('password-reset', 'Auth\ResetPasswordController@reset');
@@ -50,6 +50,7 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
 
   //PROFILE
   Route::get('profile', 'UserController@profile')->name('users.profile');
+  Route::post('logout', 'UserController@logout')->name('users.logout');
 
   //ALL AGENCIES
   Route::get('agencies', 'AgencyController@index')->name('agencies.index');

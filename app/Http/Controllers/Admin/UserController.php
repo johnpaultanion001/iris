@@ -11,6 +11,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Rules\MatchOldPassword;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends ApiController
 {
@@ -149,5 +150,14 @@ class UserController extends ApiController
       return response()->json(['success' => 'User updated.']);
     }
 
+    public function logout(Request $request)
+    {
+      auth("api")->user()->update([
+        'isLoggedIn' => 0,
+      ]);
+      $token = auth("api")->user()->token();
+      $token->revoke();
+      return response()->json(['success' => 'User is logout']);
+    }
 
 }

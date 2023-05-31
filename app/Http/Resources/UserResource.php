@@ -16,6 +16,7 @@ class UserResource extends ApiResource
     {
         return [
             'id' => $this->id,
+            'isLoggedIn' => $this->isLoggedIn,
             'profile' => $this->profile,
             'name' => $this->name,
             'last_name' => $this->last_name,

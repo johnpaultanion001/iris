@@ -26,6 +26,7 @@ class User extends Authenticatable
         'role',
         'status',
         'profile',
+        'isLoggedIn',
         'password'
     ];
 
