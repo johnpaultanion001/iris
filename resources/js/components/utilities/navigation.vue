@@ -43,7 +43,7 @@ export default {
             dropdown: false,
             grant_type: 'password',
             client_id: '2',
-            client_secret: 'CWPV7vp1LIoxHwjdpZUOVFdf3OoQEz8X81YO2Edz',
+            client_secret: 'NG9cF4LP3pttCZdipGszpmPHvnyg8rwwfuVLHRsr',
             scope: '',
             username: '',
             password: ''
