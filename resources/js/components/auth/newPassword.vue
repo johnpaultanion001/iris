@@ -1,5 +1,5 @@
 <template>
-    <Layout headerBg="/img/background-password.png" :headerTitle="'Hi, ' + userFirstName" headerText="Secure your account by creating a new password">
+    <Layout headerBg="/img/background-password.svg" :headerTitle="'Hi, ' + userFirstName" headerText="Secure your account by creating a new password">
         <div class="block">
             <div class="block relative pt-4 pb-2">
                 <label for="password" class="text-base text-blue-grey text-xs font-inter-700">New password</label>
@@ -70,7 +70,7 @@ export default {
     },
     async mounted() {
         this.getUser();
-    }, 
+    },
     methods: {
         //Get User
         async getUser(){
@@ -107,13 +107,13 @@ export default {
         checkPassword() {
             this.passwordLength = this.password.length;
             const format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-            //Use 8-32 characters     
+            //Use 8-32 characters
             if (this.passwordLength > 8) {
                 this.verCharacters = true;
             } else {
                 this.verCharacters = false;
             }
-            //Use at least one number     
+            //Use at least one number
             this.verOneNumber = /\d/.test(this.password);
             //Use at least one symbol
             this.verOneSymbol = format.test(this.password);
@@ -130,7 +130,7 @@ export default {
 
             //Check if all verifications are true
             if (this.verCharacters === true && this.verOneNumber === true && this.verOneSymbol === true && this.verOneLower === true && this.verOneUpper === true && this.verUniqueMatche === true) {
-                this.validPassword = true;			
+                this.validPassword = true;
             } else {
                 this.validPassword = false;
             }
