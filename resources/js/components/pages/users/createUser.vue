@@ -152,7 +152,7 @@ export default {
             .then((res) => {
                 this.successAlert = true;
                 this.successMessage = 'New user created';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
             })
             .catch((error) => {
                 console.log(inputs)

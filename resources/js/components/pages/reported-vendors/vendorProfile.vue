@@ -213,7 +213,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Successfully updated';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
                 this.closeModal()
             })
             .catch((error) => {

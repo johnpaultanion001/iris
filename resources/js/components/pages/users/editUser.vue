@@ -163,7 +163,7 @@ export default {
             .then((success) => {
                 this.successAlert = true;
                 this.successMessage = 'User updated created';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
                 console.log(success)
                 
                 this.$router.push("/profile/"+this.user.id);

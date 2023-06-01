@@ -816,7 +816,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Successfully updated';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
                 this.getTicket();
             })
             .catch((error) => {
@@ -882,7 +882,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Successfully updated';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
                 this.getTicket();
             })
             .catch((error) => {
@@ -1005,7 +1005,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Update Ticket #' + this.id + " severity";
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
             })
             .catch((error) => {
                 console.log(error.response.data.message || error.message)
@@ -1027,7 +1027,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Ticket #' + this.id + ' is updated';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
             })
             .catch((error) => {
                 console.log(error.response.data.message || error.message)

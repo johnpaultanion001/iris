@@ -649,7 +649,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Ticket #' + this.modalTicketID + ' is updated';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
             })
             .catch((error) => {
                 console.log(error.response.data.message || error.message)

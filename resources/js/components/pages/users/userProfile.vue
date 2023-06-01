@@ -231,7 +231,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'User successfully deactivated';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
                 this.getUser();
                 this.closeModal();
             })
@@ -250,7 +250,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'User successfully activated';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
                 this.getUser();
                 this.closeModal();
             })

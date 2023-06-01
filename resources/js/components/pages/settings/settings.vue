@@ -333,7 +333,7 @@ export default {
                 if(success.data.success){
                     this.successAlert = true;
                     this.successMessage = 'Photo updated';
-                    this.successIcon = 'like.png';
+                    this.successIcon = 'like.svg';
                     this.getUser();
                 }else{
                     this.successAlert = true;
@@ -360,7 +360,7 @@ export default {
                     if(success.data.success){
                         this.successAlert = true;
                         this.successMessage = 'Password successfully updated';
-                        this.successIcon = 'like.png';
+                        this.successIcon = 'like.svg';
                     }else{
                         this.successAlert = true;
                         this.successMessage = success.data.errors.current_password['0'];

@@ -614,7 +614,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Ticket submitted & assigned agencies notified';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
                 this.closeModal();
                 console.log(success)
             })

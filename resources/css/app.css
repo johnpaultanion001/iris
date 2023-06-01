@@ -43,6 +43,15 @@
     src: url('/fonts/OpenSans-ExtraBold.ttf');
 }
 
+/* SVG colors */
+.primary-blue{
+    filter: invert(51%) sepia(95%) saturate(6369%) hue-rotate(210deg) brightness(93%) contrast(93%);
+}
+.inactive-gray{
+    filter: invert(100%) sepia(8%) saturate(5915%) hue-rotate(175deg) brightness(100%) contrast(71%);
+}
+/* END - SVG colors */
+
 h1{
     font-family: exo-700;
     font-size: 32px;
@@ -131,7 +140,7 @@ span.vs__selected {
     position: absolute;
     right: 12px;
     top: auto;
-    bottom: 22px;
+    bottom: 20px;
 }
 
 .filter-btn {

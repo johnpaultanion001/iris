@@ -692,7 +692,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Successfully updated';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
             })
             .catch((error) => {
                 console.log(error)
@@ -707,7 +707,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Successfully updated';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
             })
             .catch((error) => {
                 console.log(error)
@@ -740,7 +740,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Ticket submitted & assigned agencies notified';
-                this.successIcon = 'like.png';
+                this.successIcon = 'like.svg';
                 this.closeModal();
             })
             .catch((error) => {

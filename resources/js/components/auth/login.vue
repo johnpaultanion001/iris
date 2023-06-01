@@ -9,11 +9,11 @@
                 <label for="password" class="text-base text-blue-grey text-xs font-inter-700">Password</label>
                 <input v-if="showPassword" type="text" name="password" id="password" class="mt-1 w-full main-input" v-model="password"/>
                 <input v-else type="password" name="password" id="password" class="mt-1 w-full main-input" v-model="password"/>
-                <button type="button" class="show-icon" @click="{this.showPassword = !this.showPassword;}">
-                    <img src="/img/icon/show.png" class="w-5">
-                </button>
-                <button v-if="showPassword" type="button" class="show-icon" @click="{this.showPassword = !this.showPassword;}">
-                    <img src="/img/icon/show-active.png" class="w-5">
+                <button type="button" class="show-icon" @click="{showPassword = !showPassword;}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" :style="showPassword ? 'fill: #1267E5' : 'fill: #CED4DA'">
+                        <path d="M10 12.9697C11.1046 12.9697 12 12.0743 12 10.9697C12 9.86516 11.1046 8.96973 10 8.96973C8.89544 8.96973 8.00001 9.86516 8.00001 10.9697C8.00001 12.0743 8.89544 12.9697 10 12.9697Z"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.457764 10.9698C1.73202 6.91264 5.52232 3.96973 9.99997 3.96973C14.4776 3.96973 18.2679 6.91261 19.5422 10.9697C18.2679 15.0268 14.4776 17.9697 9.99995 17.9697C5.52232 17.9697 1.73204 15.0269 0.457764 10.9698ZM14 10.9697C14 13.1789 12.2091 14.9697 10 14.9697C7.79087 14.9697 6.00001 13.1789 6.00001 10.9697C6.00001 8.76059 7.79087 6.96973 10 6.96973C12.2091 6.96973 14 8.76059 14 10.9697Z"/>
+                    </svg>
                 </button>
             </div>
             <div class="flex items-center pt-2 pb-4">
