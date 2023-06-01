@@ -1,7 +1,7 @@
 <template>
     <AlertTop alertIcon="/img/icon/like.svg" :active="sendSuccessful" content="Reset link sent to your email" v-if="sendSuccessful" @close="closeAlert">
     </AlertTop>
-    <Layout headerBg="/img/background-login.png" headerTitle="Reset Password" headerText="We’ll send a reset link to your email">
+    <Layout headerBg="/img/background-login.svg" headerTitle="Reset Password" headerText="We’ll send a reset link to your email" page="reset_password">
         <form class="block" @submit.prevent="submitEmail">
             <div class="block pt-4 pb-2">
                <label for="username" class="text-base text-blue-grey text-xs font-inter-700">Username</label>

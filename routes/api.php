@@ -47,6 +47,7 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   Route::get('user/{user}', 'UserController@show')->name('users.show');
   Route::post('user/change_password', 'UserController@change_password')->name('users.change_password');
   Route::post('user/{user}/update', 'UserController@update')->name('users.update');
+  Route::post('user/change_photo/change_photo', 'UserController@change_photo')->name('users.change_photo');
 
   //PROFILE
   Route::get('profile', 'UserController@profile')->name('users.profile');
@@ -76,8 +77,10 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   Route::get('count_ticket_status', 'DashboardController@count_ticket_status')->name('dashboard.count_ticket_status');
   Route::get('dashboard_violation', 'DashboardController@dashboard_violation')->name('dashboard.dashboard_violation');
 
-  //Reports
+  //Inboxes
   Route::get('inboxes', 'InboxesController@index')->name('inboxes.index');
+  Route::post('inboxes/mark_read', 'InboxesController@mark_read')->name('inboxes.mark_read');
+  Route::post('inboxes/mark_all_read', 'InboxesController@mark_all_read')->name('inboxes.mark_all_read');
 
 
 

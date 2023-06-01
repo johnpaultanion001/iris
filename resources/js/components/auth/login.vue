@@ -1,5 +1,5 @@
 <template>
-    <Layout headerBg="/img/background-login.png" headerTitle="Welcome back!" headerText="Enter your email & password to login">
+    <Layout headerBg="/img/background-login.svg" headerTitle="Welcome back!" headerText="Enter your email & password to login" page="login">
         <form class="block" @submit.prevent="submitLogin">
             <div class="block pt-4 pb-2">
                <label for="username" class="text-base text-blue-grey text-xs font-inter-700">Username</label>

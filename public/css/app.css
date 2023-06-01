@@ -823,6 +823,9 @@ video {
 .h-full {
   height: 100%;
 }
+.h-\[29\.81px\] {
+  height: 29.81px;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -883,6 +886,9 @@ video {
 }
 .w-full {
   width: 100%;
+}
+.w-\[280px\] {
+  width: 280px;
 }
 .min-w-0 {
   min-width: 0px;
@@ -1384,6 +1390,9 @@ video {
 }
 .pt-8 {
   padding-top: 2rem;
+}
+.pt-6 {
+  padding-top: 1.5rem;
 }
 .text-center {
   text-align: center;

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Custom\Hasher;
+use Illuminate\Support\Facades\Storage;
 
 class UserResource extends ApiResource
 {
@@ -14,10 +15,12 @@ class UserResource extends ApiResource
      */
     public function toArray($request)
     {
+      $profile = Storage::disk('s3')->temporaryUrl($this->profile, now()->addMinutes(5));
+
         return [
             'id' => $this->id,
             'isLoggedIn' => $this->isLoggedIn,
-            'profile' => $this->profile,
+            'profile' => $profile,
             'name' => $this->name,
             'last_name' => $this->last_name,
             'email' => $this->email,
