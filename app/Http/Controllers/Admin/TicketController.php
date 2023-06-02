@@ -85,7 +85,7 @@ class TicketController extends ApiController
                 ]
 
             );
-            $docuFile = time().'.'.$request->additional_documents_file->extension();
+            $docuFile = time().'.'.$request->additional_documents_file;
             $path = Storage::disk('s3')->temporaryUrl($request->additional_documents_file, now()->addMinutes(5));
             $path = Storage::disk('s3')->url($path);
 
