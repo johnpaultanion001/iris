@@ -20595,7 +20595,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              _this2.getRvendors(0);
+              _this2.getActivities(0);
               _this2.isFiltering = true;
               _context2.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_5___default().post('api/v1/filter/activity', {
@@ -20619,6 +20619,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     resetFilter: function resetFilter() {
+      this.getActivities(0);
       this.isFiltering = false;
       this.fRole = '';
       this.fStatus = '';
@@ -21483,6 +21484,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     resetFilter: function resetFilter() {
+      this.getRvendors(0);
       this.isFiltering = false;
       this.fCity = '';
       this.fFrom = '';
@@ -25072,7 +25074,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             //Get All Products Services
             _this.getProducts();
 
-            //if has ticket status on URL 
+            //if has ticket status on URL
             if (_this.filterStatus) {
               _this.activeStatus = _this.filterStatus;
             }
@@ -25123,6 +25125,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     resetFilter: function resetFilter() {
+      this.getTickets(this.activeStatus, 0);
       this.isFiltering = false;
       this.fProductSevice = '';
       this.fSeverity = '';
@@ -25144,7 +25147,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 severity: _this3.fSeverity,
                 from: _this3.reformat_date(_this3.fFrom),
                 till: _this3.reformat_date(_this3.fTill),
-                agencies: _this3.fAgencyValue
+                agencies: _this3.fAgencyValue.length > 0 ? _this3.fAgencyValue : null
               }).then(function (success) {
                 _this3.responseFiltered = success.data.data;
                 _this3.closeModal();
@@ -26302,7 +26305,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 account_status: _this2.fStatus,
                 from: _this2.reformat_date(_this2.fFrom),
                 till: _this2.reformat_date(_this2.fTill),
-                agencies: _this2.fAgencyValue
+                agencies: _this2.fAgencyValue.length ? _this2.fAgencyValue : null
               }).then(function (success) {
                 _this2.responseFiltered = success.data.data;
                 _this2.closeModal();
@@ -26317,6 +26320,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     resetFilter: function resetFilter() {
+      //Get Tickets
+      this.getUsers(0);
       this.isFiltering = false;
       this.fRole = '';
       this.fStatus = '';
@@ -35254,7 +35259,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data.paginateTotal - 1 > $data.pageNumber ? $options.updatePageNumber($data.pageNumber + 1) : null;
         }),
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.paginateTotal - 1 > $data.pageNumber ? 'bg-white hover:bg-lightergrey' : 'opacity-40 bg-lightergrey hover:bg-lightergrey', "mx-1 b-white hover:bg-lightergrey w-9 h-9 border border-lightergrey flex items-center justify-center rounded-full"])
-      }, _hoisted_93, 2 /* CLASS */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_94, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"py-5 border-b border-b-light px-6 flex items-center\">\r\n                    </div> "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.orderedTickets(), function (ticket, index) {
+      }, _hoisted_93, 2 /* CLASS */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_94, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"py-5 border-b border-b-light px-6 flex items-center\">\r\n          </div> "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.orderedTickets(), function (ticket, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
           ref_for: true,
           ref: "tickets"
@@ -38420,7 +38425,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.action-card {\r\n    top: 40px;\r\n    right: 30px;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n    min-width: 204px;\r\n    z-index: 9;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.action-card {\r\n  top: 40px;\r\n  right: 30px;\r\n  width: -moz-fit-content;\r\n  width: fit-content;\r\n  min-width: 204px;\r\n  z-index: 9;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

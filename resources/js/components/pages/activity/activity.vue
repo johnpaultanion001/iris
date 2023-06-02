@@ -84,7 +84,7 @@
                                         {{ act.action }}
                                     </td>
                                     <td class="p-2.5 font-opensans-600 text-xxxs text-dark2">
-                                        <p class="ellipsis-2">{{ act.activity }}</p> 
+                                        <p class="ellipsis-2">{{ act.activity }}</p>
                                     </td>
                                     <td class="p-2.5 font-opensans-600 text-xxxs text-white flex items-center whitespace-nowrap">
                                         <div class="flex items-center whitespace-nowrap" v-for="(item, index) in act.assigned_agencies" ref="activities">
@@ -146,11 +146,11 @@
                         <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
                             <v-select :filter="fuseSearch" :options="roles" :get-option-label="option => option.name" placeholder="Choose" v-model="fRole" :reduce="roles => roles.value">
                                 <template #option="{ name }" >
-                                    {{ name }} 
+                                    {{ name }}
                                 </template>
                             </v-select>
                         </div>
-                    </div> 
+                    </div>
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="from" class="text-base text-blue-grey text-xs font-inter-700">Date From</label>
@@ -242,7 +242,7 @@ export default {
             modalTicketID: '',
             //Filter Modal
             fRole: '',
-            roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}], 
+            roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}],
             fAgencyValue: [],
             fFrom: '',
             fTo: '',
@@ -283,7 +283,7 @@ export default {
     },
     methods: {
         async filterList(){
-            this.getRvendors(0)
+            this.getActivities(0);
             this.isFiltering = true
 
             await axios.post('api/v1/filter/activity', {
@@ -303,7 +303,8 @@ export default {
             })
         },
         resetFilter(){
-            this.isFiltering = false
+          this.getActivities(0);
+          this.isFiltering = false
             this.fRole = ''
             this.fStatus = ''
             this.fAgencyValue = []

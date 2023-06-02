@@ -196,14 +196,14 @@
                                         </div>
                                     </router-link>
                                     <div v-if="user.status == 'ACTIVE'" @click="openModal('deactivate'); modalUserID = user.id; modalUserName = user.name" class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                        <span class="w-5 mr-3 text-center">                                      
+                                        <span class="w-5 mr-3 text-center">
                                             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M16 8.5C16 12.9183 12.4183 16.5 8 16.5C3.58172 16.5 0 12.9183 0 8.5C0 4.08172 3.58172 0.5 8 0.5C12.4183 0.5 16 4.08172 16 8.5ZM11.4766 13.3907C10.4958 14.0892 9.29586 14.5 8 14.5C4.68629 14.5 2 11.8137 2 8.5C2 7.20414 2.41081 6.00423 3.1093 5.02339L11.4766 13.3907ZM12.8908 11.9765L4.52354 3.6092C5.50434 2.91077 6.7042 2.5 8 2.5C11.3137 2.5 14 5.18629 14 8.5C14 9.7958 13.5892 10.9957 12.8908 11.9765Z" fill="#525F7F"/>
                                             </svg>
                                         </span><span>Deactivate</span>
                                     </div>
                                     <div v-if="user.status == 'INACTIVE'" @click="openModal('activate'); modalUserID = user.id; modalUserName = user.name" class="cursor-pointer whitespace-nowrap py-3 px-4 flex items-center font-inter-400 text-black text-sm hover:bg-lighter">
-                                        <span class="w-5 mr-3 text-center">                                      
+                                        <span class="w-5 mr-3 text-center">
                                             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M16 8.5C16 12.9183 12.4183 16.5 8 16.5C3.58172 16.5 0 12.9183 0 8.5C0 4.08172 3.58172 0.5 8 0.5C12.4183 0.5 16 4.08172 16 8.5ZM11.4766 13.3907C10.4958 14.0892 9.29586 14.5 8 14.5C4.68629 14.5 2 11.8137 2 8.5C2 7.20414 2.41081 6.00423 3.1093 5.02339L11.4766 13.3907ZM12.8908 11.9765L4.52354 3.6092C5.50434 2.91077 6.7042 2.5 8 2.5C11.3137 2.5 14 5.18629 14 8.5C14 9.7958 13.5892 10.9957 12.8908 11.9765Z" fill="#525F7F"/>
                                             </svg>
@@ -227,7 +227,7 @@
                             <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
                                 <v-select :filter="fuseSearch" :options="roles" :get-option-label="option => option.name" placeholder="Choose" v-model="fRole" :reduce="roles => roles.value">
                                     <template #option="{ name }" >
-                                        {{ name }} 
+                                        {{ name }}
                                     </template>
                                 </v-select>
                             </div>
@@ -239,12 +239,12 @@
                             <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
                                 <v-select :filter="fuseSearch" :options="status" :get-option-label="(option) => option.name" placeholder="Choose" v-model="fStatus" :reduce="status => status.value">
                                     <template #option="{ name }" >
-                                        {{ name }} 
+                                        {{ name }}
                                     </template>
                                 </v-select>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="from" class="text-base text-blue-grey text-xs font-inter-700">From</label>
@@ -285,12 +285,12 @@
             </div>
         </template>
     </Modal>
-    
+
     <Modal v-show="modalActive && showModal == 'deactivate'" @close="closeModal">
         <template v-slot:body>
             <img src="/img/icon/invite-modal.svg" class="mb-6">
             <h5 class="font-exo-600 text-xl text-dark2 mb-4">Deactivate {{ modalUserName }}</h5>
-            <p class="font-inter-400 text-lg text-dark2 mb-11">Once you deactivate this account, the user can no longer access the system. Do you wish to continue?</p> 
+            <p class="font-inter-400 text-lg text-dark2 mb-11">Once you deactivate this account, the user can no longer access the system. Do you wish to continue?</p>
         </template>
         <template v-slot:footer>
             <div class="flex items-center justify-end w-full">
@@ -303,12 +303,12 @@
             </div>
         </template>
     </Modal>
-    
+
     <Modal v-show="modalActive && showModal == 'activate'" @close="closeModal">
         <template v-slot:body>
             <img src="/img/icon/invite-modal.svg" class="mb-6">
             <h5 class="font-exo-600 text-xl text-dark2 mb-4">Activate {{ modalUserName }}</h5>
-            <p class="font-inter-400 text-lg text-dark2 mb-11">Once you activate this account, the user can access the system. Do you wish to continue?</p> 
+            <p class="font-inter-400 text-lg text-dark2 mb-11">Once you activate this account, the user can access the system. Do you wish to continue?</p>
         </template>
         <template v-slot:footer>
             <div class="flex items-center justify-end w-full">
@@ -366,9 +366,9 @@ export default {
             successIcon: null,
             //Filter Modal
             fRole: '',
-            roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}], 
+            roles: [{name: 'Super Admin', value: 'SUPER_ADMIN'}, {name: 'Admin', value: 'ADMIN'}, {name: 'Moderator', value: 'MODERATOR'}],
             fStatus: '',
-            status: [{name: 'Active', value: 'ACTIVE'}, {name: 'Inactive', value: 'INACTIVE'}], 
+            status: [{name: 'Active', value: 'ACTIVE'}, {name: 'Inactive', value: 'INACTIVE'}],
             fAgencyValue: [],
             fFrom: '',
             fTo: '',
@@ -420,7 +420,7 @@ export default {
                 account_status: this.fStatus,
                 from: this.reformat_date(this.fFrom),
                 till: this.reformat_date(this.fTill),
-                agencies: this.fAgencyValue
+                agencies: this.fAgencyValue.length ? this.fAgencyValue : null
             })
             .then((success) => {
                 this.responseFiltered = success.data.data
@@ -431,6 +431,8 @@ export default {
             })
         },
         resetFilter(){
+          //Get Tickets
+            this.getUsers(0);
             this.isFiltering = false
             this.fRole = ''
             this.fStatus = ''
@@ -599,7 +601,7 @@ export default {
                 this.successMessage = 'User successfully activated '+this.modalUserName;
                 this.successIcon = 'like.svg';
                 this.getUsers(0);
-                this.closeModal();      
+                this.closeModal();
             })
             .catch((error) => {
                 this.successAlert = true;
