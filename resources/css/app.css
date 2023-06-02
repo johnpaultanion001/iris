@@ -255,3 +255,36 @@ ul[role='listbox'] {
     height: 100vh;
     overflow: auto;
 }
+
+.lightbox{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #1e1e1ea8;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+svg.lb-prev {
+    position: absolute;
+    left: 40px;
+}
+svg.lb-next {
+    position: absolute;
+    right: 40px;
+}
+svg.lb-close {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+

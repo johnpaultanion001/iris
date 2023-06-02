@@ -220,7 +220,7 @@
                         <div class="grid grid-cols-5 gap-y-5 gap-x-5 mt-2">
                             <div v-for="item in selectedAgencies" class="col-span-1">
                                 <div>
-                                    <img :src="item.logo" class="w-full mx-auto max-w-30 rounded-full">
+                                    <img :src="item.logo" class="w-full mx-auto max-w-30 max-h-30 object-center rounded-full object-contain border-light border" style="max-height: 7.5rem;">
                                     <p class="text-blue-grey font-opensans-600 text-xxs text-center my-3 ellipsis-2" style="height: 34px;">{{ item.agency }}</p>
                                     <p @click="removeChecked(item.code)" class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">Remove</p>
                                 </div>

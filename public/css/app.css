@@ -512,6 +512,9 @@ video {
 .invisible {
   visibility: hidden;
 }
+.static {
+  position: static;
+}
 .fixed {
   position: fixed;
 }
@@ -1357,6 +1360,9 @@ video {
 .pl-3\.5 {
   padding-left: 0.875rem;
 }
+.pl-4 {
+  padding-left: 1rem;
+}
 .pl-7 {
   padding-left: 1.75rem;
 }
@@ -1371,6 +1377,9 @@ video {
 }
 .pr-3\.5 {
   padding-right: 0.875rem;
+}
+.pr-4 {
+  padding-right: 1rem;
 }
 .pr-9 {
   padding-right: 2.25rem;
@@ -1398,12 +1407,6 @@ video {
 }
 .pt-8 {
   padding-top: 2rem;
-}
-.pl-4 {
-  padding-left: 1rem;
-}
-.pr-4 {
-  padding-right: 1rem;
 }
 .text-center {
   text-align: center;
@@ -1846,6 +1849,37 @@ ul[role='listbox'] {
     height: 100vh;
     overflow: auto;
 }
+
+.lightbox{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #1e1e1ea8;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+svg.lb-prev {
+    position: absolute;
+    left: 40px;
+}
+svg.lb-next {
+    position: absolute;
+    right: 40px;
+}
+svg.lb-close {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}
+.prevent-select {
+    -webkit-user-select: none; /* Safari */ /* IE 10 and IE 11 */
+    -moz-user-select: none;
+         user-select: none; /* Standard syntax */
+}
 .hover\:border-red:hover {
   --tw-border-opacity: 1;
   border-color: rgb(245 54 92 / var(--tw-border-opacity));
@@ -2116,3 +2150,6 @@ ul[role='listbox'] {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
+
+
+

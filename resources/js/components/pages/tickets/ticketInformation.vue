@@ -90,7 +90,7 @@
                                     <div class="flex items-center justify-start">
                                         <h2 class="mr-5 text-black font-exo-600 text-2xl">Ticket #{{ id }}</h2>
                                         <div class="flex items-center justify-start" v-for="item in ticketInfo.assigned_agencies">
-                                            <img :src="item.logo" class="w-10 h-10 object-cover mr-2">
+                                            <img :src="item.logo" class="w-10 h-10 mr-2 object-contain border border-light rounded rounded-full">
                                         </div>
                                     </div>
                                 </div>
@@ -247,10 +247,14 @@
                                         </tr>
                                         <tr class="relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Attatched Documents</td>
-                                            <td class="py-3 text-black text-base font-exo-400">
-                                                <div class="rounded w-30 h-30 bg-light flex items-center justify-center" style="background: #D9D9D">
-                                                    <img :src="ticketInfo.additional_documents_file">
+                                            <td class="text-black text-base font-exo-400 flex item-center justify-start flex-wrap">
+                                                <div class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
+                                                    <img @click.prevent="openLightboxSingle(ticketInfo.additional_documents_file)" :src="ticketInfo.additional_documents_file">
                                                 </div>
+                                                <!-- Multiple items Lightbox -->
+                                                <!-- <div v-for="(item, index) in additional_documents_file" class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
+                                                    <img @click.prevent="openLightbox(index)" :src="item">
+                                                </div> -->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -440,6 +444,21 @@
             </div>
         </div>
     </PageLayout>
+
+    <div v-if="lightbox" class="lightbox p-5 prevent-select">
+        <div>
+            <img :src="currentItem">
+        </div>
+        <svg @click="lightbox = false" width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer lb-close">
+            <path d="M1 13.5L13 1.5M1 1.5L13 13.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg @click="prevLightbox(currentItemID)" width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer lb-prev">
+            <path d="M8 15L1 8L8 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg @click="nextLightbox(currentItemID)" width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer lb-next">
+            <path d="M0.999999 1L8 8L1 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
     
     <Modal v-show="modalActive && showModal == 'follow'" @close="closeModal">
         <template v-slot:body>
@@ -756,7 +775,12 @@ export default {
             arrayViolations: [],
             violationAmount: '',
             //User
-            userImg: ''
+            userImg: '',
+            //Lightbox
+            lightbox: false,
+            additional_documents_file: ['/img/background-banner.svg', '/img/iris-logo.png', '/img/iris-logo-blue.png', '/img/background-login.png'],
+            currentItem: '',
+            currentItemID: 0
         };
     },
     components: { PageLayout, ContentCard, Modal, AlertTop },
@@ -782,6 +806,33 @@ export default {
         this.getUser();
     },
     methods: {
+        //Lightbox
+        openLightboxSingle(item){
+            this.lightbox = true;
+            this.currentItem = item;
+        },
+        openLightbox(id){
+            const file = this.additional_documents_file.filter((a, index) => (index == id));
+            this.lightbox = true;
+            this.currentItem = file;
+            this.currentItemID = id;
+        },
+        prevLightbox(id){
+            if(this.currentItemID == 0){
+                this.currentItemID = this.additional_documents_file.length - 1;
+            }else{
+                this.currentItemID = id - 1;
+            }
+            this.openLightbox(this.currentItemID)
+        },
+        nextLightbox(id){
+            if(this.currentItemID == this.additional_documents_file.length - 1){
+                this.currentItemID = 0;
+            }else{
+                this.currentItemID = id + 1;
+            }
+            this.openLightbox(this.currentItemID)
+        },
         //Get User
         async getUser(){
             this.pageNumber = 0;
