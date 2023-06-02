@@ -309,8 +309,10 @@
                                                             </div>
                                                         </td>
                                                         <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                            <img v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
-                                                            <img v-if="violation.amount" @click.prevent="openModal('modalEditAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
+                                                            <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount');" class="mr-2" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M10.5858 0.585786C11.3668 -0.195262 12.6332 -0.195262 13.4142 0.585786C14.1953 1.36683 14.1953 2.63316 13.4142 3.41421L12.6213 4.20711L9.79289 1.37868L10.5858 0.585786Z" fill="#1267E5"/>
+                                                                <path d="M8.37868 2.79289L0 11.1716V14H2.82842L11.2071 5.62132L8.37868 2.79289Z" fill="#1267E5"/>
+                                                            </svg>
                                                             <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
                                                             <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
                                                         </td>
@@ -475,7 +477,7 @@
     </Modal>
     <Modal modalTitle="Add Agencies" v-show="modalActive && showModal == 'modalAgencies'" @close="closeModal">
         <template v-slot:body>
-            <form class="block">
+            <form onsubmit="return false"  class="block">
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2">
                         <p class="text-black font-inter-400 text-sm">Once ticket is submitted, we’ll automatically send a notification to the assigned agencies</p>
@@ -510,7 +512,7 @@
     
     <Modal modalTitle="Add Violation" v-show="modalActive && showModal == 'modalViolation'" @close="closeModal">
         <template v-slot:body>
-            <form class="block">
+            <form onsubmit="return false"  class="block">
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2">
                         <div class="relative w-full">
@@ -541,7 +543,7 @@
     
     <Modal modalTitle="Add Amount" v-show="modalActive && showModal == 'modalAddAmount'" @close="closeModal">
         <template v-slot:body>
-            <form class="block">
+            <form onsubmit="return false"  class="block">
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2">
                         <div class="relative w-full">
@@ -599,7 +601,7 @@
     
     <Modal modalTitle="Edit Amount" v-show="modalActive && showModal == 'modalEditAmount'" @close="closeModal">
         <template v-slot:body>
-            <form class="block">
+            <form onsubmit="return false"  class="block">
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2">
                         <div class="relative w-full">
@@ -624,7 +626,7 @@
 
     <Modal modalTitle="Ticket Status" v-show="modalActive && showModal == 'ticketStatusModal'" @close="closeModal">
         <template v-slot:body>
-            <form class="block">
+            <form onsubmit="return false"  class="block">
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2">
                         <p class="text-black font-inter-400 text-sm">Once updated, we’ll automatically send a notification to the assigned agencies & customer</p>

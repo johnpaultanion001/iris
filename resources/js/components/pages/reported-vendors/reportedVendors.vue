@@ -140,7 +140,7 @@
         </div>
         <Modal modalTitle="Filters" v-show="modalActive && showModal == 'filterModal'" @close="closeModal">
             <template v-slot:body>
-                <form class="block">
+                <form onsubmit="return false"  class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <label for="city" class="text-base text-blue-grey text-xs font-inter-700">City</label>

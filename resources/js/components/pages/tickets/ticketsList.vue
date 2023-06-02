@@ -320,7 +320,7 @@
     </Modal>
     <Modal modalTitle="Filters" v-show="modalActive && showModal == 'filterModal'" @close="closeModal">
         <template v-slot:body>
-            <form class="block">
+            <form onsubmit="return false"  class="block">
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2"> 
                         <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">Product/Service</label>
@@ -388,7 +388,7 @@
     </Modal>
     <Modal modalTitle="Ticket Status" v-show="modalActive && showModal == 'ticketStatusModal'" @close="closeModal">
         <template v-slot:body>
-            <form class="block">
+            <form onsubmit="return false"  class="block">
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2">
                         <p class="text-black font-inter-400 text-sm">Once updated, we’ll automatically send a notification to the assigned agencies & customer</p>

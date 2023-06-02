@@ -251,3 +251,7 @@ button.vs__clear {
 ul[role='listbox'] {
     margin-top: 7px;
 }
+.scroll-active{
+    height: 100vh;
+    overflow: auto;
+}

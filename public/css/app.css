@@ -688,6 +688,9 @@ video {
 .ml-2\.5 {
   margin-left: 0.625rem;
 }
+.ml-3 {
+  margin-left: 0.75rem;
+}
 .ml-4 {
   margin-left: 1rem;
 }
@@ -759,9 +762,6 @@ video {
 }
 .mt-9 {
   margin-top: 2.25rem;
-}
-.ml-3 {
-  margin-left: 0.75rem;
 }
 .block {
   display: block;
@@ -1399,6 +1399,12 @@ video {
 .pt-8 {
   padding-top: 2rem;
 }
+.pl-4 {
+  padding-left: 1rem;
+}
+.pr-4 {
+  padding-right: 1rem;
+}
 .text-center {
   text-align: center;
 }
@@ -1835,6 +1841,10 @@ button.vs__clear {
 }
 ul[role='listbox'] {
     margin-top: 7px;
+}
+.scroll-active{
+    height: 100vh;
+    overflow: auto;
 }
 .hover\:border-red:hover {
   --tw-border-opacity: 1;

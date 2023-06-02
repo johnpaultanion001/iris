@@ -23,7 +23,7 @@
                     {{ session('status') }}
                 </div>
             @endif
-            <form method="POST" action="{{ route('password.email') }}" class="myform">
+            <form onsubmit="return false"  method="POST" action="{{ route('password.email') }}" class="myform">
               @csrf
 
                 <div class="card">

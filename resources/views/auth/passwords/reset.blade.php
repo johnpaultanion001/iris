@@ -18,7 +18,7 @@
         </div>
         <div class="row mt-2">
           <div class="col-lg-6 mt-lg-0 mx-auto" data-aos="fade-left">
-            <form method="POST" action="{{ route('password.update') }}" class="myform">
+            <form onsubmit="return false"  method="POST" action="{{ route('password.update') }}" class="myform">
               @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
                 <div class="card">

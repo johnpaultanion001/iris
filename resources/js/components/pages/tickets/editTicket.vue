@@ -21,7 +21,7 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="complaint" class="text-base text-blue-grey text-xs font-inter-700">Write Complaint</label>
-                                    <textarea type="text" v-model="complaint" placeholder="Write comment" name="complaint" id="complaint" class="mt-2 w-full secondary-textarea"></textarea>
+                                    <textarea type="text" v-model="complaint" placeholder="Write complaint" name="complaint" id="complaint" class="mt-2 w-full secondary-textarea"></textarea>
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -85,7 +85,9 @@
                                     <label for="documents" class="text-base text-blue-grey text-xs font-inter-700">Upload Additional Documents</label>
                                     <div class="flex items-center mt-4 ">
                                         <label class="cursor-pointer w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
-                                            <img src="/img/icon/upload.png" class="mr-3.5"> Upload
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3.5" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                                <path d="M8.48223 3.875L4.36612 7.99112C3.87796 8.47927 3.87796 9.27073 4.36612 9.75888C4.85427 10.247 5.64573 10.247 6.13388 9.75888L10.1428 5.64277C11.1191 4.66646 11.1191 3.08354 10.1428 2.10723C9.16646 1.13092 7.58354 1.13092 6.60723 2.10723L2.59835 6.22335C1.13388 7.68782 1.13388 10.0622 2.59835 11.5267C4.06282 12.9911 6.43718 12.9911 7.90165 11.5267L11.8125 7.625" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg> Upload
                                             <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden>
                                         </label>
                                         <p class="text-blue-grey text-base ml-2 font-inter-400">{{ additional_documents_file }}</p>
@@ -103,19 +105,19 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="vendor_name" class="text-base text-blue-grey text-xs font-inter-700">Vendor Name</label>
-                                    <input type="text" v-model="vendor_name" placeholder="" name="vendor_name" id="vendor_name" class="mt-2 w-full secondary-input"/>
+                                    <input type="text" v-model="vendor_name" placeholder="Vendor Name" name="vendor_name" id="vendor_name" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="email_address" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
-                                    <input type="email" v-model="email_address" placeholder="Write comment" name="email_address" id="email_address" class="mt-2 w-full secondary-input">
+                                    <input type="email" v-model="email_address" placeholder="Email Address" name="email_address" id="email_address" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="mobile_number" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
-                                    <input type="text" v-model="mobile_number" name="mobile_number" id="mobile_number" class="mt-2 w-full secondary-input">
+                                    <input type="text" v-model="mobile_number" name="mobile_number" placeholder="Mobile Number" id="mobile_number" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
@@ -140,25 +142,25 @@
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_first_name" class="text-base text-blue-grey text-xs font-inter-700">First Name</label>
-                                    <input type="text" v-model="reported_first_name" placeholder="" name="reported_first_name" id="reported_first_name" class="mt-2 w-full secondary-input"/>
+                                    <input type="text" v-model="reported_first_name" placeholder="First Name" name="reported_first_name" id="reported_first_name" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_last_name" class="text-base text-blue-grey text-xs font-inter-700">Last Name</label>
-                                    <input type="text" v-model="reported_last_name" placeholder="Write comment" name="reported_last_name" id="reported_last_name" class="mt-2 w-full secondary-input">
+                                    <input type="text" v-model="reported_last_name" placeholder="Last Name" name="reported_last_name" id="reported_last_name" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_email_address" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
-                                    <input type="email" v-model="reported_email_address" placeholder="Write comment" name="reported_email_address" id="reported_email_address" class="mt-2 w-full secondary-input">
+                                    <input type="email" v-model="reported_email_address" placeholder="Email Address" name="reported_email_address" id="reported_email_address" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_mobile_number" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
-                                    <input type="text" v-model="reported_mobile_number" name="reported_mobile_number" id="reported_mobile_number" class="mt-2 w-full secondary-input">
+                                    <input type="text" v-model="reported_mobile_number" name="reported_mobile_number" placeholder="Mobile Number" id="reported_mobile_number" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                         </div>
@@ -181,8 +183,10 @@
                                                     </div>
                                                 </td>
                                                 <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                    <img v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
-                                                    <img v-if="violation.amount" @click.prevent="openModal('modalEditAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
+                                                    <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount');" class="mr-2" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M10.5858 0.585786C11.3668 -0.195262 12.6332 -0.195262 13.4142 0.585786C14.1953 1.36683 14.1953 2.63316 13.4142 3.41421L12.6213 4.20711L9.79289 1.37868L10.5858 0.585786Z" fill="#1267E5"/>
+                                                        <path d="M8.37868 2.79289L0 11.1716V14H2.82842L11.2071 5.62132L8.37868 2.79289Z" fill="#1267E5"/>
+                                                    </svg>
                                                     <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
                                                     <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
                                                 </td>
@@ -216,13 +220,16 @@
                         <div class="grid grid-cols-5 gap-y-5 gap-x-5 mt-2">
                             <div v-for="item in selectedAgencies" class="col-span-1">
                                 <div>
-                                    <img :src="'/img/' + item.logo" class="w-full mx-auto max-w-30 rounded-full">
+                                    <img :src="item.logo" class="w-full mx-auto max-w-30 rounded-full">
                                     <p class="text-blue-grey font-opensans-600 text-xxs text-center my-3 ellipsis-2" style="height: 34px;">{{ item.agency }}</p>
                                     <p @click="removeChecked(item.code)" class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">Remove</p>
                                 </div>
                             </div>
                             <div @click="openModal('modalAgencies')" class="cursor-pointer col-span-1">
-                                <img src="/img/icon/addphoto.png" class="w-full mx-auto max-w-30 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" class="w-full mx-auto max-w-30 rounded-full">
+                                    <circle cx="60" cy="60" r="59.5" stroke="#1267E5"/>
+                                    <path d="M60 48V60M60 60V72M60 60H72M60 60L48 60" stroke="#1267E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                                 <p class="text-blue font-opensans-600 text-xxs text-center my-3">ADD AGENCY</p>
                             </div>
                         </div>
@@ -235,7 +242,7 @@
                         <div class="grid grid-cols-2 gap-y-5 gap-x-3">
                             <div class="col-span-2">
                                 <div class="relative w-full">
-                                    <textarea type="text" v-model="remarks" placeholder="Write comment" name="remarks" id="remarks" class="w-full secondary-textarea"></textarea>
+                                    <textarea type="text" v-model="remarks" placeholder="Write your remark" name="remarks" id="remarks" class="w-full secondary-textarea"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -251,7 +258,7 @@
         
         <Modal modalTitle="Add Agencies" v-show="modalActive && showModal == 'modalAgencies'" @close="closeModal">
             <template v-slot:body>
-                <form class="block">
+                <form onsubmit="return false"  class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <p class="text-black font-inter-400 text-sm">Once ticket is submitted, we’ll automatically send a notification to the assigned agencies</p>
@@ -264,7 +271,7 @@
                             <div v-for="(agency, index) in allAgencies" ref="allAgencies" class="py-2">
                                 <label class="cursor-pointer flex items-center">
                                     <input type="checkbox" @change.prevent="agencyChecked(agency.code, agency.index, $event)" :value="agency.id" v-model="chosenAgencies">
-                                    <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
+                                    <img :src="agency.logo" class="w-15 h-15 mx-4 rounded-full object-contain border border-light">
                                     <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                                 </label>
                             </div>
@@ -286,7 +293,7 @@
         
         <Modal modalTitle="Add Violation" v-show="modalActive && showModal == 'modalViolation'" @close="closeModal">
             <template v-slot:body>
-                <form class="block">
+                <form onsubmit="return false"  class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <div class="relative w-full">
@@ -317,7 +324,7 @@
         
         <Modal modalTitle="Add Amount" v-show="modalActive && showModal == 'modalAddAmount'" @close="closeModal">
             <template v-slot:body>
-                <form class="block">
+                <form onsubmit="return false"  class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <div class="relative w-full">
@@ -343,7 +350,7 @@
         
         <Modal modalTitle="Edit Amount" v-show="modalActive && showModal == 'modalEditAmount'" @close="closeModal">
             <template v-slot:body>
-                <form class="block">
+                <form onsubmit="return false"  class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <div class="relative w-full">

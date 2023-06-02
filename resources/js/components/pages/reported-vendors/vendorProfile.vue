@@ -79,7 +79,7 @@
     </PageLayout>
     <Modal modalTitle="Vendor Information" v-show="modalActive && showModal == 'updateModal'" @close="closeModal">
         <template v-slot:body>
-            <form class="block">
+            <form onsubmit="return false"  class="block">
                 <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                     <div class="col-span-2">
                         <div class="relative w-full">

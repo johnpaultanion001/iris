@@ -20,7 +20,7 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="complaint" class="text-base text-blue-grey text-xs font-inter-700">Write Complaint</label>
-                                    <textarea type="text" v-model="complaint" placeholder="Write comment" name="complaint" id="complaint" class="mt-2 w-full secondary-textarea"></textarea>
+                                    <textarea type="text" v-model="complaint" placeholder="Write complaint" name="complaint" id="complaint" class="mt-2 w-full secondary-textarea"></textarea>
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -76,7 +76,7 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="link" class="text-base text-blue-grey text-xs font-inter-700">Link</label>
-                                    <input type="text" v-model="link" name="link" id="link" class="mt-2 w-full secondary-input">
+                                    <input type="text" v-model="link" name="link" id="link" placeholder="Link" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -104,19 +104,19 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="vendor_name" class="text-base text-blue-grey text-xs font-inter-700">Vendor Name</label>
-                                    <input type="text" v-model="vendor_name" placeholder="" name="vendor_name" id="vendor_name" class="mt-2 w-full secondary-input"/>
+                                    <input type="text" v-model="vendor_name" placeholder="Vendor Name" name="vendor_name" id="vendor_name" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="email_address" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
-                                    <input type="email" v-model="email_address" placeholder="Write comment" name="email_address" id="email_address" class="mt-2 w-full secondary-input">
+                                    <input type="email" v-model="email_address" placeholder="Email Address" name="email_address" id="email_address" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="mobile_number" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
-                                    <input type="text" v-model="mobile_number" name="mobile_number" id="mobile_number" class="mt-2 w-full secondary-input">
+                                    <input type="text" v-model="mobile_number" name="mobile_number" id="mobile_number" placeholder="Mobile Number" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
@@ -141,25 +141,25 @@
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_first_name" class="text-base text-blue-grey text-xs font-inter-700">First Name</label>
-                                    <input type="text" v-model="reported_first_name" placeholder="" name="reported_first_name" id="reported_first_name" class="mt-2 w-full secondary-input"/>
+                                    <input type="text" v-model="reported_first_name" placeholder="First Name" name="reported_first_name" id="reported_first_name" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_last_name" class="text-base text-blue-grey text-xs font-inter-700">Last Name</label>
-                                    <input type="text" v-model="reported_last_name" placeholder="Write comment" name="reported_last_name" id="reported_last_name" class="mt-2 w-full secondary-input">
+                                    <input type="text" v-model="reported_last_name" placeholder="Last Name" name="reported_last_name" id="reported_last_name" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_email_address" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
-                                    <input type="email" v-model="reported_email_address" placeholder="Write comment" name="reported_email_address" id="reported_email_address" class="mt-2 w-full secondary-input">
+                                    <input type="email" v-model="reported_email_address" placeholder="Email Addres" name="reported_email_address" id="reported_email_address" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_mobile_number" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
-                                    <input type="text" v-model="reported_mobile_number" name="reported_mobile_number" id="reported_mobile_number" class="mt-2 w-full secondary-input">
+                                    <input type="text" v-model="reported_mobile_number" name="reported_mobile_number" placeholder="Mobile Number" id="reported_mobile_number" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                         <div class="grid grid-cols-2 gap-y-5 gap-x-3">
                             <div class="col-span-2">
                                 <div class="relative w-full">
-                                    <textarea type="text" v-model="remarks" placeholder="Write comment" name="remarks" id="remarks" class="w-full secondary-textarea"></textarea>
+                                    <textarea type="text" v-model="remarks" placeholder="Write your remark" name="remarks" id="remarks" class="w-full secondary-textarea"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -260,7 +260,7 @@
         
         <Modal modalTitle="Add Agencies" v-show="modalActive && showModal == 'modalAgencies'" @close="closeModal">
             <template v-slot:body>
-                <form class="block">
+                <form onsubmit="return false"  class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3 mt-2">
                         <div class="col-span-2">
                             <p class="text-black font-inter-400 text-sm">Once ticket is submitted, we’ll automatically send a notification to the assigned agencies</p>
@@ -295,7 +295,7 @@
         
         <Modal modalTitle="Add Violation" v-show="modalActive && showModal == 'modalViolation'" @close="closeModal">
             <template v-slot:body>
-                <form class="block">
+                <form onsubmit="return false"  class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <div class="relative w-full">
@@ -326,7 +326,7 @@
         
         <Modal modalTitle="Add Amount" v-show="modalActive && showModal == 'modalAddAmount'" @close="closeModal">
             <template v-slot:body>
-                <form class="block">
+                <form onsubmit="return false"  class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <div class="relative w-full">
@@ -352,7 +352,7 @@
         
         <Modal modalTitle="Edit Amount" v-show="modalActive && showModal == 'modalEditAmount'" @close="closeModal">
             <template v-slot:body>
-                <form class="block">
+                <form onsubmit="return false"  class="block">
                     <div class="grid grid-cols-2 gap-y-6 gap-x-3">
                         <div class="col-span-2">
                             <div class="relative w-full">
@@ -540,7 +540,6 @@ export default {
         editAmount(){
             const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
             violation['0'].amount = this.violationAmount
-
             const arrayViolations = []
             this.selectedViolations.map(function(value, key) {
                 arrayViolations.push({violation: value.violation, amount: value.amount});
