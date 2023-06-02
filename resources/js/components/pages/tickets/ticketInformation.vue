@@ -290,9 +290,12 @@
                                     </tbody>
                                 </table>
                                 <div class="flex items-center justify-start w-full pt-5">
-                                    <router-link to="/" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
+                                    <router-link :to="'/vendor-profile/'+vendor.id" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
                                         View Profile
                                     </router-link>
+                                    <button @click="openModal('updateModal')" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
+                                        Update
+                                    </button>
                                 </div>
                             </div>
                         </ContentCard>
@@ -700,6 +703,53 @@
             </div>
         </template>
     </Modal>
+    
+    <Modal modalTitle="Vendor Information" v-show="modalActive && showModal == 'updateModal'" @close="closeModal">
+        <template v-slot:body>
+            <form onsubmit="return false"  class="block">
+                <div class="grid grid-cols-2 gap-y-6 gap-x-3">
+                    <div class="col-span-2">
+                        <div class="relative w-full">
+                            <label for="vendorname" class="text-base text-blue-grey text-xs font-inter-700">Vendor Name</label>
+                            <input type="text" v-model="vname" placeholder="Name" name="vendorname" id="vendorname" class="mt-2 w-full secondary-input"/>
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                        <div class="relative w-full">
+                            <label for="email" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
+                            <input type="email" v-model="vemail" placeholder="Email" name="email" id="email" class="mt-2 w-full secondary-input"/>
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                        <div class="relative w-full">
+                            <label for="mobile" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
+                            <input type="text" v-model="vmobile" placeholder="Mobile Number" name="mobile" id="mobile" class="mt-2 w-full secondary-input"/>
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                        <label for="city" class="text-base text-blue-grey text-xs font-inter-700">City</label>
+                        <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
+                            <v-select :filter="fuseSearch" :options="cities" :get-option-label="(option) => option.name" placeholder="Choose" v-model="vcity"  :reduce="cities => cities.name">
+                                <template #option="{ name }">
+                                    {{ name }} 
+                                </template>
+                            </v-select>
+                        </div>
+                    </div> 
+                </div>
+            </form>
+        </template>
+        <template v-slot:footer>
+            <div class="flex items-center justify-end w-full">
+                <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-4 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+                    Close
+                </button>
+                <button @click="updateVendor()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Update
+                </button>
+            </div>
+        </template>
+    </Modal>
 </template>
 
 <script>
@@ -782,10 +832,16 @@ export default {
             lightbox: false,
             additional_documents_file: ['/img/background-banner.svg', '/img/iris-logo.png', '/img/iris-logo-blue.png', '/img/background-login.png'],
             currentItem: '',
-            currentItemID: 0
+            currentItemID: 0,
+            //Vendor Info
+            vendor: [],
+            vname: '',
+            vemail: '',
+            vmobile: '',
+            vcity: ''
         };
     },
-    components: { PageLayout, ContentCard, Modal, AlertTop },
+    components: { PageLayout, ContentCard, Modal, AlertTop, vSelect },
     watch: {
         filterSearchAgency: function() {
             this.getAgencies();
@@ -1140,6 +1196,27 @@ export default {
             })
             //Refresh Data
             this.getTicket();
+        },
+        //Update Vendor
+        async updateVendor() {
+            await axios.put('api/v1/reported_vendors/1', {
+                vendor_name: this.vname,
+                email: this.vemail,
+                mobile_number: this.vmobile,
+                city: this.vcity
+            })
+            .then((success) => {
+                //Alert Content
+                this.successAlert = true;
+                this.successMessage = 'Successfully updated';
+                this.successIcon = 'like.svg';
+                this.closeModal()
+            })
+            .catch((error) => {
+                this.successAlert = true;
+                this.successMessage = "Please enter a valid Email or Mobile Number";
+                this.successIcon = 'warning-red.svg';
+            })
         },
     },
 }

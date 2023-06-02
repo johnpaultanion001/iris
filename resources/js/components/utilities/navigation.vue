@@ -22,13 +22,18 @@
             <div v-if="dropdown" class="dropdown absolute top-14 right-0 rounded-lg bg-white shadow-secondary overflow-hidden">
                 <router-link to="/settings" class="p-5 flex items-center hover:bg-lighter">
                     <div class="w-7 relative">
-                        <img src="/img/icon/user.png">
+                        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 6C8.65685 6 10 4.65685 10 3C10 1.34315 8.65685 0 7 0C5.34315 0 4 1.34315 4 3C4 4.65685 5.34315 6 7 6Z" fill="#525F7F"/>
+                        <path d="M0 15C0 11.134 3.13401 8 7 8C10.866 8 14 11.134 14 15H0Z" fill="#525F7F"/>
+                        </svg>
                     </div>
                     <p class="font-inter-400 text-sm text-black">Profile & Settings</p>
                 </router-link>
                 <div @click="logout()" class="p-5 flex items-center hover:bg-lighter">
                     <div class="w-7 relative">
-                        <img src="/img/icon/logout.png">
+                        <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.1667 11.3333L16.5 7.99992M16.5 7.99992L13.1667 4.66659M16.5 7.99992L4.83333 7.99992M9.83333 11.3333V12.1666C9.83333 13.5473 8.71405 14.6666 7.33333 14.6666H4C2.61929 14.6666 1.5 13.5473 1.5 12.1666V3.83325C1.5 2.45254 2.61929 1.33325 4 1.33325H7.33333C8.71405 1.33325 9.83333 2.45254 9.83333 3.83325V4.66659" stroke="#525F7F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
                     <p class="font-inter-400 text-sm text-black">Logout</p>
                 </div>
