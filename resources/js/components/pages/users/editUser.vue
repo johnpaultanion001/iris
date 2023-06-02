@@ -56,12 +56,12 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <input type="text" v-model="filterSearchAgency" placeholder="Search" name="selectagencies" id="selectagencies" class="mt-4 w-full secondary-input" style="padding-left: 35px;"/>
-                                    <img src="/img/icon/search.png" class="search-img" style="top: 31px">
+                                    <img src="/img/icon/search.svg" class="search-img" style="top: 31px">
                                 </div>
                                 <div v-for="(agency, index) in agencies" ref="agencies" class="my-4">
                                     <label class="flex items-center">
                                         <input type="radio" v-model="useragency" :value="''+agency.id+''" name="filterAgencyValue">
-                                        <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
+                                        <img :src="agency.logo" class="w-15 h-15 mx-4 rounded-full object-contain border border-light">
                                         <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                                     </label>
                                 </div>

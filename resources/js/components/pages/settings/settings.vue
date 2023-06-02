@@ -12,36 +12,42 @@
                         <div class="bg-white w-full py-0 px-0 h-full">
                             <button @click="scrollToDiv('Profile')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Profile' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Profile'" src="/img/icon/profile-active.png" class="absolute">
-                                    <img src="/img/icon/profile.png"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+                                        <path d="M7.5 6C9.15685 6 10.5 4.65685 10.5 3C10.5 1.34315 9.15685 0 7.5 0C5.84315 0 4.5 1.34315 4.5 3C4.5 4.65685 5.84315 6 7.5 6Z" :fill="sectionName === 'Profile' ? '#1267E5' : '#8898AA'"/>
+                                        <path d="M0.5 15C0.5 11.134 3.63401 8 7.5 8C11.366 8 14.5 11.134 14.5 15H0.5Z" :fill="sectionName === 'Profile' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Profile' ? 'text-blue' : 'text-darkgrey'">Profile</p>
                             </button>
                             <button @click="scrollToDiv('Change Password')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Change Password' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Change Password'" src="/img/icon/changepass-active.png" class="absolute"> 
-                                    <img src="/img/icon/changepass.png"> 
+                                    <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 7V5C2.5 2.23858 4.73858 0 7.5 0C10.2614 0 12.5 2.23858 12.5 5V7C13.6046 7 14.5 7.89543 14.5 9V14C14.5 15.1046 13.6046 16 12.5 16H2.5C1.39543 16 0.5 15.1046 0.5 14V9C0.5 7.89543 1.39543 7 2.5 7ZM10.5 5V7H4.5V5C4.5 3.34315 5.84315 2 7.5 2C9.15685 2 10.5 3.34315 10.5 5Z" :fill="sectionName === 'Change Password' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Change Password' ? 'text-blue' : 'text-darkgrey'">Change Password</p>
                             </button>
                             <button @click="scrollToDiv('Contact Us')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Contact Us' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Contact Us'" src="/img/icon/contactus-active.png" class="absolute"> 
-                                    <img src="/img/icon/contactus.png"> 
+                                    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 3C2.5 2.44772 2.94772 2 3.5 2H5.65287C6.14171 2 6.5589 2.35341 6.63927 2.8356L7.37858 7.27147C7.45075 7.70451 7.23206 8.13397 6.8394 8.3303L5.29126 9.10437C6.40756 11.8783 8.62168 14.0924 11.3956 15.2087L12.1697 13.6606C12.366 13.2679 12.7955 13.0492 13.2285 13.1214L17.6644 13.8607C18.1466 13.9411 18.5 14.3583 18.5 14.8471V17C18.5 17.5523 18.0523 18 17.5 18H15.5C8.3203 18 2.5 12.1797 2.5 5V3Z" :fill="sectionName === 'Contact Us' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Contact Us' ? 'text-blue' : 'text-darkgrey'">Contact Us</p>
                             </button>
                             <button @click="scrollToDiv('About')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'About' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'About'" src="/img/icon/about-active.png" class="absolute"> 
-                                    <img src="/img/icon/about.png"> 
+                                    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18.5 10C18.5 14.4183 14.9183 18 10.5 18C6.08172 18 2.5 14.4183 2.5 10C2.5 5.58172 6.08172 2 10.5 2C14.9183 2 18.5 5.58172 18.5 10ZM11.5 6C11.5 6.55228 11.0523 7 10.5 7C9.94772 7 9.5 6.55228 9.5 6C9.5 5.44772 9.94772 5 10.5 5C11.0523 5 11.5 5.44772 11.5 6ZM9.5 9C8.94772 9 8.5 9.44772 8.5 10C8.5 10.5523 8.94772 11 9.5 11V14C9.5 14.5523 9.94772 15 10.5 15H11.5C12.0523 15 12.5 14.5523 12.5 14C12.5 13.4477 12.0523 13 11.5 13V10C11.5 9.44772 11.0523 9 10.5 9H9.5Z" :fill="sectionName === 'About' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'About' ? 'text-blue' : 'text-darkgrey'">About</p>
                             </button>
                             <button @click="scrollToDiv('Terms & Privacy')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Terms & Privacy' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Terms & Privacy'" src="/img/icon/terms-active.png" class="absolute"> 
-                                    <img src="/img/icon/terms.png"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 2C0.5 0.895432 1.39543 0 2.5 0H7.08579C7.61622 0 8.12493 0.210714 8.5 0.585786L11.9142 4C12.2893 4.37507 12.5 4.88378 12.5 5.41421V14C12.5 15.1046 11.6046 16 10.5 16H2.5C1.39543 16 0.5 15.1046 0.5 14V2ZM2.5 8C2.5 7.44772 2.94772 7 3.5 7H9.5C10.0523 7 10.5 7.44772 10.5 8C10.5 8.55229 10.0523 9 9.5 9H3.5C2.94772 9 2.5 8.55229 2.5 8ZM3.5 11C2.94772 11 2.5 11.4477 2.5 12C2.5 12.5523 2.94772 13 3.5 13H9.5C10.0523 13 10.5 12.5523 10.5 12C10.5 11.4477 10.0523 11 9.5 11H3.5Z" :fill="sectionName === 'Terms & Privacy' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Terms & Privacy' ? 'text-blue' : 'text-darkgrey'">Terms & Privacy</p>
                             </button>
@@ -60,7 +66,9 @@
                                     </div>
                                     <div class="flex items-center justify-center mt-2">
                                         <label class="cursor-pointer flex items-center justify-center">
-                                            <img src="/img/icon/photo-blue.png" class="mr-1.5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none" class="mr-1.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 2C0.895431 2 0 2.89543 0 4V12C0 13.1046 0.895431 14 2 14H14C15.1046 14 16 13.1046 16 12V4C16 2.89543 15.1046 2 14 2H12.4142C12.149 2 11.8946 1.89464 11.7071 1.70711L10.5858 0.585787C10.2107 0.210714 9.70201 0 9.17157 0H6.82843C6.29799 0 5.78929 0.210713 5.41421 0.585786L4.29289 1.70711C4.10536 1.89464 3.851 2 3.58579 2H2ZM8 11C9.65685 11 11 9.65685 11 8C11 6.34315 9.65685 5 8 5C6.34315 5 5 6.34315 5 8C5 9.65685 6.34315 11 8 11Z" fill="#1267E5"/>
+                                            </svg>
                                             <p class="m-0 text-blue font-opensans-600 text-sm">Change</p> 
                                             <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden>
                                         </label>
@@ -109,10 +117,10 @@
                                     <input @input="checkPassword" v-if="showCurrentPassword" type="text" name="currentpassword" id="currentpassword" class="mt-1 w-full main-input" v-model="currentpassword"/>
                                     <input @input="checkPassword" v-else type="password" name="currentpassword" id="currentpassword" class="mt-1 w-full main-input" v-model="currentpassword"/>
                                     <button type="button" class="show-icon" @click="{this.showCurrentPassword = !this.showCurrentPassword;}">
-                                        <img src="/img/icon/show.png" class="w-5">
-                                    </button>
-                                    <button v-if="showCurrentPassword" type="button" class="show-icon" @click="{this.showCurrentPassword = !this.showCurrentPassword;}">
-                                        <img src="/img/icon/show-active.png" class="w-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" :style="showCurrentPassword ? 'fill: #1267E5' : 'fill: #CED4DA'">
+                                            <path d="M10 12.9697C11.1046 12.9697 12 12.0743 12 10.9697C12 9.86516 11.1046 8.96973 10 8.96973C8.89544 8.96973 8.00001 9.86516 8.00001 10.9697C8.00001 12.0743 8.89544 12.9697 10 12.9697Z"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.457764 10.9698C1.73202 6.91264 5.52232 3.96973 9.99997 3.96973C14.4776 3.96973 18.2679 6.91261 19.5422 10.9697C18.2679 15.0268 14.4776 17.9697 9.99995 17.9697C5.52232 17.9697 1.73204 15.0269 0.457764 10.9698ZM14 10.9697C14 13.1789 12.2091 14.9697 10 14.9697C7.79087 14.9697 6.00001 13.1789 6.00001 10.9697C6.00001 8.76059 7.79087 6.96973 10 6.96973C12.2091 6.96973 14 8.76059 14 10.9697Z"/>
+                                        </svg>
                                     </button>
                                 </div>
                                 <div class="block relative pb-2">
@@ -120,10 +128,10 @@
                                     <input @input="checkPassword" v-if="showPassword" type="text" name="newpassword" id="newpassword" class="mt-1 w-full main-input" v-model="password"/>
                                     <input @input="checkPassword" v-else type="password" name="newpassword" id="newpassword" class="mt-1 w-full main-input" v-model="password"/>
                                     <button type="button" class="show-icon" @click="{this.showPassword = !this.showPassword;}">
-                                        <img src="/img/icon/show.png" class="w-5">
-                                    </button>
-                                    <button v-if="showPassword" type="button" class="show-icon" @click="{this.showPassword = !this.showPassword;}">
-                                        <img src="/img/icon/show-active.png" class="w-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" :style="showPassword ? 'fill: #1267E5' : 'fill: #CED4DA'">
+                                            <path d="M10 12.9697C11.1046 12.9697 12 12.0743 12 10.9697C12 9.86516 11.1046 8.96973 10 8.96973C8.89544 8.96973 8.00001 9.86516 8.00001 10.9697C8.00001 12.0743 8.89544 12.9697 10 12.9697Z"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.457764 10.9698C1.73202 6.91264 5.52232 3.96973 9.99997 3.96973C14.4776 3.96973 18.2679 6.91261 19.5422 10.9697C18.2679 15.0268 14.4776 17.9697 9.99995 17.9697C5.52232 17.9697 1.73204 15.0269 0.457764 10.9698ZM14 10.9697C14 13.1789 12.2091 14.9697 10 14.9697C7.79087 14.9697 6.00001 13.1789 6.00001 10.9697C6.00001 8.76059 7.79087 6.96973 10 6.96973C12.2091 6.96973 14 8.76059 14 10.9697Z"/>
+                                        </svg>
                                     </button>
                                 </div>
                                 <div class="block relative py-2">
@@ -131,19 +139,43 @@
                                     <input @input="checkPassword" v-if="showCPassword" type="text" name="c-password" id="c-password" class="mt-1 w-full main-input" v-model="cPassword"/>
                                     <input @input="checkPassword" v-else type="password" name="c-password" id="c-password" class="mt-1 w-full main-input" v-model="cPassword"/>
                                     <button type="button" class="show-icon" @click="{this.showCPassword = !this.showCPassword;}">
-                                        <img src="/img/icon/show.png" class="w-5">
-                                    </button>
-                                    <button v-if="showCPassword" type="button" class="show-icon" @click="{this.showCPassword = !this.showCPassword;}">
-                                        <img src="/img/icon/show-active.png" class="w-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" :style="showCPassword ? 'fill: #1267E5' : 'fill: #CED4DA'">
+                                            <path d="M10 12.9697C11.1046 12.9697 12 12.0743 12 10.9697C12 9.86516 11.1046 8.96973 10 8.96973C8.89544 8.96973 8.00001 9.86516 8.00001 10.9697C8.00001 12.0743 8.89544 12.9697 10 12.9697Z"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.457764 10.9698C1.73202 6.91264 5.52232 3.96973 9.99997 3.96973C14.4776 3.96973 18.2679 6.91261 19.5422 10.9697C18.2679 15.0268 14.4776 17.9697 9.99995 17.9697C5.52232 17.9697 1.73204 15.0269 0.457764 10.9698ZM14 10.9697C14 13.1789 12.2091 14.9697 10 14.9697C7.79087 14.9697 6.00001 13.1789 6.00001 10.9697C6.00001 8.76059 7.79087 6.96973 10 6.96973C12.2091 6.96973 14 8.76059 14 10.9697Z"/>
+                                        </svg>
                                     </button>
                                 </div>
                                 <div class="password-checklist mt-2.5">
-                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verCharacters }"><img src="/img/icon/check-active.png" class="w-3.5 h-2.5 mr-2.5"> Use 8-32 characters</p>
-                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneNumber }"><img src="/img/icon/check-active.png" class="w-3.5 h-2.5 mr-2.5"> Use at least one number</p>
-                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneSymbol }"><img src="/img/icon/check-active.png" class="w-3.5 h-2.5 mr-2.5"> Use at least one symbol</p>
-                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneLower }"><img src="/img/icon/check-active.png" class="w-3.5 h-2.5 mr-2.5"> Use at least one lower case letter</p>
-                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneUpper }"><img src="/img/icon/check-active.png" class="w-3.5 h-2.5 mr-2.5"> Use at least one upper case letter</p>
-                                    <p class="flex items-center mb-4.5 font-inter-400 text-xs" :class="{ 'opacity-40': !verUniqueMatche }"><img src="/img/icon/check-active.png" class="w-3.5 h-2.5 mr-2.5"> New & confirm password matches</p>
+                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verCharacters }">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
+                                        </svg> 
+                                        Use 8-32 characters</p>
+                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneNumber }">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
+                                        </svg> 
+                                        Use at least one number</p>
+                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneSymbol }">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
+                                        </svg> 
+                                        Use at least one symbol</p>
+                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneLower }">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
+                                        </svg> 
+                                        Use at least one lower case letter</p>
+                                    <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneUpper }">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
+                                        </svg> 
+                                        Use at least one upper case letter</p>
+                                    <p class="flex items-center mb-4.5 font-inter-400 text-xs" :class="{ 'opacity-40': !verUniqueMatche }">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
+                                        </svg> 
+                                        New & confirm password matches</p>
                                 </div>
                                 <div class="flex pt-2">
                                     <button @click="changePassword()" :class="validPassword ? 'opacity-100' : 'opacity-50'" class="w-fit cursor-pointer shadow-main rounded-full min-w-160 p-3 bg-blue text-white font-opensans-600 text-sm">Update Password</button>
@@ -338,13 +370,13 @@ export default {
                 }else{
                     this.successAlert = true;
                     this.successMessage = 'Error occured. Please try again';
-                    this.successIcon = 'warning-red.png';
+                    this.successIcon = 'warning-red.svg';
                 }
             })
             .catch((error) => {
                 this.successAlert = true;
                 this.successMessage = error;
-                this.successIcon = 'warning-red.png';
+                this.successIcon = 'warning-red.svg';
             })
         },
         //Change Password
@@ -364,13 +396,13 @@ export default {
                     }else{
                         this.successAlert = true;
                         this.successMessage = success.data.errors.current_password['0'];
-                        this.successIcon = 'warning-red.png';
+                        this.successIcon = 'warning-red.svg';
                     }
                 })
                 .catch((error) => {
                     this.successAlert = true;
                     this.successMessage = error;
-                    this.successIcon = 'warning-red.png';
+                    this.successIcon = 'warning-red.svg';
                 })
             }
         },

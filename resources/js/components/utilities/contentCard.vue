@@ -1,5 +1,5 @@
 <template>
-    <div class="content-card bg-white rounded-2xl p-4 shadow-main relative w-full">
+    <div class="content-card bg-white rounded-2xl shadow-main relative w-full" :class="this.class ? ''+this.class : 'p-4 '+this.class">
         <h6 v-if="cardTitle && cardTitle != 'Vendor Information' && cardTitle != 'User Info' && cardTitle != 'Assigned Agencies'
          && cardTitle != 'Profile' && cardTitle != 'Change Password' && cardTitle != 'Contact Us' && cardTitle != 'About' && cardTitle != 'Terms & Privacy'
          && cardTitle != 'Ticket Status' && cardTitle != 'Ticket Information' && cardTitle != 'Vendor' && cardTitle != 'Violations' && cardTitle != 'Assigned Agencies' && cardTitle != 'Comments' && cardTitle != 'Activity Log'"
@@ -18,6 +18,6 @@ export default  {
     setup: () => ({
         title: 'Content Card'
     }),
-    props: ['cardTitle'],
+    props: ['cardTitle', 'class'],
 }
 </script>

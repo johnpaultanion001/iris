@@ -17,7 +17,10 @@
                                 <div class="notification flex items-center justify-between">
                                     <div :class="inb.isRead == 0 ? 'bg-green' : 'bg-transparent'" class="circle-notif-green mr-2.5 min-w-2 w-2 h-2 rounded-full"></div>
                                     <div class="p-3 bg-light-grey rounded-full w-10 h-10 mr-4.5 hidden sm:block">
-                                        <img src="/img/icon/bell-black.png">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none">
+                                            <path d="M7.00003 0C3.68632 0 1.00003 2.68629 1.00003 6V9.58579L0.292922 10.2929C0.00692448 10.5789 -0.0786313 11.009 0.0761497 11.3827C0.230931 11.7564 0.595567 12 1.00003 12H13C13.4045 12 13.7691 11.7564 13.9239 11.3827C14.0787 11.009 13.9931 10.5789 13.7071 10.2929L13 9.58579V6C13 2.68629 10.3137 0 7.00003 0Z" fill="#111827"/>
+                                            <path d="M7 16C5.34315 16 4 14.6569 4 13H10C10 14.6569 8.65685 16 7 16Z" fill="#111827"/>
+                                        </svg>
                                     </div>
                                     <div>
                                         <p :class="inb.isRead == 0 ? 'font-inter-700 ' : 'font-inter-400'" class="text-xs text-black">{{ inb.message }}</p>
@@ -25,7 +28,9 @@
                                     </div>
                                 </div>
                                 <div class="notification flex items-center hidden sm:block justify-between">
-                                    <img src="/img/icon/right-grey.png">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                                        <path d="M0.999999 1L8 8L1 15" stroke="#CED4DA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 </div>
                             </div>
                         </div>

@@ -125,7 +125,7 @@ export default {
                 .catch((error) => {
                     this.successAlert = true;
                     this.successMessage = 'Error occured. Please try again';
-                    this.successIcon = 'warning-red.png';
+                    this.successIcon = 'warning-red.svg';
                 })
             }
         },

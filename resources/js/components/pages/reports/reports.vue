@@ -21,7 +21,12 @@
                                     </div>
                                 </div>
                                 <div v-if="report.file" class="notification flex items-center hidden sm:block justify-between">
-                                    <a :href="report.file" download><img src="/img/icon/download.png"></a>
+                                    <a :href="report.file" download>
+                                        <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 38C29.7173 38 38 29.7173 38 19.5C38 9.28273 29.7173 1 19.5 1C9.28273 1 1 9.28273 1 19.5C1 29.7173 9.28273 38 19.5 38Z" stroke="#1267E5"/>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 27C12 26.4477 12.4477 26 13 26H25C25.5523 26 26 26.4477 26 27C26 27.5523 25.5523 28 25 28H13C12.4477 28 12 27.5523 12 27ZM15.2929 19.2929C15.6834 18.9024 16.3166 18.9024 16.7071 19.2929L18 20.5858L18 13C18 12.4477 18.4477 12 19 12C19.5523 12 20 12.4477 20 13L20 20.5858L21.2929 19.2929C21.6834 18.9024 22.3166 18.9024 22.7071 19.2929C23.0976 19.6834 23.0976 20.3166 22.7071 20.7071L19.7071 23.7071C19.5196 23.8946 19.2652 24 19 24C18.7348 24 18.4804 23.8946 18.2929 23.7071L15.2929 20.7071C14.9024 20.3166 14.9024 19.6834 15.2929 19.2929Z" fill="#1267E5"/>
+                                        </svg>
+                                    </a>
                                 </div>
                             </div>
                         </div>

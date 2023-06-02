@@ -231,7 +231,7 @@ ul[role='listbox']::-webkit-scrollbar-thumb
 	background-color: #CED4DA;
 }
 .vs__actions:after {
-    content: url('/img/icon/down-blue.png');
+    content: url('/img/icon/down-blue.svg');
 }
 .vs__actions {
     width: 23px;

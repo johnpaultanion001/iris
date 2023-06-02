@@ -84,7 +84,9 @@
                                     <label for="documents" class="text-base text-blue-grey text-xs font-inter-700">Upload Additional Documents</label>
                                     <div class="flex items-center mt-4 ">
                                         <label class="cursor-pointer w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
-                                            <img src="/img/icon/upload.png" class="mr-3.5"> Upload
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3.5" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                                <path d="M8.48223 3.875L4.36612 7.99112C3.87796 8.47927 3.87796 9.27073 4.36612 9.75888C4.85427 10.247 5.64573 10.247 6.13388 9.75888L10.1428 5.64277C11.1191 4.66646 11.1191 3.08354 10.1428 2.10723C9.16646 1.13092 7.58354 1.13092 6.60723 2.10723L2.59835 6.22335C1.13388 7.68782 1.13388 10.0622 2.59835 11.5267C4.06282 12.9911 6.43718 12.9911 7.90165 11.5267L11.8125 7.625" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg> Upload
                                             <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden>
                                         </label>
                                         <p class="text-blue-grey text-base ml-2 font-inter-400">{{ additional_documents_file }}</p>
@@ -180,8 +182,10 @@
                                                     </div>
                                                 </td>
                                                 <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                    <img v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
-                                                    <img v-if="violation.amount" @click.prevent="openModal('modalEditAmount'); modalTicketID = violation.id" src="/img/icon/edit-blue.png" class="mr-2">
+                                                    <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount');" class="mr-2" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M10.5858 0.585786C11.3668 -0.195262 12.6332 -0.195262 13.4142 0.585786C14.1953 1.36683 14.1953 2.63316 13.4142 3.41421L12.6213 4.20711L9.79289 1.37868L10.5858 0.585786Z" fill="#1267E5"/>
+                                                        <path d="M8.37868 2.79289L0 11.1716V14H2.82842L11.2071 5.62132L8.37868 2.79289Z" fill="#1267E5"/>
+                                                    </svg>
                                                     <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
                                                     <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
                                                 </td>
@@ -218,13 +222,16 @@
                         <div class="grid grid-cols-5 gap-y-5 gap-x-5">
                             <div v-for="agency in currentAgencies" class="col-span-1">
                                 <div v-for="item in agency">
-                                    <img :src="'/img/' + item.logo" class="w-full mx-auto max-w-30 rounded-full">
+                                    <img :src="item.logo" class="w-full mx-auto max-w-30 max-h-30 object-center rounded-full object-contain border-light border" style="max-height: 7.5rem;">
                                     <p class="text-blue-grey font-opensans-600 text-xxs text-center my-3 ellipsis-2" style="height: 34px;">{{ item.agency }}</p>
                                     <p class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">Remove</p>
                                 </div>
                             </div>
                             <div @click="openModal('modalAgencies')" class="cursor-pointer col-span-1">
-                                <img src="/img/icon/addphoto.png" class="w-full mx-auto max-w-30 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" class="w-full mx-auto max-w-30 rounded-full">
+                                    <circle cx="60" cy="60" r="59.5" stroke="#1267E5"/>
+                                    <path d="M60 48V60M60 60V72M60 60H72M60 60L48 60" stroke="#1267E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                                 <p class="text-blue font-opensans-600 text-xxs text-center my-3">ADD AGENCY</p>
                             </div>
                         </div>
@@ -261,12 +268,12 @@
                         <div class="col-span-2">
                             <div class="relative w-full">
                                 <input type="text" v-model="filterSearchAgency" placeholder="Search" name="selectagencies" id="selectagencies" class="my-2 w-full secondary-input" style="padding-left: 35px;"/>
-                                <img src="/img/icon/search.png" class="search-img" style="top: 23px;">
+                                <img src="/img/icon/search.svg" class="search-img" style="top: 23px;">
                             </div>
                             <div v-for="(agency, index) in allAgencies" ref="allAgencies" class="py-2">
                                 <label class="cursor-pointer flex items-center">
                                     <input type="checkbox" @change.prevent="agencyChecked(agency.id, agency.index, $event)">
-                                    <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
+                                    <img :src="agency.logo" class="w-15 h-15 mx-4 rounded-full object-contain border-light border">
                                     <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                                 </label>
                             </div>
@@ -293,7 +300,7 @@
                         <div class="col-span-2">
                             <div class="relative w-full">
                                 <input type="text" v-model="filterSearchViolation" placeholder="Search" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 35px;"/>
-                                <img src="/img/icon/search.png" class="search-img" style="top: 23px;">
+                                <img src="/img/icon/search.svg" class="search-img" style="top: 23px;">
                             </div>
                             <div class="py-2">
                                 <label class="cursor-pointer flex items-start" v-for="(violation, index) in allViolations">
@@ -370,7 +377,7 @@
 
         <Modal v-show="modalActive && showModal == 'modalSubmit'" @close="closeModal">
             <template v-slot:body>
-                <img src="/img/icon/modal-send.png" class="mb-6">
+                <img src="/img/icon/modal-send.svg" class="mb-6">
                 <h5 class="font-exo-600 text-xl text-dark2 mb-4">Submit & notify assigned agencies</h5>
                 <p class="font-inter-400 text-lg text-dark2 mb-11">After submitting your ticket, all assigned agencies will be immediately notified.</p> 
             </template>
@@ -482,7 +489,6 @@ export default {
         },
         //Get checked agencies
         agencyChecked(id, index, $event){
-            console.log(this.selectedAgencies)
             const checked = $event.target.checked;
             const agencies = this.allAgencies.filter((a) => (a.id == id));
             if(checked){
@@ -500,8 +506,6 @@ export default {
                 });
             });
             this.arrayAgencies = arrayAgencies
-            console.log(this.arrayAgencies)
-            console.log(this.selectedAgencies)
             this.currentAgencies = this.selectedAgencies;
             this.closeModal();
         },//Get Violations
@@ -520,9 +524,6 @@ export default {
             }else{
                 this.checkedViolations.splice(violations['0'], 1);
             }
-
-            console.log(this.checkedViolations)
-            console.log(this.selectedViolations)
         },
         //Add checked Violations
         addCheckedViolation(){
@@ -616,12 +617,11 @@ export default {
                 this.successMessage = 'Ticket submitted & assigned agencies notified';
                 this.successIcon = 'like.svg';
                 this.closeModal();
-                console.log(success)
             })
             .catch((error) => {
                 this.successAlert = true;
                 this.successMessage = 'Error occured. Please try again';
-                this.successIcon = 'warning-red.png';
+                this.successIcon = 'warning-red.svg';
             })
         },
     },

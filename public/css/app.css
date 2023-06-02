@@ -622,6 +622,10 @@ video {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
+.my-2\.5 {
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+}
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -665,10 +669,6 @@ video {
 }
 .mb-9 {
   margin-bottom: 2.25rem;
-}
-.me-2 {
-  -webkit-margin-end: 0.5rem;
-          margin-inline-end: 0.5rem;
 }
 .ml-1 {
   margin-left: 0.25rem;
@@ -760,6 +760,9 @@ video {
 .mt-9 {
   margin-top: 2.25rem;
 }
+.ml-3 {
+  margin-left: 0.75rem;
+}
 .block {
   display: block;
 }
@@ -805,26 +808,17 @@ video {
 .h-5 {
   height: 1.25rem;
 }
-.h-7 {
-  height: 1.75rem;
-}
-.h-7\.5 {
-  height: 1.875rem;
-}
 .h-8 {
   height: 2rem;
 }
 .h-9 {
   height: 2.25rem;
 }
-.h-auto {
-  height: auto;
+.h-\[29\.81px\] {
+  height: 29.81px;
 }
 .h-full {
   height: 100%;
-}
-.h-\[29\.81px\] {
-  height: 29.81px;
 }
 .min-h-screen {
   min-height: 100vh;
@@ -877,6 +871,9 @@ video {
 .w-9 {
   width: 2.25rem;
 }
+.w-\[280px\] {
+  width: 280px;
+}
 .w-auto {
   width: auto;
 }
@@ -886,9 +883,6 @@ video {
 }
 .w-full {
   width: 100%;
-}
-.w-\[280px\] {
-  width: 280px;
 }
 .min-w-0 {
   min-width: 0px;
@@ -1081,6 +1075,9 @@ video {
 .border-0 {
   border-width: 0px;
 }
+.border-4 {
+  border-width: 4px;
+}
 .border-x-0 {
   border-left-width: 0px;
   border-right-width: 0px;
@@ -1198,9 +1195,17 @@ video {
 .bg-white-25 {
   background-color: #ffffff40;
 }
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
+}
+.object-center {
+  -o-object-position: center;
+     object-position: center;
 }
 .p-1 {
   padding: 0.25rem;
@@ -1388,11 +1393,11 @@ video {
 .pt-5 {
   padding-top: 1.25rem;
 }
-.pt-8 {
-  padding-top: 2rem;
-}
 .pt-6 {
   padding-top: 1.5rem;
+}
+.pt-8 {
+  padding-top: 2rem;
 }
 .text-center {
   text-align: center;
@@ -1808,7 +1813,7 @@ ul[role='listbox']::-webkit-scrollbar-thumb
 	background-color: #CED4DA;
 }
 .vs__actions:after {
-    content: url('/img/icon/down-blue.png');
+    content: url('/img/icon/down-blue.svg');
 }
 .vs__actions {
     width: 23px;

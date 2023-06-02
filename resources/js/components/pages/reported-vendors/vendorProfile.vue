@@ -49,7 +49,9 @@
                             </div>
                         </div>
                         <div class="p-1 lg:p-3 rounded bg-light-blue">
-                            <img src="/img/icon/flag-yellow.png">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="19" viewBox="0 0 17 19" fill="none" class="ml-1.5">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.0999756 3.9501C0.0999756 1.96187 1.71175 0.350098 3.69997 0.350098H15.6999C16.1545 0.350098 16.57 0.606901 16.7733 1.01344C16.9765 1.41998 16.9327 1.90648 16.6599 2.2701L13.5999 6.3501L16.6599 10.4301C16.9327 10.7937 16.9765 11.2802 16.7733 11.6868C16.57 12.0933 16.1545 12.3501 15.6999 12.3501H3.69997C3.03723 12.3501 2.49997 12.8874 2.49997 13.5501V17.1501C2.49997 17.8128 1.96271 18.3501 1.29997 18.3501C0.637233 18.3501 0.0999756 17.8128 0.0999756 17.1501V3.9501Z" fill="#FFD600"/>
+                            </svg>  
                         </div>
                     </div>
                     <div class="row-span-1 content-card bg-white rounded-xl p-3 shadow-main flex items-center justify-between">
@@ -60,7 +62,9 @@
                             </div>
                         </div>
                         <div class="p-1 lg:p-3 rounded bg-light-blue">
-                            <img src="/img/icon/warning-red.png">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.40835 1.96849C8.32588 0.337327 10.6744 0.337326 11.5919 1.96849L18.2883 13.8731C19.1882 15.473 18.0321 17.4498 16.1965 17.4498H2.80376C0.968179 17.4498 -0.187934 15.473 0.711981 13.8731L7.40835 1.96849ZM10.7 13.8499C10.7 14.5126 10.1628 15.0499 9.50002 15.0499C8.83728 15.0499 8.30002 14.5126 8.30002 13.8499C8.30002 13.1872 8.83728 12.6499 9.50002 12.6499C10.1628 12.6499 10.7 13.1872 10.7 13.8499ZM9.50002 4.2499C8.83728 4.2499 8.30002 4.78716 8.30002 5.4499V9.0499C8.30002 9.71264 8.83728 10.2499 9.50002 10.2499C10.1628 10.2499 10.7 9.71264 10.7 9.0499V5.4499C10.7 4.78716 10.1628 4.2499 9.50002 4.2499Z" fill="#EC0C38"/>
+                            </svg>
                         </div>
                     </div>
                 </div>
@@ -219,7 +223,7 @@ export default {
             .catch((error) => {
                 this.successAlert = true;
                 this.successMessage = "Please enter a valid Email or Mobile Number";
-                this.successIcon = 'warning-red.png';
+                this.successIcon = 'warning-red.svg';
             })
         },
     },

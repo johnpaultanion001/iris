@@ -52,7 +52,7 @@
                                         <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Agency</td>
                                         <td class="py-3 text-black text-base font-exo-400 flex items-center justify-start">
                                             <div v-for="(item, index) in user.assigned_agencies">
-                                                <img v-if="index == 'logo'" :src="'/img/'+item" class="rounded-full" style="max-height: 42px">
+                                                <img v-if="index == 'logo'" :src="item" class="rounded-full border border-light" style="max-height: 42px">
                                                 <span v-if="index == 'code'" class="px-3">{{ item }}</span>
                                             </div>
                                         </td>
@@ -107,7 +107,7 @@
     
     <Modal v-show="modalActive && showModal == 'resendInvite'" @close="closeModal">
         <template v-slot:body>
-            <img src="/img/icon/invite-modal.png" class="mb-6">
+            <img src="/img/icon/invite-modal.svg" class="mb-6">
             <h5 class="font-exo-600 text-xl text-dark2 mb-4">Resend Account Invite to {{ user.name }}</h5>
             <p class="font-inter-400 text-lg text-dark2 mb-11">Are you sure you want to send an account invite?</p> 
         </template>
@@ -125,7 +125,7 @@
     
     <Modal v-show="modalActive && showModal == 'deactivate'" @close="closeModal">
         <template v-slot:body>
-            <img src="/img/icon/invite-modal.png" class="mb-6">
+            <img src="/img/icon/warning-modal.svg" class="mb-6">
             <h5 class="font-exo-600 text-xl text-dark2 mb-4">Deactivate {{ user.name }}</h5>
             <p class="font-inter-400 text-lg text-dark2 mb-11">Once you deactivate this account, the user can no longer access the system. Do you wish to continue?</p> 
         </template>
@@ -143,7 +143,7 @@
     
     <Modal v-show="modalActive && showModal == 'activate'" @close="closeModal">
         <template v-slot:body>
-            <img src="/img/icon/invite-modal.png" class="mb-6">
+            <img src="/img/icon/invite-modal.svg" class="mb-6">
             <h5 class="font-exo-600 text-xl text-dark2 mb-4">Activate {{ user.name }}</h5>
             <p class="font-inter-400 text-lg text-dark2 mb-11">Once you activate this account, the user can access the system. Do you wish to continue?</p> 
         </template>
@@ -238,7 +238,7 @@ export default {
             .catch((error) => {
                 this.successAlert = true;
                 this.successMessage = 'Error occured. Please try again';
-                this.successIcon = 'warning-red.png';
+                this.successIcon = 'warning-red.svg';
             })
         },
         async activate() {
@@ -257,7 +257,7 @@ export default {
             .catch((error) => {
                 this.successAlert = true;
                 this.successMessage = 'Error occured. Please try again';
-                this.successIcon = 'warning-red.png';
+                this.successIcon = 'warning-red.svg';
             })
         },
     },

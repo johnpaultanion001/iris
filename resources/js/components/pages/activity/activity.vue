@@ -9,7 +9,10 @@
                     Filter
                 </button>
                 <button class="mt-1 md:mt-0 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-2 py-2.5 px-5 border border-white text-white rounded-lg flex items-center justify-center">
-                    Export <img src="/img/icon/export-white.png" class="ml-4">
+                    Export
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none" class="ml-4">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 15C-2.41411e-08 14.4477 0.447715 14 1 14H13C13.5523 14 14 14.4477 14 15C14 15.5523 13.5523 16 13 16H1C0.447715 16 2.41411e-08 15.5523 0 15ZM3.29289 7.29289C3.68342 6.90237 4.31658 6.90237 4.70711 7.29289L6 8.58579L6 1C6 0.447716 6.44771 2.41411e-08 7 0C7.55228 -2.41411e-08 8 0.447715 8 1L8 8.58579L9.29289 7.29289C9.68342 6.90237 10.3166 6.90237 10.7071 7.29289C11.0976 7.68342 11.0976 8.31658 10.7071 8.70711L7.70711 11.7071C7.51957 11.8946 7.26522 12 7 12C6.73478 12 6.48043 11.8946 6.29289 11.7071L3.29289 8.70711C2.90237 8.31658 2.90237 7.68342 3.29289 7.29289Z" :fill="vendorID ? '#1267E5' : '#ffffff'"/>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -19,7 +22,7 @@
                     <div class="grid grid-cols-2 gap-2 pb-4">
                         <div class="col-span-1 flex items-center">
                             <div @click="filterItemNumberDropdown = !filterItemNumberDropdown" class="mr-1 py-1.5 px-2.5 cursor-pointer relative bg-white text-xxs text-black font-opensans-600 border border-light rounded flex items-center">
-                                {{ perpage }} <img src="/img/icon/filter.png" class="ml-1">
+                                {{ perpage }} <img src="/img/icon/filter.svg" class="ml-1">
                                 <div v-if="filterItemNumberDropdown" style="top:28px;right:-1px;left:-1px;" class="z-9 dropdown absolute border border-light rounded-b-lg bg-white shadow-secondary overflow-hidden">
                                     <div @click="perpage = 10" class="py-1.5 px-1 flex items-center hover:bg-lighter">
                                         <p class="w-full font-inter-400 text-xxs text-center text-black">10</p>
@@ -51,26 +54,31 @@
                                     <th class="p-2.5">
                                     </th>
                                     <th class="p-2.5">
-                                        <button @click="activityOrder = 'action'; activityASC = !activityASC; orderedTickets();" class="filter-btn">Action<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="activityOrder = 'action'; activityASC = !activityASC; orderedTickets();" class="filter-btn">Action<img src="/img/icon/filter.svg" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button @click="activityOrder = 'activity'; activityASC = !activityASC; orderedTickets();" class="filter-btn">Activity<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="activityOrder = 'activity'; activityASC = !activityASC; orderedTickets();" class="filter-btn">Activity<img src="/img/icon/filter.svg" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button @click="activityOrder = 'agency'; activityASC = !activityASC; orderedTickets();" class="filter-btn">Agency<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="activityOrder = 'agency'; activityASC = !activityASC; orderedTickets();" class="filter-btn">Agency<img src="/img/icon/filter.svg" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button @click="activityOrder = 'name'; activityOrderArray = 'user'; activityASC = !activityASC; orderedTickets();" class="filter-btn">User<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="activityOrder = 'name'; activityOrderArray = 'user'; activityASC = !activityASC; orderedTickets();" class="filter-btn">User<img src="/img/icon/filter.svg" class="ml-1.5"></button>
                                     </th>
                                     <th class="p-2.5 text-center">
-                                        <button @click="activityOrder = 'created_at'; activityASC = !activityASC; orderedTickets();" class="filter-btn">Date<img src="/img/icon/filter.png" class="ml-1.5"></button>
+                                        <button @click="activityOrder = 'created_at'; activityASC = !activityASC; orderedTickets();" class="filter-btn">Date<img src="/img/icon/filter.svg" class="ml-1.5"></button>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="border-b border-light relative" v-for="(act, index) in orderedTickets()" ref="activities">
                                     <td class="w-12 min-w-44">
-                                        <router-link :to="'activity/'+act.id"><img src="/img/icon/show-active.png" style="width: 20px; height: 15px;" class="m-auto block"></router-link>
+                                        <router-link :to="'activity/'+act.id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="15" viewBox="0 0 21 15" fill="none" class="m-auto block">
+                                            <path d="M10.5 9.5C11.6046 9.5 12.5 8.60457 12.5 7.5C12.5 6.39543 11.6046 5.5 10.5 5.5C9.39544 5.5 8.50001 6.39543 8.50001 7.5C8.50001 8.60457 9.39544 9.5 10.5 9.5Z" fill="#1267E5"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.957764 7.50004C2.23202 3.44291 6.02232 0.5 10.5 0.5C14.9776 0.5 18.7679 3.44288 20.0422 7.49996C18.7679 11.5571 14.9776 14.5 10.4999 14.5C6.02232 14.5 2.23204 11.5571 0.957764 7.50004ZM14.5 7.5C14.5 9.70914 12.7091 11.5 10.5 11.5C8.29087 11.5 6.50001 9.70914 6.50001 7.5C6.50001 5.29086 8.29087 3.5 10.5 3.5C12.7091 3.5 14.5 5.29086 14.5 7.5Z" fill="#1267E5"/>
+                                            </svg>
+                                        </router-link>
                                     </td>
                                     <td class="p-2.5 font-opensans-700 text-xxxs text-dark2">
                                         {{ act.action }}
@@ -105,7 +113,7 @@
                         <p class="text-xxs text-lighttext m-0">Showing {{ (perpage * (pageNumber)) + 1 }} to {{ activities.length > (perpage * (pageNumber + 1)) ? (perpage * (pageNumber + 1)) : activities.length }} of {{ activities.length }} entries</p>
                         <div v-if="activities.length > perpage" class="flex items-center justify-end">
                             <button @click="pageNumber >  0 ? updatePageNumber(pageNumber - 1) : null" :class="pageNumber >  0 ? 'bg-white hover:bg-lightergrey' : 'opacity-40 bg-lightergrey hover:bg-lightergrey'" class="mx-1 b-white hover:bg-lightergrey w-9 h-9 border border-lightgrey flex items-center justify-center rounded-full">
-                                <img src="/img/icon/previous.png">
+                                <img src="/img/icon/previous.svg">
                             </button>
                             <button @click="updatePageNumber(0)" :class="pageNumber == 0 ? 'bg-blue hover:bg-blue text-white border-blue' : 'b-white hover:bg-lightergrey text-darkgrey border-lightergrey'" class="mx-1 font-inter-400 text-sm w-9 h-9 border flex items-center justify-center rounded-full">
                                 1
@@ -121,7 +129,7 @@
                                 {{ paginateTotal }}
                             </button>
                             <button @click="(paginateTotal - 1) > pageNumber ? updatePageNumber(pageNumber + 1) : null" :class="(paginateTotal - 1) > pageNumber ? 'bg-white hover:bg-lightergrey' : 'opacity-40 bg-lightergrey hover:bg-lightergrey'" class="mx-1 b-white hover:bg-lightergrey w-9 h-9 border border-lightergrey flex items-center justify-center rounded-full">
-                                <img src="/img/icon/next.png">
+                                <img src="/img/icon/next.svg">
                             </button>
                         </div>
                     </div>
@@ -147,39 +155,39 @@
                         <div class="relative w-full">
                             <label for="from" class="text-base text-blue-grey text-xs font-inter-700">Date From</label>
                             <input type="date" v-model="fFrom" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/date-blue.png" class="date-img">
+                            <img src="/img/icon/date-blue.svg" class="date-img">
                         </div>
                     </div>
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="to" class="text-base text-blue-grey text-xs font-inter-700">Date To</label>
                             <input type="date" v-model="fTo" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/date-blue.png" class="date-img">
+                            <img src="/img/icon/date-blue.svg" class="date-img">
                         </div>
                     </div>
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="from" class="text-base text-blue-grey text-xs font-inter-700">Time From</label>
                             <input type="time" v-model="fTFrom" placeholder="Month DD, YYYY" name="from" id="from" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/clock-active.png" class="date-img">
+                            <img src="/img/icon/clock-active.svg" class="date-img">
                         </div>
                     </div>
                     <div class="col-span-1">
                         <div class="relative w-full">
                             <label for="to" class="text-base text-blue-grey text-xs font-inter-700">Time To</label>
                             <input type="time" v-model="fTTo" placeholder="Month DD, YYYY" name="to" id="to" class="mt-2 w-full secondary-input"/>
-                            <img src="/img/icon/clock-active.png" class="date-img">
+                            <img src="/img/icon/clock-active.svg" class="date-img">
                         </div>
                     </div>
                     <div class="col-span-2">
                         <div class="relative w-full">
                             <label for="selectagencies" class="text-base text-blue-grey text-xs font-inter-700">Agencies</label>
                             <input type="text" v-model="filterSearchAgency" placeholder="Search" name="selectagencies" id="selectagencies" class="mt-4 w-full secondary-input" style="padding-left: 35px;"/>
-                            <img src="/img/icon/search.png" class="search-img">
+                            <img src="/img/icon/search.svg" class="search-img">
                         </div>
                         <div v-for="(agency, index) in agencies" ref="agencies" class="my-4 flex items-center">
                             <input type="checkbox" v-model="fAgencyValue" :value="agency.id">
-                            <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
+                            <img :src="agency.logo" class="w-15 h-15 mx-4 rounded-full object-contain border border-light">
                             <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                         </div>
                     </div>

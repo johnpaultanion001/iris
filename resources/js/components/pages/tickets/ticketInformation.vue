@@ -12,57 +12,70 @@
                         <div class="bg-white w-full rounded-2xl p-4">
                             <button @click="scrollToDiv('Ticket Status')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Ticket Status' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Ticket Status'" src="/img/icon/ticketstatus-active.png" class="absolute">
-                                    <img src="/img/icon/ticketstatus.png"> 
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM11.7071 6.70711C12.0976 6.31658 12.0976 5.68342 11.7071 5.29289C11.3166 4.90237 10.6834 4.90237 10.2929 5.29289L7 8.58579L5.70711 7.29289C5.31658 6.90237 4.68342 6.90237 4.29289 7.29289C3.90237 7.68342 3.90237 8.31658 4.29289 8.70711L6.29289 10.7071C6.68342 11.0976 7.31658 11.0976 7.70711 10.7071L11.7071 6.70711Z" :fill="sectionName === 'Ticket Status' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Ticket Status' ? 'text-blue' : 'text-darkgrey'">Ticket Status</p>
                             </button>
                             <button @click="scrollToDiv('Ticket Info')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Ticket Info' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Ticket Info'" src="/img/icon/about-active.png" class="absolute"> 
-                                    <img src="/img/icon/about.png"> 
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM9 4C9 4.55228 8.55228 5 8 5C7.44772 5 7 4.55228 7 4C7 3.44772 7.44772 3 8 3C8.55228 3 9 3.44772 9 4ZM7 7C6.44772 7 6 7.44772 6 8C6 8.55229 6.44772 9 7 9V12C7 12.5523 7.44772 13 8 13H9C9.55228 13 10 12.5523 10 12C10 11.4477 9.55228 11 9 11V8C9 7.44772 8.55228 7 8 7H7Z" :fill="sectionName === 'Ticket Info' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Ticket Info' ? 'text-blue' : 'text-darkgrey'">Ticket Info</p>
                             </button>
                             <button @click="scrollToDiv('Vendor')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Vendor' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Vendor'" src="/img/icon/profile-active.png" class="absolute"> 
-                                    <img src="/img/icon/profile.png"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
+                                        <path d="M7 6C8.65685 6 10 4.65685 10 3C10 1.34315 8.65685 0 7 0C5.34315 0 4 1.34315 4 3C4 4.65685 5.34315 6 7 6Z" :fill="sectionName === 'Vendor' ? '#1267E5' : '#8898AA'"/>
+                                        <path d="M0 15C0 11.134 3.13401 8 7 8C10.866 8 14 11.134 14 15H0Z" :fill="sectionName === 'Vendor' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Vendor' ? 'text-blue' : 'text-darkgrey'">Vendor</p>
                             </button>
-                            <button @click="scrollToDiv('Violations')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Violations' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
+                            <button @click="scrollToDiv('ViolationsSection')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'ViolationsSection' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Violations'" src="/img/icon/violations-active.png" class="absolute"> 
-                                    <img src="/img/icon/violations.png"> 
+                                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M6.25706 1.09882C7.02167 -0.26048 8.97875 -0.260481 9.74336 1.09882L15.3237 11.0194C16.0736 12.3526 15.1102 13.9999 13.5805 13.9999H2.4199C0.890251 13.9999 -0.0731769 12.3526 0.676753 11.0194L6.25706 1.09882ZM9.00012 11C9.00012 11.5523 8.55241 12 8.00012 12C7.44784 12 7.00012 11.5523 7.00012 11C7.00012 10.4477 7.44784 10 8.00012 10C8.55241 10 9.00012 10.4477 9.00012 11ZM8.00012 3C7.44784 3 7.00012 3.44772 7.00012 4V7C7.00012 7.55228 7.44784 8 8.00012 8C8.55241 8 9.00012 7.55228 9.00012 7V4C9.00012 3.44772 8.55241 3 8.00012 3Z" :fill="sectionName === 'ViolationsSection' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
-                                <p :class="sectionName === 'Violations' ? 'text-blue' : 'text-darkgrey'">Violations</p>
+                                <p :class="sectionName === 'ViolationsSection' ? 'text-blue' : 'text-darkgrey'">Violations</p>
                             </button>
                             <button @click="scrollToDiv('Assigned Agencies')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Assigned Agencies' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Assigned Agencies'" src="/img/icon/agencies-active.png" class="absolute"> 
-                                    <img src="/img/icon/agencies.png"> 
+                                    <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1 2C1 0.89543 1.89543 0 3 0H11C12.1046 0 13 0.895431 13 2V14C13.5523 14 14 14.4477 14 15C14 15.5523 13.5523 16 13 16H10C9.44771 16 9 15.5523 9 15V13C9 12.4477 8.55229 12 8 12H6C5.44772 12 5 12.4477 5 13V15C5 15.5523 4.55228 16 4 16H1C0.447715 16 0 15.5523 0 15C0 14.4477 0.447715 14 1 14V2ZM4 3H6V5H4V3ZM6 7H4V9H6V7ZM8 3H10V5H8V3ZM10 7H8V9H10V7Z" :fill="sectionName === 'Assigned Agencies' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Assigned Agencies' ? 'text-blue' : 'text-darkgrey'">Assigned Agencies</p>
                             </button>
                             <button @click="scrollToDiv('Comments')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Comments' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Comments'" src="/img/icon/comments-active.png" class="absolute"> 
-                                    <img src="/img/icon/comments.png"> 
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16 2V10C16 11.1046 15.1046 12 14 12H9L4 16V12H2C0.895431 12 0 11.1046 0 10V2C0 0.895431 0.895431 0 2 0H14C15.1046 0 16 0.895431 16 2ZM5 5H3V7H5V5ZM7 5H9V7H7V5ZM13 5H11V7H13V5Z" :fill="sectionName === 'Comments' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Comments' ? 'text-blue' : 'text-darkgrey'">Comments</p>
                             </button>
                             <button @click="scrollToDiv('Activity Log')" class="rounded w-full flex items-center text-start mb-1 py-4.5 px-2 text-sm font-opensans-600  border-l-4 hover:bg-lighter" :class="sectionName === 'Activity Log' ? 'border-green bg-lighter' : 'bg-white border-transparent'">
                                 <div class="mr-3.5 relative">
-                                    <img v-if="sectionName === 'Activity Log'" src="/img/icon/activitylog-active.png" class="absolute"> 
-                                    <img src="/img/icon/activitylog.png"> 
+                                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0.999998 0C0.447715 0 0 0.447715 0 1C0 1.55228 0.447715 2 0.999998 2H12C12.5523 2 13 1.55228 13 1C13 0.447715 12.5523 0 12 0H0.999998Z" :fill="sectionName === 'Activity Log' ? '#1267E5' : '#8898AA'"/>
+                                        <path d="M0.999998 4C0.447715 4 0 4.44772 0 5C0 5.55228 0.447715 6 0.999998 6H7.99999C8.55227 6 8.99999 5.55228 8.99999 5C8.99999 4.44772 8.55227 4 7.99999 4H0.999998Z" :fill="sectionName === 'Activity Log' ? '#1267E5' : '#8898AA'"/>
+                                        <path d="M0.999998 8C0.447715 8 0 8.44772 0 9C0 9.55229 0.447715 10 0.999998 10H4.99999C5.55228 10 5.99999 9.55229 5.99999 9C5.99999 8.44772 5.55228 8 4.99999 8H0.999998Z" :fill="sectionName === 'Activity Log' ? '#1267E5' : '#8898AA'"/>
+                                        <path d="M13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44771 11 5L11 10.5858L9.70709 9.29289C9.31657 8.90237 8.6834 8.90237 8.29288 9.29289C7.90236 9.68342 7.90236 10.3166 8.29288 10.7071L11.2929 13.7071C11.4804 13.8946 11.7348 14 12 14C12.2652 14 12.5196 13.8946 12.7071 13.7071L15.7071 10.7071C16.0976 10.3166 16.0976 9.68342 15.7071 9.29289C15.3166 8.90237 14.6834 8.90237 14.2929 9.29289L13 10.5858L13 5Z" :fill="sectionName === 'Activity Log' ? '#1267E5' : '#8898AA'"/>
+                                    </svg>
                                 </div>
                                 <p :class="sectionName === 'Activity Log' ? 'text-blue' : 'text-darkgrey'">Activity Log</p>
                             </button>
                         </div>
                         <div class="bg-light-blue w-full p-4 h-full rounded-b-2xl">
-                            <button class="border border-blue text-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 rounded-full flex items-center justify-center">
-                                <img src="/img/icon/export-blue.png" class="mr-2">Export
+                            <button class="border border-blue text-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 rounded-full flex items-center justify-center">                
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none" class="mr-2">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 15C-2.41411e-08 14.4477 0.447715 14 1 14H13C13.5523 14 14 14.4477 14 15C14 15.5523 13.5523 16 13 16H1C0.447715 16 2.41411e-08 15.5523 0 15ZM3.29289 7.29289C3.68342 6.90237 4.31658 6.90237 4.70711 7.29289L6 8.58579L6 1C6 0.447716 6.44771 2.41411e-08 7 0C7.55228 -2.41411e-08 8 0.447715 8 1L8 8.58579L9.29289 7.29289C9.68342 6.90237 10.3166 6.90237 10.7071 7.29289C11.0976 7.68342 11.0976 8.31658 10.7071 8.70711L7.70711 11.7071C7.51957 11.8946 7.26522 12 7 12C6.73478 12 6.48043 11.8946 6.29289 11.7071L3.29289 8.70711C2.90237 8.31658 2.90237 7.68342 3.29289 7.29289Z" fill="#1267E5"/>
+                                </svg>Export
                             </button>
                         </div>
                     </div>
@@ -92,40 +105,60 @@
                             </div>
                             <div class="px-10 py-5 flex items-center justify-between border-b border-light mx-2">
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'FOR_REVIEW' ? '/img/icon/forreview-active.svg' : '/img/icon/forreview-inactive.svg'" class="m-auto">
+                                    <svg width="31" height="23" viewBox="0 0 31 23" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-auto">
+                                        <path d="M15.5 14.7C17.2673 14.7 18.7 13.2673 18.7 11.5C18.7 9.73269 17.2673 8.3 15.5 8.3C13.7327 8.3 12.3 9.73269 12.3 11.5C12.3 13.2673 13.7327 14.7 15.5 14.7Z" :fill="ticketInfo.status == 'FOR_REVIEW' ? '#1267E6' : '#888C93'"/>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.232422 11.5001C2.27122 5.00866 8.33568 0.300003 15.4999 0.300003C22.6641 0.300003 28.7285 5.00861 30.7674 11.4999C28.7286 17.9913 22.6641 22.7 15.4999 22.7C8.33569 22.7 2.27126 17.9914 0.232422 11.5001ZM21.8999 11.5C21.8999 15.0346 19.0346 17.9 15.5 17.9C11.9654 17.9 9.09999 15.0346 9.09999 11.5C9.09999 7.96538 11.9654 5.1 15.5 5.1C19.0346 5.1 21.8999 7.96538 21.8999 11.5Z" :fill="ticketInfo.status == 'FOR_REVIEW' ? '#1267E6' : '#888C93'"/>
+                                    </svg>
                                     <p :class="ticketInfo.status == 'FOR_REVIEW' ? 'text-blue' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">For Review</p>
                                 </div>
                                 <div>
-                                    <img src="/img/icon/arrow-right.svg" class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="14" viewBox="0 0 17 14" fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.5429 0.292893C8.93342 -0.0976311 9.56659 -0.0976311 9.95711 0.292893L15.9571 6.29289C16.3476 6.68342 16.3476 7.31658 15.9571 7.70711L9.95711 13.7071C9.56659 14.0976 8.93342 14.0976 8.5429 13.7071C8.15237 13.3166 8.15237 12.6834 8.5429 12.2929L12.8358 8L1.25 8C0.697716 8 0.25 7.55228 0.25 7C0.25 6.44771 0.697716 6 1.25 6H12.8358L8.5429 1.70711C8.15237 1.31658 8.15237 0.683417 8.5429 0.292893Z" fill="#CED4DA"/>
+                                    </svg>
                                 </div>
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'ACKNOWLEDGED' ? '/img/icon/acknowledged-active.svg' : '/img/icon/acknowledged-inactive.svg'" class="m-auto">
+                                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-auto">
+                                        <path d="M0.700195 13.8C0.700195 12.4745 1.77471 11.4 3.1002 11.4C4.42568 11.4 5.5002 12.4745 5.5002 13.8V23.4C5.5002 24.7255 4.42568 25.8 3.1002 25.8C1.77471 25.8 0.700195 24.7255 0.700195 23.4V13.8Z" :fill="ticketInfo.status == 'ACKNOWLEDGED' ? '#1267E6' : '#888C93'"/>
+                                        <path d="M7.10019 13.5333V22.2223C7.10019 23.4344 7.785 24.5424 8.86911 25.0845L8.94886 25.1243C9.83754 25.5687 10.8175 25.8 11.811 25.8H20.4768C22.0022 25.8 23.3155 24.7233 23.6147 23.2276L25.5347 13.6276C25.9307 11.6474 24.4162 9.8 22.3968 9.8H16.7002V3.4C16.7002 1.63269 15.2675 0.199997 13.5002 0.199997C12.6165 0.199997 11.9002 0.916341 11.9002 1.8V2.86666C11.9002 4.25143 11.4511 5.59885 10.6202 6.70666L8.3802 9.69333C7.54933 10.8011 7.10019 12.1486 7.10019 13.5333Z" :fill="ticketInfo.status == 'ACKNOWLEDGED' ? '#1267E6' : '#888C93'"/>
+                                    </svg>
                                     <p :class="ticketInfo.status == 'ACKNOWLEDGED' ? 'text-blue' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">Acknowledged</p>
                                 </div>
                                 <div>
-                                    <img src="/img/icon/arrow-right.svg" class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="14" viewBox="0 0 17 14" fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.5429 0.292893C8.93342 -0.0976311 9.56659 -0.0976311 9.95711 0.292893L15.9571 6.29289C16.3476 6.68342 16.3476 7.31658 15.9571 7.70711L9.95711 13.7071C9.56659 14.0976 8.93342 14.0976 8.5429 13.7071C8.15237 13.3166 8.15237 12.6834 8.5429 12.2929L12.8358 8L1.25 8C0.697716 8 0.25 7.55228 0.25 7C0.25 6.44771 0.697716 6 1.25 6H12.8358L8.5429 1.70711C8.15237 1.31658 8.15237 0.683417 8.5429 0.292893Z" fill="#CED4DA"/>
+                                    </svg>
                                 </div>
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'ON_GOING' ? '/img/icon/ongoing-active.svg' : '/img/icon/ongoing-inactive.svg'" class="m-auto">
+                                    <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-auto">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5002 26.3C20.5694 26.3 26.3002 20.5692 26.3002 13.5C26.3002 6.43075 20.5694 0.699997 13.5002 0.699997C6.43095 0.699997 0.700195 6.43075 0.700195 13.5C0.700195 20.5692 6.43095 26.3 13.5002 26.3ZM15.1002 7.1C15.1002 6.21634 14.3839 5.5 13.5002 5.5C12.6165 5.5 11.9002 6.21634 11.9002 7.1V13.5C11.9002 13.9243 12.0688 14.3313 12.3688 14.6314L16.8943 19.1569C17.5191 19.7817 18.5322 19.7817 19.157 19.1569C19.7819 18.532 19.7819 17.5189 19.157 16.8941L15.1002 12.8373V7.1Z" :fill="ticketInfo.status == 'ON_GOING' ? '#1267E6' : '#888C93'"/>
+                                    </svg>
                                     <p :class="ticketInfo.status == 'ON_GOING' ? 'text-blue' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">On-going</p>
                                 </div>
                                 <div>
-                                    <img src="/img/icon/arrow-right.svg" class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="14" viewBox="0 0 17 14" fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.5429 0.292893C8.93342 -0.0976311 9.56659 -0.0976311 9.95711 0.292893L15.9571 6.29289C16.3476 6.68342 16.3476 7.31658 15.9571 7.70711L9.95711 13.7071C9.56659 14.0976 8.93342 14.0976 8.5429 13.7071C8.15237 13.3166 8.15237 12.6834 8.5429 12.2929L12.8358 8L1.25 8C0.697716 8 0.25 7.55228 0.25 7C0.25 6.44771 0.697716 6 1.25 6H12.8358L8.5429 1.70711C8.15237 1.31658 8.15237 0.683417 8.5429 0.292893Z" fill="#CED4DA"/>
+                                    </svg>
                                 </div>
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'RESOLVED' ? '/img/icon/resolved-active.svg' : '/img/icon/resolved-inactive.svg'" class="m-auto">
+                                    <svg width="30" height="28" viewBox="0 0 30 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-auto">
+                                        <path d="M17.3732 0.433334L15.9332 1.87333L18.0665 4.00667C18.3598 4.34 18.5065 4.72667 18.5065 5.16667C18.5065 5.60667 18.3598 6.02 18.0665 6.31333L13.3332 11.1267L14.6665 12.5667L19.5065 7.75333C20.2132 6.96667 20.5598 6.1 20.5598 5.16667C20.5598 4.23333 20.2132 3.35333 19.5065 2.56667L17.3732 0.433334ZM12.0665 3.12667L10.6265 4.56667L11.4398 5.31333C11.7332 5.60667 11.8798 6.00667 11.8798 6.5C11.8798 6.99333 11.7332 7.39333 11.4398 7.68667L10.6265 8.43333L12.0665 9.87333L12.8132 9.06C13.5198 8.27333 13.8798 7.42 13.8798 6.5C13.8798 5.54 13.5198 4.67333 12.8132 3.87333L12.0665 3.12667ZM25.9998 5.24667C25.0798 5.24667 24.2265 5.60667 23.4398 6.31333L15.9332 13.8333L17.3732 15.1667L24.8132 7.75333C25.1465 7.42 25.5465 7.24667 25.9998 7.24667C26.4532 7.24667 26.8532 7.42 27.1865 7.75333L27.9998 8.56667L29.3732 7.12667L28.6265 6.31333C27.8398 5.60667 26.9598 5.24667 25.9998 5.24667ZM7.33317 9.16667L0.666504 27.8333L19.3332 21.1667L7.33317 9.16667ZM23.3332 13.2467C22.3998 13.2467 21.5465 13.6067 20.7465 14.3133L18.6265 16.4333L20.0665 17.8733L22.1865 15.7533C22.5198 15.42 22.8932 15.2467 23.3332 15.2467C23.7732 15.2467 24.1732 15.42 24.5065 15.7533L26.6665 17.8733L28.0665 16.5L25.9332 14.3133C25.1465 13.6067 24.2665 13.2467 23.3332 13.2467Z" :fill="ticketInfo.status == 'RESOLVED' ? '#1267E6' : '#888C93'"/>
+                                    </svg>
                                     <p :class="ticketInfo.status == 'RESOLVED' ? 'text-blue' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">Resolved</p>
                                 </div>
                                 <div>
-                                    <img src="/img/icon/line.png" class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2" height="70" viewBox="0 0 2 70" fill="none">
+                                        <line x1="1.25" y1="70" x2="1.25" y2="-2.18557e-08" stroke="#CED4DA"/>
+                                    </svg>
                                 </div>
                                 <div class="text-center">
-                                    <img :src="ticketInfo.status == 'INVALID' ? '/img/icon/invalid-red2.svg' : '/img/icon/invalid-inactive.svg'" class="m-auto">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" fill="none" class="m-auto">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M26.3002 13.5C26.3002 20.5692 20.5694 26.3 13.5002 26.3C6.43095 26.3 0.700195 20.5692 0.700195 13.5C0.700195 6.43075 6.43095 0.699997 13.5002 0.699997C20.5694 0.699997 26.3002 6.43075 26.3002 13.5ZM19.0628 21.3251C17.4934 22.4427 15.5736 23.1 13.5002 23.1C8.19826 23.1 3.9002 18.8019 3.9002 13.5C3.9002 11.4266 4.55749 9.50676 5.67508 7.93743L19.0628 21.3251ZM21.3255 19.0623L7.93785 5.67472C9.50714 4.55723 11.4269 3.9 13.5002 3.9C18.8021 3.9 23.1002 8.19806 23.1002 13.5C23.1002 15.5733 22.443 17.493 21.3255 19.0623Z" :fill="ticketInfo.status == 'INVALID' ? '#FF4500' : '#888C93'"/>
+                                    </svg>
                                     <p :class="ticketInfo.status == 'INVALID' ? 'text-red' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">Invalid</p>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between w-full pt-5">
-                                <div class="flex items-center justify-start">
+                                <div v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" class="flex items-center justify-start">
                                     <button @click="openModal('ticketStatusModal')" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
                                         Update Ticket Status
                                     </button>
@@ -135,6 +168,18 @@
                                     <router-link :to="'/edit-ticket/'+id" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
                                         Edit
                                     </router-link>
+                                </div>
+                                <div v-if="ticketInfo.status == 'RESOLVED'" class="flex items-center justify-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
+                                        <path d="M11.1087 0.708336L10.2087 1.60834L11.542 2.94167C11.7253 3.15 11.817 3.39167 11.817 3.66667C11.817 3.94167 11.7253 4.2 11.542 4.38334L8.58366 7.39167L9.41699 8.29167L12.442 5.28334C12.8837 4.79167 13.1003 4.25 13.1003 3.66667C13.1003 3.08334 12.8837 2.53334 12.442 2.04167L11.1087 0.708336M7.79199 2.39167L6.89199 3.29167L7.40033 3.75834C7.58366 3.94167 7.67533 4.19167 7.67533 4.5C7.67533 4.80834 7.58366 5.05834 7.40033 5.24167L6.89199 5.70834L7.79199 6.60834L8.25866 6.1C8.70033 5.60834 8.92533 5.075 8.92533 4.5C8.92533 3.9 8.70033 3.35834 8.25866 2.85834L7.79199 2.39167M16.5003 3.71667C15.9253 3.71667 15.392 3.94167 14.9003 4.38334L10.2087 9.08334L11.1087 9.91667L15.7587 5.28334C15.967 5.075 16.217 4.96667 16.5003 4.96667C16.7837 4.96667 17.0337 5.075 17.242 5.28334L17.7503 5.79167L18.6087 4.89167L18.142 4.38334C17.6503 3.94167 17.1003 3.71667 16.5003 3.71667M4.83366 6.16667L0.666992 17.8333L12.3337 13.6667L4.83366 6.16667ZM14.8337 8.71667C14.2503 8.71667 13.717 8.94167 13.217 9.38334L11.892 10.7083L12.792 11.6083L14.117 10.2833C14.3253 10.075 14.5587 9.96667 14.8337 9.96667C15.1087 9.96667 15.3587 10.075 15.567 10.2833L16.917 11.6083L17.792 10.75L16.4587 9.38334C15.967 8.94167 15.417 8.71667 14.8337 8.71667V8.71667Z" fill="#54A581"/>
+                                    </svg>
+                                    <p class="font-inter-400 text-sm text-blue-grey ml-3"><span class="font-inter-700">Resolved</span> as of {{ format_date(ticketInfo.activity_log['0']['0']['created_at']) }}</p>
+                                </div>
+                                <div v-if="ticketInfo.status == 'INVALID'" class="flex items-center justify-start">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16 8.5C16 12.9183 12.4183 16.5 8 16.5C3.58172 16.5 0 12.9183 0 8.5C0 4.08172 3.58172 0.5 8 0.5C12.4183 0.5 16 4.08172 16 8.5ZM11.4766 13.3907C10.4958 14.0892 9.29586 14.5 8 14.5C4.68629 14.5 2 11.8137 2 8.5C2 7.20414 2.41081 6.00423 3.1093 5.02339L11.4766 13.3907ZM12.8908 11.9765L4.52354 3.6092C5.50434 2.91077 6.7042 2.5 8 2.5C11.3137 2.5 14 5.18629 14 8.5C14 9.7958 13.5892 10.9957 12.8908 11.9765Z" fill="#FF4500"/>
+                                    </svg>
+                                    <p class="font-inter-400 text-sm text-blue-grey ml-3"><span class="font-inter-700">Invalid</span> as of {{ format_date(ticketInfo.activity_log['0']['0']['created_at']) }}</p>
                                 </div>
                                 <button v-if="ticketInfo.isFollow == 1" @mouseover="followingtext = 'Unfollow'" @mouseleave="followingtext = 'Following'" @click.prevent="openModal('unfollow')" class="border hover:border-red hover:text-red border-green mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-green rounded-full flex items-center justify-center">
                                     {{ followingtext }}
@@ -245,8 +290,8 @@
                                 </div>
                             </div>
                         </ContentCard>
-                        <div ref="Violations"></div>
                     </div>
+                    <div ref="ViolationsSection"></div>
 
                     <div class="col-span-12">
                         <ContentCard cardTitle="Violations">
@@ -304,17 +349,20 @@
                                 <div class="grid grid-cols-5 gap-y-5 gap-x-5 mt-2">
                                     <div v-for="item in selectedAgencies" class="col-span-1">
                                         <div class="">
-                                            <img :src="item.logo" class="w-full mx-auto max-w-30 rounded-full border-light border">
+                                            <img :src="item.logo" class="w-full mx-auto max-w-30 rounded-full border-light border object-contain" style="max-height: 7.5rem;">
                                             <p class="text-blue-grey font-opensans-600 text-xxs text-center my-3 ellipsis-2" style="height: 34px;">{{ item.agency }}</p>
-                                            <p @click="removeChecked(item.code)" class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">Remove</p>
+                                            <p v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" @click="removeChecked(item.code)" class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">Remove</p>
                                         </div>
                                     </div>
-                                    <div @click="openModal('modalAgencies')" class="cursor-pointer col-span-1">
-                                        <img src="/img/icon/addphoto.png" class="w-full mx-auto max-w-30 rounded-full">
+                                    <div v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" @click="openModal('modalAgencies')" class="cursor-pointer col-span-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" class="w-full mx-auto max-w-30 rounded-full">
+                                            <circle cx="60" cy="60" r="59.5" stroke="#1267E5"/>
+                                            <path d="M60 48V60M60 60V72M60 60H72M60 60L48 60" stroke="#1267E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
                                         <p class="text-blue font-opensans-600 text-xxs text-center my-3">ADD AGENCY</p>
                                     </div>
                                 </div>
-                                <div class="flex items-center justify-start w-full pt-5">
+                                <div v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" class="flex items-center justify-start w-full pt-5">
                                     <button @click="updateAgency()" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
                                         Update
                                     </button>
@@ -365,7 +413,10 @@
                                                 <div class="flex items-start justify-start">
                                                     <div class="mr-4 pt-1">
                                                         <div class="block">
-                                                            <img src="/img/icon/bell-purple.png" class="">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.865 9.7454C13.3995 9.2334 12.8875 8.65158 12.8875 7.53449V5.62613C12.8875 3.04285 10.6068 0.7854 8.00024 0.7854C5.3937 0.7854 3.11297 3.06613 3.11297 5.67267V7.53449C3.11297 8.65158 2.60097 9.2334 2.13552 9.7454C1.76315 10.1643 1.41406 10.5599 1.41406 11.165C1.41406 12.445 4.06715 13.3061 8.00024 13.3061C11.9333 13.3061 14.5864 12.445 14.5864 11.165C14.5864 10.5832 14.2373 10.1643 13.865 9.7454Z" fill="#5E72E4"/>
+                                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00015 13.7716C7.27869 13.7716 6.58051 13.7483 5.95215 13.6785C6.20815 14.5628 7.02269 15.1912 8.00015 15.1912C8.9776 15.1912 9.79215 14.5396 10.0481 13.6785C9.41979 13.7483 8.7216 13.7716 8.00015 13.7716Z" fill="#5E72E4"/>
+                                                            </svg>
                                                         </div>
                                                         <div v-if="index != index.length" style="width:2px; height:100%; background:#CED4DA; margin: 5px auto; min-height: 60px;"></div>
                                                     </div>
@@ -390,7 +441,7 @@
     
     <Modal v-show="modalActive && showModal == 'follow'" @close="closeModal">
         <template v-slot:body>
-            <img src="/img/icon/follow-modal.png" class="mb-6">
+            <img src="/img/icon/follow-modal.svg" class="mb-6">
             <h5 class="font-exo-600 text-xl text-dark2 mb-4">Follow Ticket #{{ id }}</h5>
             <p class="font-inter-400 text-lg text-dark2 mb-11">By following this ticket you’ll be notified about any updates.</p> 
         </template>
@@ -407,7 +458,7 @@
     </Modal>
     <Modal v-show="modalActive && showModal == 'unfollow'" @close="closeModal">
         <template v-slot:body>
-            <img src="/img/icon/unfollow-modal.png" class="mb-6">
+            <img src="/img/icon/unfollow-modal.svg" class="mb-6">
             <h5 class="font-exo-600 text-xl text-dark2 mb-4">Follow Ticket #{{ id }}</h5>
             <p class="font-inter-400 text-lg text-dark2 mb-11">By unfollowing this ticket you’ll no longer be notified about any updates.</p> 
         </template>
@@ -432,12 +483,12 @@
                     <div class="col-span-2">
                         <div class="relative w-full">
                             <input type="text" v-model="filterSearchAgency" placeholder="Search" name="selectagencies" id="selectagencies" class="my-2 w-full secondary-input" style="padding-left: 35px;"/>
-                            <img src="/img/icon/search.png" class="search-img" style="top: 23px;">
+                            <img src="/img/icon/search.svg" class="search-img" style="top: 23px;">
                         </div>
                         <div v-for="(agency, index) in allAgencies" ref="allAgencies" class="py-2">
                             <label class="cursor-pointer flex items-center">
                                 <input type="checkbox" @change.prevent="agencyChecked(agency.code, agency.index, $event)" :value="agency.id" v-model="chosenAgencies">
-                                <img :src="agency.logo" class="w-15 h-15 mx-4 rounded-full">
+                                <img :src="agency.logo" class="w-15 h-15 mx-4 rounded-full object-contain border-light border">
                                 <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                             </label>
                         </div>
@@ -464,7 +515,7 @@
                     <div class="col-span-2">
                         <div class="relative w-full">
                             <input type="text" v-model="filterSearchViolation" placeholder="Search" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 35px;"/>
-                            <img src="/img/icon/search.png" class="search-img" style="top: 23px;">
+                            <img src="/img/icon/search.svg" class="search-img" style="top: 23px;">
                         </div>
                         <div class="py-2">
                             <label class="cursor-pointer flex items-start" v-for="(violation, index) in allViolations">
@@ -967,7 +1018,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Following Ticket #' + this.id;
-                this.successIcon = 'favorite-active.png';
+                this.successIcon = 'favorite-active.svg';
             })
             .catch((error) => {
                 console.log(error.response.data.message || error.message)
@@ -986,7 +1037,7 @@ export default {
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Unfollowing Ticket #' + this.id;
-                this.successIcon = 'unfollow.png';
+                this.successIcon = 'unfollow.svg';
             })
             .catch((error) => {
                 console.log(error.response.data.message || error.message)

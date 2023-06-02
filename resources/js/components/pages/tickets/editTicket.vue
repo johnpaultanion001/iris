@@ -259,7 +259,7 @@
                         <div class="col-span-2">
                             <div class="relative w-full">
                                 <input type="text" v-model="filterSearchAgency" placeholder="Search" name="selectagencies" id="selectagencies" class="my-2 w-full secondary-input" style="padding-left: 35px;"/>
-                                <img src="/img/icon/search.png" class="search-img" style="top: 23px;">
+                                <img src="/img/icon/search.svg" class="search-img" style="top: 23px;">
                             </div>
                             <div v-for="(agency, index) in allAgencies" ref="allAgencies" class="py-2">
                                 <label class="cursor-pointer flex items-center">
@@ -291,7 +291,7 @@
                         <div class="col-span-2">
                             <div class="relative w-full">
                                 <input type="text" v-model="filterSearchViolation" placeholder="Search" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 35px;"/>
-                                <img src="/img/icon/search.png" class="search-img" style="top: 23px;">
+                                <img src="/img/icon/search.svg" class="search-img" style="top: 23px;">
                             </div>
                             <div class="py-2">
                                 <label class="cursor-pointer flex items-start" v-for="(violation, index) in allViolations">
@@ -368,7 +368,7 @@
 
         <Modal v-show="modalActive && showModal == 'modalSubmit'" @close="closeModal">
             <template v-slot:body>
-                <img src="/img/icon/modal-send.png" class="mb-6">
+                <img src="/img/icon/modal-send.svg" class="mb-6">
                 <h5 class="font-exo-600 text-xl text-dark2 mb-4">Submit & notify assigned agencies</h5>
                 <p class="font-inter-400 text-lg text-dark2 mb-11">After submitting your ticket, all assigned agencies will be immediately notified.</p> 
             </template>
@@ -746,7 +746,7 @@ export default {
             .catch((error) => {
                 this.successAlert = true;
                 this.successMessage = "Error";
-                this.successIcon = 'warning-red.png';
+                this.successIcon = 'warning-red.svg';
                 console.log(error.response.data.errors)
             })
 
