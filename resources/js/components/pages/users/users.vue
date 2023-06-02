@@ -2,19 +2,19 @@
     <AlertTop :alertIcon="'/img/icon/'+successIcon" :active="successAlert" :content="successMessage" v-if="successAlert" @close="closeAlert" />
     <PageLayout :pageName="title">
         <div class="grid grid-cols-12 gap-3 mb-6 pt-4">
-            <div class="col-span-12 md:col-span-6">
+            <div class="col-span-11 md:col-span-6">
                 <h1>{{ title }}</h1>
             </div>
             <div v-if="showFilterBtn" class="col-span-1 flex items-center justify-end">
                 <button @click="showFilter = !showFilter" class="w-fit bg-transparent rounded-lg">
-                    <img src="/img/icon/filter-white.png" class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="5" height="17" viewBox="0 0 5 17" fill="none"><path d="M2.5 4.5C1.39543 4.5 0.5 3.60457 0.5 2.5C0.5 1.39543 1.39543 0.5 2.5 0.5C3.60457 0.5 4.5 1.39543 4.5 2.5C4.5 3.60457 3.60457 4.5 2.5 4.5Z" fill="#ffffff"></path><path d="M2.5 10.5C1.39543 10.5 0.5 9.60457 0.5 8.5C0.5 7.39543 1.39543 6.5 2.5 6.5C3.60457 6.5 4.5 7.39543 4.5 8.5C4.5 9.60457 3.60457 10.5 2.5 10.5Z" fill="#ffffff"></path><path d="M2.5 16.5C1.39543 16.5 0.5 15.6046 0.5 14.5C0.5 13.3954 1.39543 12.5 2.5 12.5C3.60457 12.5 4.5 13.3954 4.5 14.5C4.5 15.6046 3.60457 16.5 2.5 16.5Z" fill="#ffffff"></path></svg>
                 </button>
             </div>
             <div v-if="showFilter" class="bg-white-25 sm:bg-transparent p-2.5 sm:p-0 rounded-lg col-span-12 xl:col-span-6 flex items-center justify-end flex-col md:flex-row flex-wrap">
                 <button @click="openModal('filterModal')" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 border border-white text-white rounded-lg flex items-center justify-center">
                     Filter
                 </button>
-                <button class="mt-1 md:mt-0 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-2 py-2.5 px-5 border border-white text-white rounded-lg flex items-center justify-center">
+                <button class="mt-1 md:mt-0 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 border border-white text-white rounded-lg flex items-center justify-center">
                     Export
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none" class="ml-4">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0 15C-2.41411e-08 14.4477 0.447715 14 1 14H13C13.5523 14 14 14.4477 14 15C14 15.5523 13.5523 16 13 16H1C0.447715 16 2.41411e-08 15.5523 0 15ZM3.29289 7.29289C3.68342 6.90237 4.31658 6.90237 4.70711 7.29289L6 8.58579L6 1C6 0.447716 6.44771 2.41411e-08 7 0C7.55228 -2.41411e-08 8 0.447715 8 1L8 8.58579L9.29289 7.29289C9.68342 6.90237 10.3166 6.90237 10.7071 7.29289C11.0976 7.68342 11.0976 8.31658 10.7071 8.70711L7.70711 11.7071C7.51957 11.8946 7.26522 12 7 12C6.73478 12 6.48043 11.8946 6.29289 11.7071L3.29289 8.70711C2.90237 8.31658 2.90237 7.68342 3.29289 7.29289Z" :fill="vendorID ? '#1267E5' : '#ffffff'"/>

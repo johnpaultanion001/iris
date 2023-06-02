@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="px-10 py-5 flex items-center justify-between border-b border-light mx-2">
+                            <div class="px-10 py-5 flex items-center justify-between border-b border-light mx-2 scroll-style overflow-auto" style="min-width: 110px;">
                                 <div class="text-center">
                                     <svg width="31" height="23" viewBox="0 0 31 23" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-auto">
                                         <path d="M15.5 14.7C17.2673 14.7 18.7 13.2673 18.7 11.5C18.7 9.73269 17.2673 8.3 15.5 8.3C13.7327 8.3 12.3 9.73269 12.3 11.5C12.3 13.2673 13.7327 14.7 15.5 14.7Z" :fill="ticketInfo.status == 'FOR_REVIEW' ? '#1267E6' : '#888C93'"/>
@@ -157,15 +157,15 @@
                                     <p :class="ticketInfo.status == 'INVALID' ? 'text-red' : 'text-blue-grey'" class="text-xs font-opensans-600 mt-3">Invalid</p>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between w-full pt-5">
-                                <div v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" class="flex items-center justify-start">
-                                    <button @click="openModal('ticketStatusModal')" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
+                            <div class="flex items-center justify-between w-full pt-5 flex-wrap">
+                                <div v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" class="flex items-center justify-start flex-wrap w-full md:w-auto">
+                                    <button @click="openModal('ticketStatusModal')" class="whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
                                         Update Ticket Status
                                     </button>
-                                    <button @click="openModal('modalSeverity'); severity = this.ticketInfo.severity" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-2 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
+                                    <button @click="openModal('modalSeverity'); severity = this.ticketInfo.severity" class="border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
                                         Update Severity
                                     </button>
-                                    <router-link :to="'/edit-ticket/'+id" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
+                                    <router-link :to="'/edit-ticket/'+id" class="border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
                                         Edit
                                     </router-link>
                                 </div>
@@ -194,8 +194,8 @@
 
                     <div class="col-span-12">
                         <ContentCard cardTitle="Ticket Information">
-                            <div class="block px-2 py-4">
-                                <table class="table-fixed w-full">
+                            <div class="block px-2 py-4 scroll-style overflow-auto">
+                                <table class="table-fixed w-full" style="min-width: 400px;">
                                     <tbody>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Product/Service</td>
@@ -248,12 +248,14 @@
                                         <tr class="relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Attatched Documents</td>
                                             <td class="text-black text-base font-exo-400 flex item-center justify-start flex-wrap">
-                                                <div class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
-                                                    <img @click.prevent="openLightboxSingle(ticketInfo.additional_documents_file)" :src="ticketInfo.additional_documents_file">
+                                                <div @click.prevent="openLightboxSingle(ticketInfo.additional_documents_file)" class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
+                                                    <img :src="ticketInfo.additional_documents_file">
                                                 </div>
                                                 <!-- Multiple items Lightbox -->
-                                                <!-- <div v-for="(item, index) in additional_documents_file" class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
-                                                    <img @click.prevent="openLightbox(index)" :src="item">
+                                                <!-- <div v-for="(item, index) in additional_documents_file">
+                                                    <div @click.prevent="openLightbox(index)" class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
+                                                        <img :src="item">
+                                                    </div>
                                                 </div> -->
                                             </td>
                                         </tr>
@@ -266,8 +268,8 @@
 
                     <div class="col-span-12" v-for="vendor in ticketInfo.vendor">
                         <ContentCard cardTitle="Vendor Information">
-                            <div class="block px-2 pt-4 pb-2">
-                                <table class="table-fixed w-full">
+                            <div class="block px-2 pt-4 pb-2 scroll-style overflow-auto">
+                                <table class="table-fixed w-full" style="min-width: 400px;">
                                     <tbody>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Vendor Name</td>
@@ -302,14 +304,14 @@
                             <div class="block p-2">
                                 <div class="grid grid-cols-2 gap-y-5 gap-x-3">
                                     <div class="col-span-2">
-                                        <div class="scroll-style overflow-auto mb-4">
-                                            <table class="table-auto w-full">
+                                        <div class="scroll-style overflow-auto mb-4 scroll-style overflow-auto">
+                                            <table class="table-auto w-full" style="min-width: 400px;">
                                                 <tbody>
                                                     <tr class="border-b border-light relative" v-for="(violation, index) in selectedViolations">
                                                         <td>
                                                             <div class="flex items-center flex-nowrap h-15">
                                                                 <p class="font-inter-400 text-base text-blue-grey w-fit mr-4">{{ index + 1 }}</p>
-                                                                <p class="font-inter-400 text-base text-black">{{ violation.violation }}</p>
+                                                                <p class="font-inter-400 text-base text-black truncate">{{ violation.violation }}</p>
                                                             </div>
                                                         </td>
                                                         <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
@@ -353,15 +355,15 @@
                         <ContentCard cardTitle="Assigned Agencies">
                             <div class="block px-2 py-4">
                                 <div class="grid grid-cols-5 gap-y-5 gap-x-5 mt-2">
-                                    <div v-for="item in selectedAgencies" class="col-span-1">
+                                    <div v-for="item in selectedAgencies" class="col-span-2 sm:col-span-1">
                                         <div class="">
                                             <img :src="item.logo" class="w-full mx-auto max-w-30 rounded-full border-light border object-contain" style="max-height: 7.5rem;">
                                             <p class="text-blue-grey font-opensans-600 text-xxs text-center my-3 ellipsis-2" style="height: 34px;">{{ item.agency }}</p>
                                             <p v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" @click="removeChecked(item.code)" class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">Remove</p>
                                         </div>
                                     </div>
-                                    <div v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" @click="openModal('modalAgencies')" class="cursor-pointer col-span-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" class="w-full mx-auto max-w-30 rounded-full">
+                                    <div v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" @click="openModal('modalAgencies')" class="cursor-pointer col-span-2 sm:col-span-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 120 120" fill="none" class="w-full mx-auto max-w-30 rounded-full">
                                             <circle cx="60" cy="60" r="59.5" stroke="#1267E5"/>
                                             <path d="M60 48V60M60 60V72M60 60H72M60 60L48 60" stroke="#1267E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>

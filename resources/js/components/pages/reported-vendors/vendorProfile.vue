@@ -14,8 +14,8 @@
         <div class="grid grid-cols-5 gap-3 py-4">
             <div class="col-span-5 md:col-span-3 lg:col-span-4">
                 <ContentCard cardTitle="Vendor Information">
-                    <div class="px-3 pb-2">
-                        <table class="table-fixed w-full">
+                    <div class="px-3 pb-2 scroll-style overflow-auto">
+                        <table class="table-fixed w-full" style="min-width: 400px;">
                             <tbody>
                                 <tr class="border-b border-light relative">
                                     <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/3 lg:w-1/4">Vendor Name</td>

@@ -24,7 +24,7 @@
     </div>
     <div v-if="showFilterBtn" class="col-span-1 flex items-center justify-end">
       <button @click="showFilter = !showFilter" class="w-fit bg-transparent rounded-lg">
-        <img src="/img/icon/filter-white.png" class="">
+        <svg xmlns="http://www.w3.org/2000/svg" width="5" height="17" viewBox="0 0 5 17" fill="none"><path d="M2.5 4.5C1.39543 4.5 0.5 3.60457 0.5 2.5C0.5 1.39543 1.39543 0.5 2.5 0.5C3.60457 0.5 4.5 1.39543 4.5 2.5C4.5 3.60457 3.60457 4.5 2.5 4.5Z" fill="#ffffff"></path><path d="M2.5 10.5C1.39543 10.5 0.5 9.60457 0.5 8.5C0.5 7.39543 1.39543 6.5 2.5 6.5C3.60457 6.5 4.5 7.39543 4.5 8.5C4.5 9.60457 3.60457 10.5 2.5 10.5Z" fill="#ffffff"></path><path d="M2.5 16.5C1.39543 16.5 0.5 15.6046 0.5 14.5C0.5 13.3954 1.39543 12.5 2.5 12.5C3.60457 12.5 4.5 13.3954 4.5 14.5C4.5 15.6046 3.60457 16.5 2.5 16.5Z" fill="#ffffff"></path></svg>
       </button>
     </div>
     <div v-if="showFilter"
@@ -149,7 +149,7 @@
                 </div>
               </div>
             </div>
-            <p class="text-xxs text-lighttext m-0">entries per page</p>
+            <p class="text-xxs text-lighttext m-0 truncate">entries per page</p>
           </div>
           <div class="col-span-1 flex justify-end relative">
             <input v-model="filterSearch" type="text"
@@ -291,7 +291,7 @@
           </table>
         </div>
         <div class="pagination-cont flex items-center justify-between px-4">
-          <p class="text-xxs text-lighttext m-0">Showing {{ (perpage * (pageNumber)) + 1 }} to
+          <p class="text-xxs text-lighttext m-0 truncate">Showing {{ (perpage * (pageNumber)) + 1 }} to
             {{ tickets.length > (perpage * (pageNumber + 1)) ? (perpage * (pageNumber + 1)) : tickets.length }} of
             {{ tickets.length }} entries</p>
           <div v-if="tickets.length > perpage" class="flex items-center justify-end">

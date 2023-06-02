@@ -12,25 +12,25 @@
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="firstname" class="text-base text-blue-grey text-xs font-inter-700">First Name</label>
-                                    <input type="text" v-model="firstname" placeholder="" name="firstname" id="firstname" class="mt-2 w-full secondary-input"/>
+                                    <input type="text" v-model="firstname" placeholder="First Name" name="firstname" id="firstname" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="lastname" class="text-base text-blue-grey text-xs font-inter-700">Last Name</label>
-                                    <input type="text" v-model="lastname" placeholder="" name="lastname" id="lastname" class="mt-2 w-full secondary-input"/>
+                                    <input type="text" v-model="lastname" placeholder="Last Name" name="lastname" id="lastname" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="useremail" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
-                                    <input type="email" v-model="useremail" placeholder="Write comment" name="useremail" id="useremail" class="mt-2 w-full secondary-input">
+                                    <input type="email" v-model="useremail" placeholder="Email Address" name="useremail" id="useremail" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="usermobile" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
-                                    <input type="number" v-model="usermobile" name="usermobile" id="usermobile" class="mt-2 w-full secondary-input">
+                                    <input type="number" v-model="usermobile" name="usermobile" placeholder="Mobile Number" id="usermobile" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -61,7 +61,7 @@
                                 <div v-for="(agency, index) in agencies" ref="agencies" class="my-4">
                                     <label class="flex items-center">
                                         <input type="radio" v-model="useragency" :value="''+agency.id+''" name="filterAgencyValue">
-                                        <img :src="'/img/' + agency.logo" class="w-15 h-15 mx-4 rounded-full">
+                                        <img :src="agency.logo" class="w-15 h-15 mx-4 rounded-full border border-light object-contain">
                                         <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                                     </label>
                                 </div>

@@ -9,25 +9,25 @@
                 <ContentCard cardTitle="User Info">
                     <div class="block p-2">
                         <div class="grid grid-cols-2 gap-y-5 gap-x-3">
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="firstname" class="text-base text-blue-grey text-xs font-inter-700">First Name</label>
                                     <input type="text" v-model="firstname" placeholder="" name="firstname" id="firstname" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="lastname" class="text-base text-blue-grey text-xs font-inter-700">Last Name</label>
                                     <input type="text" v-model="lastname" placeholder="" name="lastname" id="lastname" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="useremail" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
                                     <input type="email" v-model="useremail" placeholder="Write comment" name="useremail" id="useremail" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="usermobile" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
                                     <input type="number" v-model="usermobile" name="usermobile" id="usermobile" class="mt-2 w-full secondary-input">

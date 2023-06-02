@@ -90,7 +90,7 @@
                                             </svg> Upload
                                             <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden>
                                         </label>
-                                        <p class="text-blue-grey text-base ml-2 font-inter-400">{{ additional_documents_file }}</p>
+                                        <p class="text-blue-grey text-base ml-2 font-inter-400 truncate">{{ additional_documents_file }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -108,19 +108,19 @@
                                     <input type="text" v-model="vendor_name" placeholder="Vendor Name" name="vendor_name" id="vendor_name" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="email_address" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
                                     <input type="email" v-model="email_address" placeholder="Email Address" name="email_address" id="email_address" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="mobile_number" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
                                     <input type="text" v-model="mobile_number" name="mobile_number" placeholder="Mobile Number" id="mobile_number" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
                                         <v-select :filter="fuseSearch" :options="cities" :get-option-label="(option) => option.name" :placeholder="city" v-model="city"  :reduce="cities => cities.name">
@@ -139,25 +139,25 @@
                 <ContentCard cardTitle="Reported By">
                     <div class="block p-2">
                         <div class="grid grid-cols-2 gap-y-5 gap-x-3">
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_first_name" class="text-base text-blue-grey text-xs font-inter-700">First Name</label>
                                     <input type="text" v-model="reported_first_name" placeholder="First Name" name="reported_first_name" id="reported_first_name" class="mt-2 w-full secondary-input"/>
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_last_name" class="text-base text-blue-grey text-xs font-inter-700">Last Name</label>
                                     <input type="text" v-model="reported_last_name" placeholder="Last Name" name="reported_last_name" id="reported_last_name" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_email_address" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
                                     <input type="email" v-model="reported_email_address" placeholder="Email Address" name="reported_email_address" id="reported_email_address" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_mobile_number" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
                                     <input type="text" v-model="reported_mobile_number" name="reported_mobile_number" placeholder="Mobile Number" id="reported_mobile_number" class="mt-2 w-full secondary-input">
@@ -179,7 +179,7 @@
                                                 <td>
                                                     <div class="flex items-center flex-nowrap h-15">
                                                         <p class="font-inter-400 text-base text-blue-grey w-fit mr-4">{{ index + 1 }}</p>
-                                                        <p class="font-inter-400 text-base text-black">{{ violation.violation }}</p>
+                                                        <p class="font-inter-400 text-base text-black ellipsis-2" style="height: 41px">{{ violation.violation }}</p>
                                                     </div>
                                                 </td>
                                                 <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
@@ -218,15 +218,15 @@
                 <ContentCard cardTitle="Assigned Agencies">
                     <div class="block px-2 py-4">
                         <div class="grid grid-cols-5 gap-y-5 gap-x-5 mt-2">
-                            <div v-for="item in selectedAgencies" class="col-span-1">
+                            <div v-for="item in selectedAgencies" class="col-span-2 sm:col-span-1">
                                 <div>
                                     <img :src="item.logo" class="w-full mx-auto max-w-30 max-h-30 object-center rounded-full object-contain border-light border" style="max-height: 7.5rem;">
                                     <p class="text-blue-grey font-opensans-600 text-xxs text-center my-3 ellipsis-2" style="height: 34px;">{{ item.agency }}</p>
                                     <p @click="removeChecked(item.code)" class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">Remove</p>
                                 </div>
                             </div>
-                            <div @click="openModal('modalAgencies')" class="cursor-pointer col-span-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" class="w-full mx-auto max-w-30 rounded-full">
+                            <div @click="openModal('modalAgencies')" class="cursor-pointer col-span-2 sm:col-span-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" class="w-full mx-auto max-w-30 rounded-full">
                                     <circle cx="60" cy="60" r="59.5" stroke="#1267E5"/>
                                     <path d="M60 48V60M60 60V72M60 60H72M60 60L48 60" stroke="#1267E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -303,7 +303,7 @@
                             <div class="py-2">
                                 <label class="cursor-pointer flex items-start" v-for="(violation, index) in allViolations">
                                     <input type="checkbox" class="mt-1" @change.prevent="violationChecked(violation.id, violation.index, $event)" :value="violation.id" v-model="chosenViolations">
-                                    <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">{{ violation.violation }}</p>
+                                    <p class="font-inter-400 text-black font-base mx-4 truncate">{{ violation.violation }}</p>
                                 </label>
                             </div>
                         </div>

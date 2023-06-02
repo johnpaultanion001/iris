@@ -1,12 +1,12 @@
 <template>
-    <div class="grid gap-x-4 grid-cols-4 :grid-cols-6 xl:grid-cols-6 pl-4">
+    <div class="grid gap-x-4 grid-cols-4 xl:grid-cols-6 pl-4">
         <div class="bg-header absolute top-0 inset-x-0 m-auto max-w-full overflow-hidden" ></div>
         <Transition name="slide-fade">
             <div v-if="show && !sidebarMobile" class="col-span-1">
                 <Sidebar :pageName="pageName" :show="show" />
             </div>
         </Transition>
-        <div class="py-4 px-4 scroll-active scroll-style" :class="show ? 'page-content col-span-4 sm:col-span-3 xl:col-span-5' : 'col-span-4 xl:col-span-6'">
+        <div class="py-4 px-4 scroll-active scroll-style" :class="show ? 'page-content col-span-4 md:col-span-3 xl:col-span-5' : 'col-span-4 xl:col-span-6'">
             <Navigation @menu="show = !show" />
             <div v-if="show && sidebarMobile" class="w-full">
                 <Sidebar :pageName="pageName" :show="show" />
@@ -47,9 +47,14 @@ export default {
                 this.show = false;
                 this.sidebarMobile = true;
             }
-            else {
+            else{
                 this.show = true;
                 this.sidebarMobile = false;
+            }
+
+            
+            if(window.devicePixelRatio * 100 > 299){
+                this.sidebarMobile = true;
             }
         },
     }

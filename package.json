@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@mahdikhashan/vue3-click-outside": "^0.1.2",
+        "detect-zoom": "^1.0.2",
         "fuse.js": "^6.6.2",
         "humanize-string": "^3.0.0",
         "moment": "^2.29.4",

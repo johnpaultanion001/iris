@@ -14,8 +14,8 @@
                                 <img :src="user.profile" class="rounded-2xl w-full h-full object-cover">
                             </div>
                         </div>
-                        <div class="mx-0 mt-4 md:my-0 md:ml-4">
-                            <table class="table-fixed w-full">
+                        <div class="mx-0 mt-4 md:my-0 md:ml-4 scroll-style overflow-auto">
+                            <table class="table-fixed w-full" style="min-width: 400px;">
                                 <tbody>
                                     <tr class="border-b border-light relative">
                                         <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 sm:w-1/2 xl:w-1/4 whitespace-nowrap">Name</td>
