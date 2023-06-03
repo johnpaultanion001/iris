@@ -318,7 +318,9 @@ class TicketController extends ApiController
       return new CommentCollection($ticket->comments()->latest()->get());
     }
     public function product_service(Request $request){
-      $collection = Ticket::select('product_service')->latest()->get();
+      $collection = Ticket::select('product_service')
+              ->groupBy('product_service')
+              ->orderBy('product_service', 'ASC')->get();
       return response()->json([
             'data' => $collection,
       ], 200);
