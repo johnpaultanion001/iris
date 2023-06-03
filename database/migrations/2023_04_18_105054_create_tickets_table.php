@@ -21,7 +21,6 @@ class CreateTicketsTable extends Migration
             $table->longText('complaint')->nullable();
             $table->string('platform')->nullable();
             $table->string('link')->nullable();
-            $table->string('additional_documents_file')->nullable();
             $table->foreignId('vendor_id')->nullable();
             $table->foreignId('reported_by_id')->nullable();
             $table->longText('remarks')->nullable();

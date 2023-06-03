@@ -29,3 +29,24 @@ INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `provider`, `red
 
 INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
 (1, 1, '2023-05-31 05:32:57', '2023-05-31 05:32:57');
+
+INSERT INTO `ticket_document_files` (`id`, `ticket_id`, `document_file`, `created_at`, `updated_at`) VALUES
+(1, '1', 'documents_file/sWvyZo9Lq2pVbnvh5vG3BV7gtq2Kj3gdvz23hQ7w.docx', '2023-06-03 08:49:10', '2023-06-03 08:49:10'),
+(2, '1', 'documents_file/ZGu1a985xHcLNZL48D1IBE9FKIDYdodIsgn4SgT4.docx', '2023-06-03 08:49:10', '2023-06-03 08:49:10'),
+(3, '2', 'documents_file/PfLsOh7s01iUeMVmqbIXLFw8sDVSLS3AKErwooSY.docx', '2023-06-03 08:55:14', '2023-06-03 08:55:14'),
+(4, '2', 'documents_file/QdbThE6C5KXkd6o5pUgQaBTcqPs3q3zvyV40OBhW.png', '2023-06-03 08:55:14', '2023-06-03 08:55:14'),
+(5, '3', 'documents_file/sWvyZo9Lq2pVbnvh5vG3BV7gtq2Kj3gdvz23hQ7w.docx', '2023-06-03 08:49:10', '2023-06-03 08:49:10'),
+(6, '3', 'documents_file/ZGu1a985xHcLNZL48D1IBE9FKIDYdodIsgn4SgT4.docx', '2023-06-03 08:49:10', '2023-06-03 08:49:10'),
+(7, '4', 'documents_file/PfLsOh7s01iUeMVmqbIXLFw8sDVSLS3AKErwooSY.docx', '2023-06-03 08:55:14', '2023-06-03 08:55:14'),
+(8, '4', 'documents_file/QdbThE6C5KXkd6o5pUgQaBTcqPs3q3zvyV40OBhW.png', '2023-06-03 08:55:14', '2023-06-03 08:55:14'),
+(9, '5', 'documents_file/sWvyZo9Lq2pVbnvh5vG3BV7gtq2Kj3gdvz23hQ7w.docx', '2023-06-03 08:49:10', '2023-06-03 08:49:10'),
+(10, '6', 'documents_file/ZGu1a985xHcLNZL48D1IBE9FKIDYdodIsgn4SgT4.docx', '2023-06-03 08:49:10', '2023-06-03 08:49:10'),
+(11, '7', 'documents_file/PfLsOh7s01iUeMVmqbIXLFw8sDVSLS3AKErwooSY.docx', '2023-06-03 08:55:14', '2023-06-03 08:55:14'),
+(12, '8', 'documents_file/QdbThE6C5KXkd6o5pUgQaBTcqPs3q3zvyV40OBhW.png', '2023-06-03 08:55:14', '2023-06-03 08:55:14'),
+(13, '9', 'documents_file/sWvyZo9Lq2pVbnvh5vG3BV7gtq2Kj3gdvz23hQ7w.docx', '2023-06-03 08:49:10', '2023-06-03 08:49:10'),
+(14, '10', 'documents_file/ZGu1a985xHcLNZL48D1IBE9FKIDYdodIsgn4SgT4.docx', '2023-06-03 08:49:10', '2023-06-03 08:49:10'),
+(15, '11', 'documents_file/PfLsOh7s01iUeMVmqbIXLFw8sDVSLS3AKErwooSY.docx', '2023-06-03 08:55:14', '2023-06-03 08:55:14'),
+(16, '12', 'documents_file/QdbThE6C5KXkd6o5pUgQaBTcqPs3q3zvyV40OBhW.png', '2023-06-03 08:55:14', '2023-06-03 08:55:14'),
+(17, '13', 'documents_file/QdbThE6C5KXkd6o5pUgQaBTcqPs3q3zvyV40OBhW.png', '2023-06-03 08:55:14', '2023-06-03 08:55:14'),
+(18, '14', 'documents_file/QdbThE6C5KXkd6o5pUgQaBTcqPs3q3zvyV40OBhW.png', '2023-06-03 08:55:14', '2023-06-03 08:55:14');
+

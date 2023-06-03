@@ -18,6 +18,7 @@ use App\Models\Inbox;
 use App\Models\Agency;
 use App\Models\TicketAssignAgency;
 use App\Models\TicketComment;
+use App\Models\TicketDocumentFile;
 use Illuminate\Support\Facades\Storage;
 
 class TicketController extends ApiController
@@ -86,7 +87,6 @@ class TicketController extends ApiController
                 ]
 
             );
-            $path = Storage::disk('s3')->put('documents_file', $request['additional_documents_file']);
 
             $ticket = Ticket::create([
                 'user_id'         => auth("api")->user()->id,
@@ -94,11 +94,19 @@ class TicketController extends ApiController
                 'complaint' => request('complaint'),
                 'platform' => request('platform'),
                 'link' => request('link'),
-                'additional_documents_file' => $path,
                 'vendor_id' => $vendor->id,
                 'reported_by_id' => $reportedBy->id,
                 'remarks' => request('remarks'),
             ]);
+
+            foreach(request('additional_documents_file') as $docu){
+              $path = Storage::disk('s3')->put('documents_file', $docu);
+                TicketDocumentFile::create([
+                  'ticket_id' => $ticket->id,
+                  'document_file' => $path,
+              ]);
+            }
+
             foreach(request('violations') as $vio){
               Violation::create([
                 'ticket_id' => $ticket->id,
@@ -170,15 +178,21 @@ class TicketController extends ApiController
         if ($validator->fails()) {
           return $this->responseUnprocessable($validator->errors());
         }
-        $path = Storage::disk('s3')->put('documents_file', $request['additional_documents_file']);
         $ticket->update([
             'product_service' => request('product_service'),
             'complaint' => request('complaint'),
             'platform' => request('platform'),
             'link' => request('link'),
-            'additional_documents_file' => $path,
             'remarks' => request('remarks'),
         ]);
+        TicketDocumentFile::where('ticket_id',$ticket->id)->delete();
+        foreach(request('additional_documents_file') as $docu){
+          $path = Storage::disk('s3')->put('documents_file', $docu);
+            TicketDocumentFile::create([
+              'ticket_id' => $ticket->id,
+              'document_file' => $path,
+            ]);
+        }
 
         ReportedBy::find($ticket->reported_by_id)->update(
               [

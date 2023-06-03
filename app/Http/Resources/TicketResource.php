@@ -19,7 +19,14 @@ class TicketResource extends ApiResource
       $activity_logs = Activity::where('subject_id',$this->id)
                                 ->where('subject_type',"App\Models\Ticket")
                                 ->latest()->get();
-      $docu = Storage::disk('s3')->temporaryUrl($this->additional_documents_file, now()->addMinutes(5));
+      foreach($this->ticketsDocuments()->get() as $document){
+        $docu = Storage::disk('s3')->temporaryUrl($document->document_file, now()->addMinutes(5));
+
+        $documents[] = array(
+            'file' =>  $docu,
+        );
+      }
+
 
         return [
             'id' => $this->id,
@@ -36,7 +43,7 @@ class TicketResource extends ApiResource
               new ReportedByResource($this->reportedby),
             ],
             'date_submitted' => (string)$this->created_at->toDateTimeString(),
-            'additional_documents_file' => $docu,
+            'additional_documents_file' => $documents ?? '',
             'remarks' => $this->remarks,
             'vendor' => [
               new VendorTicketResource($this->vendor),

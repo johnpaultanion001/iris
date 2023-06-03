@@ -36,6 +36,11 @@ class Ticket extends Model
       return $this->hasMany(Violation::class, 'ticket_id', 'id');
   }
 
+  public function ticketsDocuments()
+  {
+      return $this->hasMany(TicketDocumentFile::class, 'ticket_id', 'id');
+  }
+
   public function agencies()
   {
       return $this->hasMany(TicketAssignAgency::class, 'ticket_id', 'id');
