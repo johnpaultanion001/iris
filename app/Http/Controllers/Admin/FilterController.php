@@ -14,6 +14,7 @@ use App\Models\Vendor;
 use App\Models\User;
 use App\Models\Agency;
 use App\Models\ActivityLog;
+use Illuminate\Support\Facades\Log;
 
 class FilterController extends ApiController
 {
@@ -40,13 +41,13 @@ class FilterController extends ApiController
 
   public function filter_users(Request $request)
   {
-    if(request('user_type') == null){
+    if(request('user_type')){
       $collection = User::whereIn('agency_id', request('agencies') ?? Agency::select('id'))
                     ->where('role', request('user_type'))
                     ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])
                     ->latest()->get();
     }
-    elseif(request('account_status') == null){
+    elseif(request('account_status')){
       $collection = User::whereIn('agency_id', request('agencies') ?? Agency::select('id'))
                 ->where('status', request('account_status'))
                 ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])

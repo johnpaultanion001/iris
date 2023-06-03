@@ -60,7 +60,10 @@ class TicketController extends ApiController
         ]);
 
         if ($validator->fails()) {
-            return $this->responseUnprocessable($validator->errors());
+          return response()->json([
+            'status' => 200,
+            'message' => ['validationFailed' => true, 'errors' => $validator->errors()],
+          ], 200);
         }
 
         try {
@@ -99,11 +102,19 @@ class TicketController extends ApiController
                 'remarks' => request('remarks'),
             ]);
 
-            foreach(request('additional_documents_file') as $docu){
-              $path = Storage::disk('s3')->put('documents_file', $docu);
+            if(is_array(request('additional_documents_file') )) {
+              foreach (request('additional_documents_file') as $docu) {
+                $path = Storage::disk('s3')->put('documents_file', $docu);
                 TicketDocumentFile::create([
                   'ticket_id' => $ticket->id,
                   'document_file' => $path,
+                ]);
+              }
+            } else {
+              $path = Storage::disk('s3')->put('documents_file', request('additional_documents_file'));
+              TicketDocumentFile::create([
+                'ticket_id' => $ticket->id,
+                'document_file' => $path,
               ]);
             }
 

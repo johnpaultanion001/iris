@@ -9,13 +9,11 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="productservice" class="text-base text-blue-grey text-xs font-inter-700">Product/Service</label>
-                                    <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
-                                        <v-select :filter="fuseSearch" :options="products" :get-option-label="option => option.product_service" placeholder="Product/Service" v-model="product_service" :reduce="products => products.product_service">
-                                            <template #option="{ product_service }">
-                                                {{ product_service }} 
-                                            </template>
-                                        </v-select>
-                                    </div>
+                                  <search-input-dropdown v-model="product_service"
+                                                         :data-list="products"
+                                                         :free-text=true
+                                                         @update-value="updateValue($event)"
+                                                         @clear-input="clearInput()"/>
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -125,7 +123,7 @@
                                     <div class="mt-2 w-full secondary-input" style="padding: 4px 0 0 0">
                                         <v-select :filter="fuseSearch" :options="cities" :get-option-label="(option) => option.name" :placeholder="city" v-model="city"  :reduce="cities => cities.name">
                                             <template #option="{ name }">
-                                                {{ name }} 
+                                                {{ name }}
                                             </template>
                                         </v-select>
                                     </div>
@@ -255,7 +253,7 @@
                 </button>
             </div>
         </div>
-        
+
         <Modal modalTitle="Add Agencies" v-show="modalActive && showModal == 'modalAgencies'" @close="closeModal">
             <template v-slot:body>
                 <form onsubmit="return false"  class="block">
@@ -290,7 +288,7 @@
                 </div>
             </template>
         </Modal>
-        
+
         <Modal modalTitle="Add Violation" v-show="modalActive && showModal == 'modalViolation'" @close="closeModal">
             <template v-slot:body>
                 <form onsubmit="return false"  class="block">
@@ -321,7 +319,7 @@
                 </div>
             </template>
         </Modal>
-        
+
         <Modal modalTitle="Add Amount" v-show="modalActive && showModal == 'modalAddAmount'" @close="closeModal">
             <template v-slot:body>
                 <form onsubmit="return false"  class="block">
@@ -346,8 +344,8 @@
                 </div>
             </template>
         </Modal>
-        
-        
+
+
         <Modal modalTitle="Edit Amount" v-show="modalActive && showModal == 'modalEditAmount'" @close="closeModal">
             <template v-slot:body>
                 <form onsubmit="return false"  class="block">
@@ -377,7 +375,7 @@
             <template v-slot:body>
                 <img src="/img/icon/modal-send.svg" class="mb-6">
                 <h5 class="font-exo-600 text-xl text-dark2 mb-4">Submit & notify assigned agencies</h5>
-                <p class="font-inter-400 text-lg text-dark2 mb-11">After submitting your ticket, all assigned agencies will be immediately notified.</p> 
+                <p class="font-inter-400 text-lg text-dark2 mb-11">After submitting your ticket, all assigned agencies will be immediately notified.</p>
             </template>
             <template v-slot:footer>
                 <div class="flex items-center justify-end w-full">
@@ -403,6 +401,7 @@ import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 import AlertTop from '../../utilities/alertTop.vue'
 import Fuse from 'fuse.js'
+import SearchInputDropdown from "../../utilities/searchInputDropdown.vue";
 
 export default {
     setup: () => ({
@@ -437,7 +436,7 @@ export default {
             //Cities
             filteredCities: [],
             cityDD: false,
-            cities: [{name: 'Alaminos'}, {name: 'Angeles City'}, {name: 'Antipolo'}, {name: 'Bacolod'}, {name: 'Bacoor'}, {name: 'Bago'}, {name: 'Baguio'}, {name: 'Bais'}, {name: 'Balanga'}, {name: 'Baliwag'}, {name: 'Batac'}, {name: 'Batangas City'}, {name: 'Bayawan'}, {name: 'Baybay'}, {name: 'Bayugan'}, {name: 'Biñan'}, {name: 'Bislig'}, {name: 'Bogo'}, {name: 'Borongan'}, {name: 'Butuan'}, {name: 'Cabadbaran'}, {name: 'Cabanatuan'}, {name: 'Cabuyao'}, {name: 'Cadiz'}, {name: 'Cagayan de Oro'}, {name: 'Calaca'}, {name: 'Calamba'}, {name: 'Calapan'}, {name: 'Calbayog'}, {name: 'Caloocan'}, {name: 'Candon'}, {name: 'Canlaon'}, {name: 'Carcar'}, {name: 'Catbalogan'}, {name: 'Cauayan'}, {name: 'Cavite City'}, {name: 'Cebu City'}, {name: 'Cotabato City'}, {name: 'Dagupan'}, {name: 'Danao'}, {name: 'Dapitan'}, {name: 'Dasmariñas'}, {name: 'Davao City'}, {name: 'Digos'}, {name: 'Dipolog'}, {name: 'Dumaguete'}, {name: 'El Salvador'}, {name: 'Escalante'}, {name: 'Gapan'}, {name: 'General Santos'}, {name: 'General Trias'}, {name: 'Gingoog'}, {name: 'Guihulngan'}, {name: 'Himamaylan'}, {name: 'Ilagan'}, {name: 'Iligan'}, {name: 'Iloilo City'}, {name: 'Imus'}, {name: 'Iriga'}, {name: 'Isabela'}, {name: 'Kabankalan'}, {name: 'Kidapawan'}, {name: 'Koronadal'}, {name: 'La Carlota'}, {name: 'Lamitan'}, {name: 'Laoag'}, {name: 'Lapu-Lapu City'}, {name: 'Las Piñas'}, {name: 'Legazpi'}, {name: 'Ligao'}, {name: 'Lipa'}, {name: 'Lucena'}, {name: 'Maasin'}, {name: 'Mabalacat'}, {name: 'Makati'}, {name: 'Malabon'}, {name: 'Malaybalay'}, {name: 'Malolos'}, {name: 'Mandaluyong'}, {name: 'Mandaue'}, {name: 'Manila'}, {name: 'Marawi'}, {name: 'Marikina'}, {name: 'Masbate City'}, {name: 'Mati'}, {name: 'Meycauayan'}, {name: 'Muñoz'}, {name: 'Muntinlupa'}, {name: 'Naga'}, {name: 'Naga'}, {name: 'Navotas'}, {name: 'Olongapo'}, {name: 'Ormoc'}, {name: 'Oroquieta'}, {name: 'Ozamiz'}, {name: 'Pagadian'}, {name: 'Palayan'}, {name: 'Panabo'}, {name: 'Parañaque'}, {name: 'Pasay'}, {name: 'Pasig'}, {name: 'Passi'}, {name: 'Puerto Princesa'}, {name: 'Quezon City'}, {name: 'Roxas'}, {name: 'Sagay'}, {name: 'Samal'}, {name: 'San Carlos'}, {name: 'San Carlos'}, {name: 'San Fernando'}, {name: 'San Fernando'}, {name: 'San Jose'}, {name: 'San Jose del Monte'}, {name: 'San Juan'}, {name: 'San Pablo'}, {name: 'San Pedro'}, {name: 'Santa Rosa'}, {name: 'Santo Tomas'}, {name: 'Santiago'}, {name: 'Silay'}, {name: 'Sipalay'}, {name: 'Sorsogon City'}, {name: 'Surigao City'}, {name: 'Tabaco'}, {name: 'Tabuk'}, {name: 'Tacloban'}, {name: 'Tacurong'}, {name: 'Tagaytay'}, {name: 'Tagbilaran'}, {name: 'Taguig'}, {name: 'Tagum'}, {name: 'Talisay'}, {name: 'Talisay'}, {name: 'Tanauan'}, {name: 'Tandag'}, {name: 'Tangub'}, {name: 'Tanjay'}, {name: 'Tarlac City'}, {name: 'Tayabas'}, {name: 'Toledo'}, {name: 'Trece Martires'}, {name: 'Tuguegarao'}, {name: 'Urdaneta'}, {name: 'Valencia'}, {name: 'Valenzuela'}, {name: 'Victorias'}, {name: 'Vigan'}, {name: 'Zamboanga City'}], 
+            cities: [{name: 'Alaminos'}, {name: 'Angeles City'}, {name: 'Antipolo'}, {name: 'Bacolod'}, {name: 'Bacoor'}, {name: 'Bago'}, {name: 'Baguio'}, {name: 'Bais'}, {name: 'Balanga'}, {name: 'Baliwag'}, {name: 'Batac'}, {name: 'Batangas City'}, {name: 'Bayawan'}, {name: 'Baybay'}, {name: 'Bayugan'}, {name: 'Biñan'}, {name: 'Bislig'}, {name: 'Bogo'}, {name: 'Borongan'}, {name: 'Butuan'}, {name: 'Cabadbaran'}, {name: 'Cabanatuan'}, {name: 'Cabuyao'}, {name: 'Cadiz'}, {name: 'Cagayan de Oro'}, {name: 'Calaca'}, {name: 'Calamba'}, {name: 'Calapan'}, {name: 'Calbayog'}, {name: 'Caloocan'}, {name: 'Candon'}, {name: 'Canlaon'}, {name: 'Carcar'}, {name: 'Catbalogan'}, {name: 'Cauayan'}, {name: 'Cavite City'}, {name: 'Cebu City'}, {name: 'Cotabato City'}, {name: 'Dagupan'}, {name: 'Danao'}, {name: 'Dapitan'}, {name: 'Dasmariñas'}, {name: 'Davao City'}, {name: 'Digos'}, {name: 'Dipolog'}, {name: 'Dumaguete'}, {name: 'El Salvador'}, {name: 'Escalante'}, {name: 'Gapan'}, {name: 'General Santos'}, {name: 'General Trias'}, {name: 'Gingoog'}, {name: 'Guihulngan'}, {name: 'Himamaylan'}, {name: 'Ilagan'}, {name: 'Iligan'}, {name: 'Iloilo City'}, {name: 'Imus'}, {name: 'Iriga'}, {name: 'Isabela'}, {name: 'Kabankalan'}, {name: 'Kidapawan'}, {name: 'Koronadal'}, {name: 'La Carlota'}, {name: 'Lamitan'}, {name: 'Laoag'}, {name: 'Lapu-Lapu City'}, {name: 'Las Piñas'}, {name: 'Legazpi'}, {name: 'Ligao'}, {name: 'Lipa'}, {name: 'Lucena'}, {name: 'Maasin'}, {name: 'Mabalacat'}, {name: 'Makati'}, {name: 'Malabon'}, {name: 'Malaybalay'}, {name: 'Malolos'}, {name: 'Mandaluyong'}, {name: 'Mandaue'}, {name: 'Manila'}, {name: 'Marawi'}, {name: 'Marikina'}, {name: 'Masbate City'}, {name: 'Mati'}, {name: 'Meycauayan'}, {name: 'Muñoz'}, {name: 'Muntinlupa'}, {name: 'Naga'}, {name: 'Naga'}, {name: 'Navotas'}, {name: 'Olongapo'}, {name: 'Ormoc'}, {name: 'Oroquieta'}, {name: 'Ozamiz'}, {name: 'Pagadian'}, {name: 'Palayan'}, {name: 'Panabo'}, {name: 'Parañaque'}, {name: 'Pasay'}, {name: 'Pasig'}, {name: 'Passi'}, {name: 'Puerto Princesa'}, {name: 'Quezon City'}, {name: 'Roxas'}, {name: 'Sagay'}, {name: 'Samal'}, {name: 'San Carlos'}, {name: 'San Carlos'}, {name: 'San Fernando'}, {name: 'San Fernando'}, {name: 'San Jose'}, {name: 'San Jose del Monte'}, {name: 'San Juan'}, {name: 'San Pablo'}, {name: 'San Pedro'}, {name: 'Santa Rosa'}, {name: 'Santo Tomas'}, {name: 'Santiago'}, {name: 'Silay'}, {name: 'Sipalay'}, {name: 'Sorsogon City'}, {name: 'Surigao City'}, {name: 'Tabaco'}, {name: 'Tabuk'}, {name: 'Tacloban'}, {name: 'Tacurong'}, {name: 'Tagaytay'}, {name: 'Tagbilaran'}, {name: 'Taguig'}, {name: 'Tagum'}, {name: 'Talisay'}, {name: 'Talisay'}, {name: 'Tanauan'}, {name: 'Tandag'}, {name: 'Tangub'}, {name: 'Tanjay'}, {name: 'Tarlac City'}, {name: 'Tayabas'}, {name: 'Toledo'}, {name: 'Trece Martires'}, {name: 'Tuguegarao'}, {name: 'Urdaneta'}, {name: 'Valencia'}, {name: 'Valenzuela'}, {name: 'Victorias'}, {name: 'Vigan'}, {name: 'Zamboanga City'}],
             //Modal
             showModal: '',
             modalActive: false,
@@ -466,7 +465,7 @@ export default {
             this.getViolations();
         }
     },
-    components: { PageLayout, ContentCard, vSelect, Modal, AlertTop },
+    components: {SearchInputDropdown, PageLayout, ContentCard, vSelect, Modal, AlertTop },
     async mounted(){
         this.getAgencies()
         this.getProducts()
@@ -476,7 +475,7 @@ export default {
     computed: {
         total: function(){
             return this.selectedViolations.reduce(function(total, item){
-                return total + parseInt(item.amount); 
+                return total + parseInt(item.amount);
             },0);
         },
     },
@@ -521,7 +520,7 @@ export default {
             this.checkedAgencies = checkedAgencies
             this.selectedAgencies = selectedAgencies
 
-            
+
             //clone Ticket Violations to Selected Violations
             const selectedViolations = []
             const checkedViolations = []
@@ -555,9 +554,9 @@ export default {
         agencyChecked(code, index, $event){
             const checked = $event.target.checked;
             const agencies = this.allAgencies.filter((a) => (a.code == code));
-            
+
             if(checked){
-                this.checkedAgencies.push(agencies['0']); 
+                this.checkedAgencies.push(agencies['0']);
             }else{
                 this.checkedAgencies.splice(agencies['0'], 1);
             }
@@ -577,13 +576,13 @@ export default {
             this.chosenAgencies = chosenAgencies
             this.checkedAgencies = checkedAgencies
 
-            
+
             const arrayAgencies = []
             this.selectedAgencies.map(function(value, key) {
                 arrayAgencies.push({agency_id: value.id});
             });
             this.arrayAgencies = arrayAgencies
-            
+
             this.closeModal();
 
             console.log(this.selectedAgencies)
@@ -615,9 +614,9 @@ export default {
         violationChecked(id, index, $event){
             const checked = $event.target.checked;
             const violations = this.allViolations.filter((a) => (a.id == id));
-            
+
             if(checked){
-                this.checkedViolations.push(violations['0']); 
+                this.checkedViolations.push(violations['0']);
             }else{
                 this.checkedViolations.splice(violations['0'], 1);
             }
@@ -634,7 +633,7 @@ export default {
             this.arrayViolations = arrayViolations
 
             this.selectedViolations = this.checkedViolations
-            
+
             this.closeModal();
         },
         editAmount(){
@@ -652,13 +651,13 @@ export default {
         addAmount(){
             const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
             violation['0'].amount = this.violationAmount
-            
+
             const arrayViolations = []
             this.selectedViolations.map(function(value, key) {
                 arrayViolations.push({violation: value.violation, amount: value.amount});
             });
             this.arrayViolations = arrayViolations
-            
+
             this.closeModal();
         },
         //Cities Search
@@ -668,6 +667,13 @@ export default {
                 shouldSort: true,
             })
             return search.length ? fuse.search(search).map(({ item }) => item) : fuse.list
+        },
+        // Search Input Dropdown
+        updateValue(value) {
+          this.product_service = value.product_service
+        },
+        clearInput(type) {
+          this.product_service = null
         },
         //Modals
         openModal(itemID){
