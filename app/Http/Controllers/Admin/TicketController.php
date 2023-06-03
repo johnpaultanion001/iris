@@ -54,6 +54,7 @@ class TicketController extends ApiController
             'reported_last_name' => 'required',
             'reported_email_address' => ['required', 'email', 'max:255' ],
             'reported_mobile_number' => ['required', 'string', 'min:8','max:11'],
+            "agencies"  => "required",
 
         ]);
 
@@ -163,6 +164,7 @@ class TicketController extends ApiController
           'reported_last_name' => 'required',
           'reported_email_address' => ['required', 'email', 'max:255' , 'unique:reported_bies,email,'.$ticket->reported_by_id],
           'reported_mobile_number' => ['required', 'string', 'min:8','max:11', 'unique:reported_bies,mobile_number,'.$ticket->reported_by_id],
+
         ]);
 
         if ($validator->fails()) {
@@ -327,6 +329,15 @@ class TicketController extends ApiController
     }
 
     public function assigned_agencies(Request $request){
+      $validator = Validator::make($request->all(), [
+        'ticket_id' => 'required',
+        'agencies' => 'required',
+      ]);
+
+      if ($validator->fails()) {
+        return $this->responseUnprocessable($validator->errors());
+      }
+
       $ticket = Ticket::where('id',  request('ticket_id'))->first();
       if ($ticket == null) {
         return $this->ticketNotFound();
@@ -345,6 +356,7 @@ class TicketController extends ApiController
           'agency_id' => $agency['agency_id'],
           ]
         );
+
       }
       $data = [
         'tiket_id' => $ticket->id,
