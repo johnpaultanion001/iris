@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {createRouter, createWebHistory} from "vue-router";
 //Auth
 import login from '../components/auth/login.vue'
 import resetPassword from '../components/auth/resetPassword.vue'
@@ -24,163 +24,163 @@ import activity from '../components/pages/activity/activity.vue'
 import axios from 'axios'
 
 const routes = [
-    {
-        path: '/:pathMatch(.*)*',
-        component: notFound
-    },
-    {
-        path: '/login',
-        component: login
-    },
-    {
-        path: '/reset-password',
-        component: resetPassword
-    },
-    {
-        path: '/forgot-password/:token',
-        component: newPassword
-    },
-    //Pages
-    {
-        path: '/',
-        component: dashboard,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/inbox',
-        component: inbox,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/tickets/:status',
-        component: tickets,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/tickets/',
-        component: tickets,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/create-ticket',
-        component: createTicket,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/edit-ticket/:id',
-        component: editTicket,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/ticket-information/:id',
-        component: ticketInformation,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/reported-vendors',
-        component: reportedVendors,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/vendor-profile/:id',
-        component: vendorProfile,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/users',
-        component: users,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/create-user',
-        component: createUser,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/edit-user/:id',
-        component: editUser,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/profile/:id',
-        component: userProfile,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/reports',
-        component: reports,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/settings',
-        component: settings,
-        meta: {
-          requiresAuth: true
-        }
-    },
-    {
-        path: '/activity',
-        component: activity,
-        meta: {
-          requiresAuth: true
-        }
-    },
+  {
+    path: '/:pathMatch(.*)*',
+    component: notFound
+  },
+  {
+    path: '/login',
+    component: login
+  },
+  {
+    path: '/reset-password',
+    component: resetPassword
+  },
+  {
+    path: '/forgot-password/:token',
+    component: newPassword
+  },
+  //Pages
+  {
+    path: '/',
+    component: dashboard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/inbox',
+    component: inbox,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/intelligence/:status',
+    component: tickets,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/intelligence',
+    component: tickets,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/create-ticket',
+    component: createTicket,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/edit-ticket/:id',
+    component: editTicket,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/ticket-information/:id',
+    component: ticketInformation,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/reported-vendors',
+    component: reportedVendors,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/vendor-profile/:id',
+    component: vendorProfile,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/users',
+    component: users,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/create-user',
+    component: createUser,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/edit-user/:id',
+    component: editUser,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/profile/:id',
+    component: userProfile,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/reports',
+    component: reports,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings',
+    component: settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity',
+    component: activity,
+    meta: {
+      requiresAuth: true
+    }
+  },
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes,
+  history: createWebHistory(),
+  routes,
 })
 
 
 router.beforeEach(async (to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        const response = await axios.get('api/v1/profile')
-        .then((res) => {
-            next()
-        })
-        .catch((error) => {
-            next({ path: '/login' })
-        })
-        console.clear('');
-    } else {
-        const response = await axios.get('api/v1/profile')
-        .then((res) => {
-            next({ path: '/' })
-        })
-        .catch((error) => {
-            next()
-        })
-        console.clear('');
-    }
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    const response = await axios.get('api/v1/profile')
+      .then((res) => {
+        next()
+      })
+      .catch((error) => {
+        next({path: '/login'})
+      })
+    console.clear('');
+  } else {
+    const response = await axios.get('api/v1/profile')
+      .then((res) => {
+        next({path: '/'})
+      })
+      .catch((error) => {
+        next()
+      })
+    console.clear('');
+  }
 })
 
 export default router

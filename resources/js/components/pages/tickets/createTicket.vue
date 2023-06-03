@@ -1,7 +1,7 @@
 <template>
   <AlertTop :alertIcon="'/img/icon/'+successIcon" :active="successAlert" :content="successMessage" v-if="successAlert"
             @close="successAlert = false"/>
-  <PageLayout :pageName="title">
+  <PageLayout pageName="Intelligence">
     <div class="grid grid-cols-12 gap-3 mb-6 pt-4">
       <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
         <ContentCard cardTitle="Ticket Information">
@@ -182,7 +182,7 @@
                         </div>
                       </td>
                       <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                        <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount');" class="mr-2"
+                        <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount', violation.id);" class="mr-2"
                              width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
                             d="M10.5858 0.585786C11.3668 -0.195262 12.6332 -0.195262 13.4142 0.585786C14.1953 1.36683 14.1953 2.63316 13.4142 3.41421L12.6213 4.20711L9.79289 1.37868L10.5858 0.585786Z"
@@ -491,6 +491,7 @@ export default {
       chosenViolations: [],
       arrayViolations: [],
       errors: null,
+      violationID: null,
       platforms: [
         {
           id: "facebook",
@@ -613,7 +614,7 @@ export default {
       this.closeModal();
     },
     editAmount() {
-      const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
+      const violation = this.selectedViolations.filter((a) => (a.id == this.violationID));
       violation['0'].amount = this.violationAmount
       const arrayViolations = []
       this.selectedViolations.map(function (value, key) {
@@ -622,9 +623,10 @@ export default {
       this.arrayViolations = arrayViolations
 
       this.closeModal();
+      this.violationAmount = null
     },
     addAmount() {
-      const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
+      const violation = this.selectedViolations.filter((a) => (a.id == this.violationID));
       violation['0'].amount = this.violationAmount
 
       const arrayViolations = []
@@ -634,6 +636,7 @@ export default {
       this.arrayViolations = arrayViolations
 
       this.closeModal();
+      this.violationAmount = null
     },
     //Cities Search
     fuseSearch(options, search) {
@@ -647,9 +650,15 @@ export default {
         : fuse.list
     },
     //Modals
-    openModal(itemID) {
+    openModal(itemID, dataID = null) {
       document.querySelector('body').style.overflow = 'hidden';
       this.showModal = itemID;
+      if(itemID === 'modalEditAmount' || itemID === 'modalAddAmount') {
+        this.violationID = dataID
+        const violation = this.selectedViolations.filter((a) => (a.id == dataID));
+        this.violationAmount = violation[0].amount
+      }
+
       this.modalActive = true;
     },
     closeModal() {

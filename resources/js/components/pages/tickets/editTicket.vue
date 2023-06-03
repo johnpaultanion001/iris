@@ -1,6 +1,6 @@
 <template>
     <AlertTop :alertIcon="'/img/icon/'+successIcon" :active="successAlert" :content="successMessage" v-if="successAlert" @close="closeAlert" />
-    <PageLayout :pageName="title">
+    <PageLayout pageName="Intelligence">
         <div class="grid grid-cols-12 gap-3 mb-6 pt-4">
             <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
                 <ContentCard cardTitle="Ticket Information">
@@ -25,51 +25,12 @@
                             <div class="col-span-2">
                                 <label for="platform" class="text-base text-blue-grey text-xs font-inter-700">Platform</label>
                                 <div class="grid grid-rows-3 grid-flow-col">
-                                    <div class="flex items-center justify-start my-1">
-                                        <label for="facebook" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="radio" v-model="platform" value="Facebook" id="facebook" class="mr-2.5"/> Facebook
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-start my-1">
-                                        <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-start my-1">
-                                        <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-start my-1">
-                                        <label for="lazada" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="radio" v-model="platform" value="Lazada" id="lazada" class="mr-2.5"/> Lazada
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-start my-1">
-                                        <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-start my-1">
-                                        <label for="facebook" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="radio" v-model="platform" value="Facebook" id="facebook" class="mr-2.5"/> Facebook
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-start my-1">
-                                        <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-start my-1">
-                                        <label for="shopee" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="radio" v-model="platform" value="Shopee" id="shopee" class="mr-2.5"/> Shopee
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-start my-1">
-                                        <label for="lazada" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
-                                            <input type="radio" v-model="platform" value="Lazada" id="lazada" class="mr-2.5"/> Lazada
-                                        </label>
-                                    </div>
+                                  <div class="flex items-center justify-start my-1" v-for="(data, index) in platforms">
+                                    <label :for="data.id" class="text-base cursor-pointer text-blue-grey text-xs font-inter-700">
+                                      <input type="radio" v-model="platform" :value="data.value" :id="data.id" class="mr-2.5"/>
+                                      {{ data.value }}
+                                    </label>
+                                  </div>
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -181,12 +142,12 @@
                                                     </div>
                                                 </td>
                                                 <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                    <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount');" class="mr-2" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount', violation.id);" class="mr-2" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M10.5858 0.585786C11.3668 -0.195262 12.6332 -0.195262 13.4142 0.585786C14.1953 1.36683 14.1953 2.63316 13.4142 3.41421L12.6213 4.20711L9.79289 1.37868L10.5858 0.585786Z" fill="#1267E5"/>
                                                         <path d="M8.37868 2.79289L0 11.1716V14H2.82842L11.2071 5.62132L8.37868 2.79289Z" fill="#1267E5"/>
                                                     </svg>
                                                     <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
-                                                    <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
+                                                    <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount', violation.id);" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
                                                 </td>
                                             </tr>
                                             <tr class="relative">
@@ -453,8 +414,39 @@ export default {
             chosenViolations: [],
             arrayViolations: [],
             violationAmount: '',
+            violationID: null,
             //Ticket info
             ticketInfo: [],
+            platforms: [
+              {
+                id: "facebook",
+                value: "Facebook"
+              },
+              {
+                id: "shopee",
+                value: "Shopee"
+              },
+              {
+                id: "lazada",
+                value: "Lazada"
+              },
+              {
+                id: "youtube",
+                value: "Youtube"
+              },
+              {
+                id: "twitter",
+                value: "Twitter"
+              },
+              {
+                id: "instagram",
+                value: "Instagram"
+              },
+              {
+                id: "google",
+                value: "Google"
+              },
+            ],
         };
     },
     watch: {
@@ -637,7 +629,7 @@ export default {
             this.closeModal();
         },
         editAmount(){
-            const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
+            const violation = this.selectedViolations.filter((a) => (a.id == this.violationID));
             violation['0'].amount = this.violationAmount
 
             const arrayViolations = []
@@ -647,9 +639,10 @@ export default {
             this.arrayViolations = arrayViolations
 
             this.closeModal();
+            this.violationAmount = null
         },
         addAmount(){
-            const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
+            const violation = this.selectedViolations.filter((a) =>  (a.id == this.violationID));
             violation['0'].amount = this.violationAmount
 
             const arrayViolations = []
@@ -659,6 +652,7 @@ export default {
             this.arrayViolations = arrayViolations
 
             this.closeModal();
+            this.violationAmount = null
         },
         //Cities Search
         fuseSearch(options, search) {
@@ -676,9 +670,15 @@ export default {
           this.product_service = null
         },
         //Modals
-        openModal(itemID){
+        openModal(itemID, dataID = null){
             document.querySelector('body').style.overflow = 'hidden';
             this.showModal = itemID;
+            if(itemID === 'modalEditAmount' || itemID === 'modalAddAmount') {
+              this.violationID = dataID
+              const violation = this.selectedViolations.filter((a) => (a.id == dataID));
+              this.violationAmount = violation[0].amount
+            }
+
             this.modalActive = true;
         },
         closeModal() {

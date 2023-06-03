@@ -1,5 +1,5 @@
 <template>
-    <PageLayout :pageName="title">        
+    <PageLayout :pageName="title">
         <TicketsList vendorID="" colVendor="on" colSeverity="on" />
     </PageLayout>
 </template>
@@ -11,7 +11,7 @@ import TicketsList from './ticketsList.vue'
 
 export default {
     setup: () => ({
-        title: 'Tickets',
+        title: 'Intelligence',
     }),
     components: { TicketsList, PageLayout},
 }

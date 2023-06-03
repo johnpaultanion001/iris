@@ -19,6 +19,7 @@
         "tailwindcss": "^3.3.1"
     },
     "dependencies": {
+        "@heroicons/vue": "^1.0.6",
         "@mahdikhashan/vue3-click-outside": "^0.1.2",
         "detect-zoom": "^1.0.2",
         "fuse.js": "^6.6.2",
