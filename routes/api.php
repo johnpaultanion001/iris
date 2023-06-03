@@ -48,6 +48,7 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
   Route::post('user/change_password', 'UserController@change_password')->name('users.change_password');
   Route::post('user/{user}/update', 'UserController@update')->name('users.update');
   Route::post('user/change_photo/change_photo', 'UserController@change_photo')->name('users.change_photo');
+  Route::post('user/{user}/change_profile', 'UserController@change_profile')->name('users.change_profile');
 
   //PROFILE
   Route::get('profile', 'UserController@profile')->name('users.profile');

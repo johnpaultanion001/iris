@@ -129,7 +129,6 @@ class UserController extends ApiController
     public function update (User $user, Request $request){
       $validator = Validator::make($request->all(), [
           'agency_id' => 'required',
-          'profile' => 'required',
           'name' => 'required',
           'last_name' => 'required',
           'email' => 'required|email|max:255|unique:users,email,'.$user->id,
@@ -139,19 +138,36 @@ class UserController extends ApiController
       if ($validator->fails()) {
           return $this->responseUnprocessable($validator->errors());
       }
-      $path = Storage::disk('s3')->put('profile', $request['profile']);
-      $path = Storage::disk('s3')->url($path);
 
       $user->update([
         'agency_id' => $request['agency_id'],
-        'profile' => $path,
         'name' => $request['name'],
         'last_name' => $request['last_name'],
         'email' => $request['email'],
         'mobile_number' => $request['mobile_number'],
       ]);
+
       return response()->json(['success' => 'User updated.']);
     }
+
+    public function change_profile(User $user, Request $request){
+      $validator = Validator::make($request->all(), [
+          'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+      ]);
+
+      if ($validator->fails()) {
+          return $this->responseUnprocessable($validator->errors());
+      }
+      $path = Storage::disk('s3')->put('profile', $request['profile']);
+
+      $user->update([
+        'profile' => $path,
+      ]);
+      $profile = Storage::disk('s3')->temporaryUrl($path, now()->addMinutes(5));
+      return response()->json(['success' => 'Profile updated.','profile'=> $profile]);
+    }
+
+
 
     public function logout(Request $request)
     {

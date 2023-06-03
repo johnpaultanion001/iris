@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ReportSeeder::class);
+        $this->call(IrisSeeder::class);
 
     }
 }

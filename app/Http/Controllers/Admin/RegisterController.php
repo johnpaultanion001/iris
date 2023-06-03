@@ -51,7 +51,6 @@ class RegisterController extends ApiController
     protected function create(array $data)
     {
       $path = Storage::disk('s3')->put('profile', $data['profile']);
-      $path = Storage::disk('s3')->url($path);
 
         return User::create([
             'agency_id' => $data['agency_id'],

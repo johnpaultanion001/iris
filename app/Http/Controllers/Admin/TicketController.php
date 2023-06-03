@@ -85,9 +85,7 @@ class TicketController extends ApiController
                 ]
 
             );
-            $docuFile = time().'.'.$request->additional_documents_file;
-            $path = Storage::disk('s3')->temporaryUrl($request->additional_documents_file, now()->addMinutes(5));
-            $path = Storage::disk('s3')->url($path);
+            $path = Storage::disk('s3')->put('documents_file', $request['additional_documents_file']);
 
             $ticket = Ticket::create([
                 'user_id'         => auth("api")->user()->id,
@@ -170,13 +168,13 @@ class TicketController extends ApiController
         if ($validator->fails()) {
           return $this->responseUnprocessable($validator->errors());
         }
-
+        $path = Storage::disk('s3')->put('documents_file', $request['additional_documents_file']);
         $ticket->update([
             'product_service' => request('product_service'),
             'complaint' => request('complaint'),
             'platform' => request('platform'),
             'link' => request('link'),
-            'additional_documents_file' => request('additional_documents_file'),
+            'additional_documents_file' => $path,
             'remarks' => request('remarks'),
         ]);
 
