@@ -69,8 +69,8 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none" class="mr-1.5">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M2 2C0.895431 2 0 2.89543 0 4V12C0 13.1046 0.895431 14 2 14H14C15.1046 14 16 13.1046 16 12V4C16 2.89543 15.1046 2 14 2H12.4142C12.149 2 11.8946 1.89464 11.7071 1.70711L10.5858 0.585787C10.2107 0.210714 9.70201 0 9.17157 0H6.82843C6.29799 0 5.78929 0.210713 5.41421 0.585786L4.29289 1.70711C4.10536 1.89464 3.851 2 3.58579 2H2ZM8 11C9.65685 11 11 9.65685 11 8C11 6.34315 9.65685 5 8 5C6.34315 5 5 6.34315 5 8C5 9.65685 6.34315 11 8 11Z" fill="#1267E5"/>
                                             </svg>
-                                            <p class="m-0 text-blue font-opensans-600 text-sm">Change</p> 
-                                            <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden>
+                                            <p class="m-0 text-blue font-opensans-600 text-sm">Change</p>
+                                            <input type="file" name="profile" @change="onFileChange()" id="profile" hidden ref="profileImage">
                                         </label>
                                     </div>
                                 </div>
@@ -149,32 +149,32 @@
                                     <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verCharacters }">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
-                                        </svg> 
+                                        </svg>
                                         Use 8-32 characters</p>
                                     <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneNumber }">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
-                                        </svg> 
+                                        </svg>
                                         Use at least one number</p>
                                     <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneSymbol }">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
-                                        </svg> 
+                                        </svg>
                                         Use at least one symbol</p>
                                     <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneLower }">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
-                                        </svg> 
+                                        </svg>
                                         Use at least one lower case letter</p>
                                     <p class="flex items-center mb-3 font-inter-400 text-xs" :class="{ 'opacity-40': !verOneUpper }">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
-                                        </svg> 
+                                        </svg>
                                         Use at least one upper case letter</p>
                                     <p class="flex items-center mb-4.5 font-inter-400 text-xs" :class="{ 'opacity-40': !verUniqueMatche }">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="11" viewBox="0 0 14 11" fill="none" class="w-3.5 h-2.5 mr-2.5">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.26262C14.0976 1.65314 14.0976 2.28631 13.7071 2.67683L5.70711 10.6768C5.31658 11.0674 4.68342 11.0674 4.29289 10.6768L0.292893 6.67683C-0.0976311 6.28631 -0.0976311 5.65314 0.292893 5.26262C0.683417 4.8721 1.31658 4.8721 1.70711 5.26262L5 8.55551L12.2929 1.26262C12.6834 0.872095 13.3166 0.872095 13.7071 1.26262Z" fill="#1267E5"/>
-                                        </svg> 
+                                        </svg>
                                         New & confirm password matches</p>
                                 </div>
                                 <div class="flex pt-2">
@@ -322,13 +322,13 @@ export default {
         checkPassword() {
             this.passwordLength = this.password.length;
             const format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-            //Use 8-32 characters     
+            //Use 8-32 characters
             if (this.passwordLength > 8) {
                 this.verCharacters = true;
             } else {
                 this.verCharacters = false;
             }
-            //Use at least one number     
+            //Use at least one number
             this.verOneNumber = /\d/.test(this.password);
             //Use at least one symbol
             this.verOneSymbol = format.test(this.password);
@@ -345,41 +345,34 @@ export default {
 
             //Check if all verifications are true
             if (this.verCharacters === true && this.verOneNumber === true && this.verOneSymbol === true && this.verOneLower === true && this.verOneUpper === true && this.verUniqueMatche === true) {
-                this.validPassword = true;			
+                this.validPassword = true;
             } else {
                 this.validPassword = false;
             }
         },
         //Input File Photo
-        async onFileChange($event) {
-            var files = $event.target.files || $event.dataTransfer.files;
-            if (!files.length)
-            return;
-
-            // var x = URL.createObjectURL(files[0])
-            
-            await axios.post('/api/v1/user/'+ this.userInfo.id +'/change_profile', {
-                profile: files[0],
-            })
-            .then((success) => {
-                //Alert Content
-                if(success.data.success){
-                    this.successAlert = true;
-                    this.successMessage = 'Photo updated';
-                    this.successIcon = 'like.svg';
-                    this.getUser();
-                }else{
-                    this.successAlert = true;
-                    this.successMessage = 'Error occured. Please try again';
-                    this.successIcon = 'warning-red.svg';
-                }
-            })
-            .catch((error) => {
+        async onFileChange() {
+          this.profileImage = this.$refs.profileImage.files[0];
+          const formData = new FormData();
+          formData.append('profile', this.profileImage);
+            const headers = { 'Content-Type': 'multipart/form-data' };
+            await axios.post('/api/v1/user/'+this.userInfo.id+'/change_profile', formData, { headers }).then((success) => {
+              if(success.data.success){
+                  this.successAlert = true;
+                  this.successMessage = 'Profile image updated';
+                  this.successIcon = 'like.svg';
+                  this.userInfo.profile = success.data.profile;
+                  this.userImg = success.data.profile;
+              } else {
                 this.successAlert = true;
-                this.successMessage = error;
+                this.successMessage = success.data.errors.current_password['0'];
                 this.successIcon = 'warning-red.svg';
-                console.log(error.response.data.errors)
-            })
+              }
+          }).catch((error) => {
+              this.successAlert = true;
+              this.successMessage = error.response.data.errors.profile[0];
+              this.successIcon = 'warning-red.svg';
+          });
         },
         //Change Password
         async changePassword() {

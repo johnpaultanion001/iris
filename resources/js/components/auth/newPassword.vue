@@ -75,6 +75,7 @@ export default {
     data() {
         return {
             token: this.$route.params.token,
+            id: this.$route.params.id,
             userFirstName: 'Juana',
             userEmail: null,
             showPassword: false,
