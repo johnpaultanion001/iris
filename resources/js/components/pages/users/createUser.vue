@@ -30,7 +30,7 @@
                             <div class="col-span-1">
                                 <div class="relative w-full">
                                     <label for="usermobile" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
-                                    <input type="number" v-model="usermobile" name="usermobile" placeholder="Mobile Number" id="usermobile" class="mt-2 w-full secondary-input">
+                                    <input type="text" v-model="usermobile" name="usermobile" placeholder="Mobile Number" id="usermobile" class="mt-2 w-full secondary-input">
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -155,7 +155,7 @@ export default {
                 this.successIcon = 'like.svg';
             })
             .catch((error) => {
-                console.log(inputs)
+                console.log(error.errors)
             })
         },
         //Get Agencies

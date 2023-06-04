@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\TicketResource;
@@ -103,7 +104,7 @@ class TicketController extends ApiController
             ]);
 
             foreach (request('additional_documents_file') as $docu) {
-              $path = Storage::disk('s3')->put('documents_file', $docu);
+              $path = Storage::disk('s3')->put('documents_file', $docu['file']);
               TicketDocumentFile::create([
                 'ticket_id' => $ticket->id,
                 'document_file' => $path,
@@ -178,9 +179,11 @@ class TicketController extends ApiController
           'reported_mobile_number' => ['required', 'string', 'min:8','max:11', 'unique:reported_bies,mobile_number,'.$ticket->reported_by_id],
 
         ]);
-
         if ($validator->fails()) {
-          return $this->responseUnprocessable($validator->errors());
+          return response()->json([
+            'status' => 200,
+            'message' => ['validationFailed' => true, 'errors' => $validator->errors()],
+          ], 200);
         }
         $ticket->update([
             'product_service' => request('product_service'),
@@ -191,7 +194,7 @@ class TicketController extends ApiController
         ]);
         TicketDocumentFile::where('ticket_id',$ticket->id)->delete();
         foreach(request('additional_documents_file') as $docu){
-          $path = Storage::disk('s3')->put('documents_file', $docu);
+          $path = Storage::disk('s3')->put('documents_file', $docu['file']);
             TicketDocumentFile::create([
               'ticket_id' => $ticket->id,
               'document_file' => $path,

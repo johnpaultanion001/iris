@@ -43,18 +43,13 @@ export default {
     methods: {
         //Format Mobile Display Settings
         isMobile() {
-            if( screen.width <= 768 ) {
+            if( screen.width <= 768 || window.innerWidth <= 768 ) {
                 this.show = false;
                 this.sidebarMobile = true;
             }
             else{
                 this.show = true;
                 this.sidebarMobile = false;
-            }
-
-            
-            if(window.devicePixelRatio * 100 > 299){
-                this.sidebarMobile = true;
             }
         },
     }

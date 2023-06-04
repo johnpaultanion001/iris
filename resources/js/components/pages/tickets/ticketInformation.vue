@@ -211,7 +211,7 @@
                                         </tr>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Link</td>
-                                            <td class="py-3 text-blue text-base font-exo-400"><a :href="ticketInfo.link" download>{{ ticketInfo.link }}</a></td>
+                                            <td class="py-3 text-blue text-base font-exo-400"><a :href="ticketInfo.link">{{ ticketInfo.link }}</a></td>
                                         </tr>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Created By</td>
@@ -248,15 +248,15 @@
                                         <tr class="relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Attatched Documents</td>
                                             <td class="text-black text-base font-exo-400 flex item-center justify-start flex-wrap">
-                                                <div @click.prevent="openLightboxSingle(ticketInfo.additional_documents_file)" class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
+                                                <!-- <div @click.prevent="openLightboxSingle(ticketInfo.additional_documents_file)" class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
                                                     <img :src="ticketInfo.additional_documents_file">
-                                                </div>
-                                                <!-- Multiple items Lightbox -->
-                                                <!-- <div v-for="(item, index) in additional_documents_file">
-                                                    <div @click.prevent="openLightbox(index)" class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
-                                                        <img :src="item">
-                                                    </div>
                                                 </div> -->
+                                                <!-- Multiple items Lightbox -->
+                                                <div v-for="(item, index) in ticketInfo.additional_documents_file">
+                                                    <div @click.prevent="openLightbox(index)" class="cursor-pointer rounded w-30 h-30 bg-light flex items-center justify-center mr-5 my-3 p-2" style="background: #D9D9D">
+                                                        <img :src="item.file">
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -307,23 +307,23 @@
                             <div class="block p-2">
                                 <div class="grid grid-cols-2 gap-y-5 gap-x-3">
                                     <div class="col-span-2">
-                                        <div class="scroll-style overflow-auto mb-4 scroll-style overflow-auto">
-                                            <table class="table-auto w-full" style="min-width: 400px;">
+                                        <div class="scroll-style overflow-auto mb-4">
+                                            <table class="table-auto w-full">
                                                 <tbody>
                                                     <tr class="border-b border-light relative" v-for="(violation, index) in selectedViolations">
                                                         <td>
                                                             <div class="flex items-center flex-nowrap h-15">
                                                                 <p class="font-inter-400 text-base text-blue-grey w-fit mr-4">{{ index + 1 }}</p>
-                                                                <p class="font-inter-400 text-base text-black truncate">{{ violation.violation }}</p>
+                                                                <p class="font-inter-400 text-base text-black ellipsis-2" style="height: 41px">{{ violation.violation }}</p>
                                                             </div>
                                                         </td>
                                                         <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                            <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount');" class="mr-2" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount', violation.id);" class="mr-2" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <path d="M10.5858 0.585786C11.3668 -0.195262 12.6332 -0.195262 13.4142 0.585786C14.1953 1.36683 14.1953 2.63316 13.4142 3.41421L12.6213 4.20711L9.79289 1.37868L10.5858 0.585786Z" fill="#1267E5"/>
                                                                 <path d="M8.37868 2.79289L0 11.1716V14H2.82842L11.2071 5.62132L8.37868 2.79289Z" fill="#1267E5"/>
                                                             </svg>
                                                             <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
-                                                            <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount'); modalTicketID = violation.id" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
+                                                            <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount', violation.id);" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
                                                         </td>
                                                     </tr>
                                                     <tr class="relative">
@@ -342,9 +342,6 @@
                                         <div class="flex items-center justify-start w-full">
                                             <button @click="openModal('modalViolation');" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
                                                 Add
-                                            </button>
-                                            <button @click="updateViolation()" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
-                                                Update
                                             </button>
                                         </div>
                                     </div>
@@ -830,7 +827,6 @@ export default {
             userImg: '',
             //Lightbox
             lightbox: false,
-            additional_documents_file: ['/img/background-banner.svg', '/img/iris-logo.png', '/img/iris-logo-blue.png', '/img/background-login.png'],
             currentItem: '',
             currentItemID: 0,
             //Vendor Info
@@ -870,21 +866,21 @@ export default {
             this.currentItem = item;
         },
         openLightbox(id){
-            const file = this.additional_documents_file.filter((a, index) => (index == id));
+            const file = this.ticketInfo.additional_documents_file.filter((a, index) => (index == id));
             this.lightbox = true;
             this.currentItem = file;
             this.currentItemID = id;
         },
         prevLightbox(id){
             if(this.currentItemID == 0){
-                this.currentItemID = this.additional_documents_file.length - 1;
+                this.currentItemID = this.ticketInfo.additional_documents_file.length - 1;
             }else{
                 this.currentItemID = id - 1;
             }
             this.openLightbox(this.currentItemID)
         },
         nextLightbox(id){
-            if(this.currentItemID == this.additional_documents_file.length - 1){
+            if(this.currentItemID == this.ticketInfo.additional_documents_file.length - 1){
                 this.currentItemID = 0;
             }else{
                 this.currentItemID = id + 1;
@@ -1022,44 +1018,43 @@ export default {
             console.log(this.checkedViolations)
             console.log(this.selectedViolations)
         },
-        //Add checked agencies
+        //Add checked Violations
         addCheckedViolation(){
+            const arrayViolations = []
+            this.checkedViolations.map(function(value, key) {
+                arrayViolations.push({violation: value.violation, amount: value.amount});
+            });
+            this.arrayViolations = arrayViolations
+
             this.selectedViolations = this.checkedViolations
+
             this.closeModal();
         },
-        //Update Violations
-        async updateViolation(){
+        editAmount(){
+            const violation = this.selectedViolations.filter((a) => (a.id == this.violationID));
+            violation['0'].amount = this.violationAmount
+
             const arrayViolations = []
             this.selectedViolations.map(function(value, key) {
                 arrayViolations.push({violation: value.violation, amount: value.amount});
             });
             this.arrayViolations = arrayViolations
 
-            //Post
-            await axios.post('api/v1/ticket/violations', {
-                ticket_id: this.id,
-                violations: this.arrayViolations
-            })
-            .then((success) => {
-                //Alert Content
-                this.successAlert = true;
-                this.successMessage = 'Successfully updated';
-                this.successIcon = 'like.svg';
-                this.getTicket();
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        },
-        editAmount(){
-            const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
-            violation['0'].amount = this.violationAmount
             this.closeModal();
+            this.violationAmount = null
         },
         addAmount(){
-            const violation = this.selectedViolations.filter((a) => (a.id == this.modalTicketID));
+            const violation = this.selectedViolations.filter((a) =>  (a.id == this.violationID));
             violation['0'].amount = this.violationAmount
+
+            const arrayViolations = []
+            this.selectedViolations.map(function(value, key) {
+                arrayViolations.push({violation: value.violation, amount: value.amount});
+            });
+            this.arrayViolations = arrayViolations
+
             this.closeModal();
+            this.violationAmount = null
         },
         //Cities Search
         fuseSearch(options, search) {
