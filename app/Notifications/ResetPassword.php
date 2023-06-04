@@ -70,10 +70,10 @@ class ResetPassword extends Notification
         if (static::$toMailCallback) {
             return call_user_func(static::$toMailCallback, $notifiable, $this->token);
         }
-
+        $user = \App\Models\User::where('id', $this->user_id)->first();
         return (new MailMessage)
             ->line('You are receiving this email because we received a password reset request for your account.')
-            ->action('Reset Password', url('forgot-password', [$this->user_id, $this->token]))
+            ->action('Reset Password', url('forgot-password', [$this->user_id, $this->token, $user->email, $user->name]))
             ->line('If you did not request a password reset, no further action is required.');
     }
 

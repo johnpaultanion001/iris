@@ -21,7 +21,6 @@ class RegisterController extends ApiController
 
         $validator = Validator::make($request->all(), [
             'agency_id' => 'required',
-            'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email|max:255|unique:users',
@@ -50,11 +49,9 @@ class RegisterController extends ApiController
      */
     protected function create(array $data)
     {
-      $path = Storage::disk('s3')->put('profile', $data['profile']);
 
         return User::create([
             'agency_id' => $data['agency_id'],
-            'profile' => $path,
             'name' => $data['name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],

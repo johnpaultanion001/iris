@@ -68,7 +68,7 @@ class FilterController extends ApiController
   {
 
       $collection = ActivityLog::whereHas('user', function($q) {
-                                  $q->where('role', request('user_type'));
+                                  $q->whereIn('role', [request('user_type')] ?? ['SUPER_ADMIN','ADMIN']);
                                   $q->whereIn('agency_id', request('agencies') ?? Agency::select('id'));
                               })
                               ->whereBetween('created_at', [request('from') ?? '2001-05-17', request('till') ?? '2099-05-17'])
