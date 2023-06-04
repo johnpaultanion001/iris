@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\TicketResource;
@@ -104,7 +105,7 @@ class TicketController extends ApiController
 
             if(is_array(request('additional_documents_file') )) {
               foreach (request('additional_documents_file') as $docu) {
-                $path = Storage::disk('s3')->put('documents_file', $docu);
+                $path = Storage::disk('s3')->put('documents_file', $docu['file']);
                 TicketDocumentFile::create([
                   'ticket_id' => $ticket->id,
                   'document_file' => $path,
