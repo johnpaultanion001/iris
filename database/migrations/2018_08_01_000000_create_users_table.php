@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('role');
             $table->string('password');
             $table->string('status')->default("ACTIVE");
-            $table->string('profile');
+            $table->string('profile')->nullable();
             $table->boolean('isLoggedIn')->default(false);
             $table->timestamps();
             $table->rememberToken();
