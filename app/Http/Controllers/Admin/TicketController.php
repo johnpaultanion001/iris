@@ -104,7 +104,7 @@ class TicketController extends ApiController
             ]);
 
             foreach (request('additional_documents_file') as $docu) {
-              $path = Storage::disk('s3')->put('documents_file', $docu['file']);
+              $path = Storage::disk('s3')->put('documents_file', $docu);
               TicketDocumentFile::create([
                 'ticket_id' => $ticket->id,
                 'document_file' => $path,
