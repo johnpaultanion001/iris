@@ -45,7 +45,7 @@ class TicketController extends ApiController
             'complaint' => 'required',
             'platform' => 'required',
             'link' => 'required',
-            'additional_documents_file' => 'required',
+            //'additional_documents_file' => 'required',
             // vendor info
             'vendor_name' => 'required',
             'email_address' => ['required', 'email', 'max:255' ],
