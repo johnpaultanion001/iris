@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Report;
 use App\Http\Resources\ReportCollection;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\ApiController;
 
-class ReportController extends Controller
+class ReportController extends ApiController
 {
   public function index(Request $request)
   {
