@@ -303,51 +303,56 @@
                     <div ref="ViolationsSection"></div>
 
                     <div class="col-span-12">
-                        <ContentCard cardTitle="Violations">
-                            <div class="block p-2">
-                                <div class="grid grid-cols-2 gap-y-5 gap-x-3">
-                                    <div class="col-span-2">
-                                        <div class="scroll-style overflow-auto mb-4">
-                                            <table class="table-auto w-full">
-                                                <tbody>
-                                                    <tr class="border-b border-light relative" v-for="(violation, index) in selectedViolations">
-                                                        <td>
-                                                            <div class="flex items-center flex-nowrap h-15">
-                                                                <p class="font-inter-400 text-base text-blue-grey w-fit mr-4">{{ index + 1 }}</p>
-                                                                <p class="font-inter-400 text-base text-black ellipsis-2" style="height: 41px">{{ violation.violation }}</p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                            <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount', violation.id);" class="mr-2" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M10.5858 0.585786C11.3668 -0.195262 12.6332 -0.195262 13.4142 0.585786C14.1953 1.36683 14.1953 2.63316 13.4142 3.41421L12.6213 4.20711L9.79289 1.37868L10.5858 0.585786Z" fill="#1267E5"/>
-                                                                <path d="M8.37868 2.79289L0 11.1716V14H2.82842L11.2071 5.62132L8.37868 2.79289Z" fill="#1267E5"/>
-                                                            </svg>
-                                                            <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
-                                                            <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount', violation.id);" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="relative">
-                                                        <td>
-                                                            <div class="flex items-center flex-nowrap h-15">
-                                                                <p class="font-inter-700 text-base text-black">Total Fine</p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
-                                                            <p class="font-inter-700 text-base text-black">Php {{ total }}</p>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="flex items-center justify-start w-full">
-                                            <button @click="openModal('modalViolation');" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
-                                                Add
-                                            </button>
+                        <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
+                            <ContentCard cardTitle="Violations">
+                                <div class="block p-2">
+                                    <div class="grid grid-cols-2 gap-y-5 gap-x-3">
+                                        <div class="col-span-2">
+                                            <div class="scroll-style overflow-auto mb-4">
+                                                <table class="table-auto w-full">
+                                                    <tbody>
+                                                        <tr class="border-b border-light relative" v-for="(violation, index) in selectedViolations">
+                                                            <td>
+                                                                <div class="flex items-center flex-nowrap h-15">
+                                                                    <p class="font-inter-400 text-base text-blue-grey w-fit mr-4">{{ index + 1 }}</p>
+                                                                    <p class="font-inter-400 text-base text-black ellipsis-2" style="height: 41px">{{ violation.violation }}</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
+                                                                <svg v-if="violation.amount" @click.prevent="openModal('modalEditAmount', violation.id);" class="mr-2" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M10.5858 0.585786C11.3668 -0.195262 12.6332 -0.195262 13.4142 0.585786C14.1953 1.36683 14.1953 2.63316 13.4142 3.41421L12.6213 4.20711L9.79289 1.37868L10.5858 0.585786Z" fill="#1267E5"/>
+                                                                    <path d="M8.37868 2.79289L0 11.1716V14H2.82842L11.2071 5.62132L8.37868 2.79289Z" fill="#1267E5"/>
+                                                                </svg>
+                                                                <p v-if="violation.amount" class="font-inter-400 text-base text-black whitespace-nowrap">Php {{ violation.amount }}</p>
+                                                                <p v-if="!violation.amount" @click.prevent="openModal('modalAddAmount', violation.id);" class="font-opensans-600 text-base whitespace-nowrap" style="color:#5E72E4;">Add Amount</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="relative">
+                                                            <td>
+                                                                <div class="flex items-center flex-nowrap h-15">
+                                                                    <p class="font-inter-700 text-base text-black">Total Fine</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="cursor-pointer flex items-center ml-10 flex-nowrap h-15">
+                                                                <p class="font-inter-700 text-base text-black">Php {{ total }}</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="flex items-center justify-start w-full">
+                                                <button @click="openModal('modalViolation');" class="mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
+                                                    Add
+                                                </button>
+                                                <button @click="updateViolation()" class="border border-blue mt-1 md:mt-0 min-w-0 md:min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
+                                                    Update
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </ContentCard>
+                            </ContentCard>
+                        </div>
                         <div ref="Assigned Agencies"></div>
                     </div>
 
@@ -543,7 +548,7 @@
                         <div class="py-2">
                             <label class="cursor-pointer flex items-start" v-for="(violation, index) in allViolations">
                                 <input type="checkbox" class="mt-1" @change.prevent="violationChecked(violation.id, violation.index, $event)" :value="violation.id" v-model="chosenViolations">
-                                <p class="font-inter-400 text-black font-base mx-4 ellipsis-2" style="height: 46px;">{{ violation.violation }}</p>
+                                <p class="font-inter-400 text-black font-base mx-4 truncate">{{ violation.violation }}</p>
                             </label>
                         </div>
                     </div>
@@ -587,6 +592,32 @@
         </template>
     </Modal>
 
+
+    <Modal modalTitle="Edit Amount" v-show="modalActive && showModal == 'modalEditAmount'" @close="closeModal">
+        <template v-slot:body>
+            <form onsubmit="return false"  class="block">
+                <div class="grid grid-cols-2 gap-y-6 gap-x-3">
+                    <div class="col-span-2">
+                        <div class="relative w-full">
+                            <input type="text" v-model="violationAmount" placeholder="Enter amount" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
+                            <p class="php font-inter-700 text-blue-grey">Php</p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </template>
+        <template v-slot:footer>
+            <div class="flex items-center justify-end w-full">
+                <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-2 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+                    Cancel
+                </button>
+                <button @click="editAmount()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+                    Save
+                </button>
+            </div>
+        </template>
+    </Modal>
+
     <Modal modalTitle="Severity" v-show="modalActive && showModal == 'modalSeverity'" @close="closeModal">
         <template v-slot:body>
             <p class="font-inter-400 text-base text-black mb-5">Choose the severity of the ticket</p>
@@ -615,31 +646,6 @@
                 </button>
                 <button @click="submitSeverity()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                     Add
-                </button>
-            </div>
-        </template>
-    </Modal>
-
-    <Modal modalTitle="Edit Amount" v-show="modalActive && showModal == 'modalEditAmount'" @close="closeModal">
-        <template v-slot:body>
-            <form onsubmit="return false"  class="block">
-                <div class="grid grid-cols-2 gap-y-6 gap-x-3">
-                    <div class="col-span-2">
-                        <div class="relative w-full">
-                            <input type="text" v-model="violationAmount" placeholder="Enter amount" name="selectviolations" id="selectviolations" class="my-2 w-full secondary-input" style="padding-left: 47px;"/>
-                            <p class="php font-inter-700 text-blue-grey">Php</p>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </template>
-        <template v-slot:footer>
-            <div class="flex items-center justify-end w-full">
-                <button @click="closeModal" class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-2 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
-                    Cancel
-                </button>
-                <button @click="editAmount()" class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
-                    Save
                 </button>
             </div>
         </template>
@@ -823,6 +829,7 @@ export default {
             chosenViolations: [],
             arrayViolations: [],
             violationAmount: '',
+            violationID: null,
             //User
             userImg: '',
             //Lightbox
@@ -926,7 +933,7 @@ export default {
                 selectedViolations.push(value);
                 chosenViolations.push(value.id);
                 checkedViolations.push(value);
-                arrayViolations.push({violation: value.violation, amount: value.amount});
+                arrayViolations.push({id: value.id, ticket_id: value.ticket_id, violation: value.violation, amount: value.amount, created_at: value.created_at, updated_at: value.updated_at });
             });
             this.checkedViolations = checkedViolations
             this.arrayViolations = arrayViolations
@@ -1076,9 +1083,15 @@ export default {
             this.successAlert = false
         },
         //Modals
-        openModal(itemID){
+        openModal(itemID, dataID = null){
             document.querySelector('body').style.overflow = 'hidden';
             this.showModal = itemID;
+            if(itemID === 'modalEditAmount' || itemID === 'modalAddAmount') {
+              this.violationID = dataID
+              const violation = this.selectedViolations.filter((a) => (a.id == dataID));
+              this.violationAmount = violation[0].amount
+            }
+
             this.modalActive = true;
         },
         closeModal() {
@@ -1210,6 +1223,26 @@ export default {
             .catch((error) => {
                 this.successAlert = true;
                 this.successMessage = "Please enter a valid Email or Mobile Number";
+                this.successIcon = 'warning-red.svg';
+            })
+        },
+        //Update Violation
+        async updateViolation() {
+            console.log(this.arrayViolations)
+            await axios.post('api/v1/ticket/violations', {
+                ticket_id: this.id,
+                violation: this.arrayViolations
+            })
+            .then((success) => {
+                //Alert Content
+                this.successAlert = true;
+                this.successMessage = 'Successfully updated';
+                this.successIcon = 'like.svg';
+                this.closeModal()
+            })
+            .catch((error) => {
+                this.successAlert = true;
+                this.successMessage = error.response.data;
                 this.successIcon = 'warning-red.svg';
             })
         },

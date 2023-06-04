@@ -53,12 +53,9 @@
                                             </svg> Upload
                                             <input type="file" name="documents" @change="onFileChange()" id="documents" hidden multiple="multiple" ref="documents">
                                         </label>
-                                        <div v-for="item in docu_name" class="w-100 overflow-auto">
-                                          <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
-                                      </div>
                                         <div class="block w-100 overflow-auto">
-                                            <div v-for="item in additional_documents_file" class="w-100 overflow-auto">
-                                                <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
+                                            <div v-for="item in docu_name" class="w-100 overflow-auto">
+                                            <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
                                             </div>
                                         </div>
                                         <p class="text-red pt-2 text-xs" v-if="errors && errors.additional_documents_file">{{ errors.additional_documents_file[0]}}</p>
@@ -506,6 +503,7 @@ export default {
             this.platform = this.ticketInfo.platform
             this.link = this.ticketInfo.link
             this.additional_documents_file = this.ticketInfo.additional_documents_file
+            this.docu_name = this.ticketInfo.additional_documents_file
             this.vendor_name = this.ticketInfo.vendor.map(function(value, key) { return value.vendor_name });
             this.email_address = this.ticketInfo.vendor.map(function(value, key) { return value.email });
             this.mobile_number = this.ticketInfo.vendor.map(function(value, key) { return value.mobile_number });
@@ -715,7 +713,7 @@ export default {
               return;
 
             for (var i = 0; i < this.documents.length; i++) {
-                this.selected_docu.push({file: URL.createObjectURL(this.documents[i])});
+                this.selected_docu.push(this.documents[i]);
                 this.docu_name.push({file: this.documents[i].name});
             }
         },
@@ -746,47 +744,50 @@ export default {
                 this.successAlert = true;
                 this.successMessage = 'Successfully updated';
                 this.successIcon = 'like.svg';
+                console.log(this.arrayViolations)
             })
             .catch((error) => {
                 console.log(error)
             })
-          const formData = new FormData();
-          formData.append('product_service', this.product_service);
-          formData.append('complaint', this.complaint);
-          formData.append('platform', this.platform);
-          formData.append('link', this.link);
-          for (var i = 0; i < this.$refs.documents.files.length; i++ ){
-              let file = this.$refs.documents.files[i];
-              formData.append('additional_documents_file', file);
-          }
-          formData.append('reported_first_name', String(this.reported_first_name[0]));
-          formData.append('reported_last_name', String(this.reported_last_name[0]));
-          formData.append('reported_email_address', String(this.reported_email_address));
-          formData.append('reported_mobile_number', String(this.reported_mobile_number));
-          formData.append('remarks', this.remarks);
-          const headers = { 'Content-Type': 'multipart/form-data' };
-            await axios.post('api/v1/ticket/update/'+this.id, formData, { headers })
-            .then((response) => {
-              if (response.data && response.data.message && response.data.message.validationFailed) {
-                this.errors = response.data.message.errors
-                this.successAlert = true;
-                this.successMessage = 'Error occured. Please try again';
-                this.successIcon = 'warning-red.svg';
-              } else {
-                this.errors = null
-                //Alert Content
-                this.successAlert = true;
-                this.successMessage = 'Ticket submitted & assigned agencies notified';
-                this.successIcon = 'like.svg';
-                this.closeModal();
-              }
-            })
-            .catch((error) => {
-                this.successAlert = true;
-                this.successMessage = "Error";
-                this.successIcon = 'warning-red.svg';
-                console.log(error.response.data.errors)
-            })
+
+            const formData = new FormData();
+            formData.append('product_service', this.product_service);
+            formData.append('complaint', this.complaint);
+            formData.append('platform', this.platform);
+            formData.append('link', this.link);
+            for (var i = 0; i < this.$refs.documents.files.length; i++ ){
+                let file = this.$refs.documents.files[i];
+                formData.append('additional_documents_file', file);
+            }
+            formData.append('additional_documents_file', this.selected_docu);
+            formData.append('reported_first_name', String(this.reported_first_name[0]));
+            formData.append('reported_last_name', String(this.reported_last_name[0]));
+            formData.append('reported_email_address', String(this.reported_email_address));
+            formData.append('reported_mobile_number', String(this.reported_mobile_number));
+            formData.append('remarks', this.remarks);
+            const headers = { 'Content-Type': 'multipart/form-data' };
+                await axios.post('api/v1/ticket/update/'+this.id, formData, { headers })
+                .then((response) => {
+                if (response.data && response.data.message && response.data.message.validationFailed) {
+                    this.errors = response.data.message.errors
+                    this.successAlert = true;
+                    this.successMessage = 'Error occured. Please try again';
+                    this.successIcon = 'warning-red.svg';
+                } else {
+                    this.errors = null
+                    //Alert Content
+                    this.successAlert = true;
+                    this.successMessage = 'Ticket submitted & assigned agencies notified';
+                    this.successIcon = 'like.svg';
+                    this.closeModal();
+                }
+                })
+                .catch((error) => {
+                    this.successAlert = true;
+                    this.successMessage = "Error";
+                    this.successIcon = 'warning-red.svg';
+                    console.log(error.response.data.errors)
+                })
 
             this.closeModal();
         },

@@ -418,8 +418,8 @@ export default {
             await axios.post('api/v1/filter/users', {
                 user_type: this.fRole,
                 account_status: this.fStatus,
-                from: this.reformat_date(this.fFrom),
-                till: this.reformat_date(this.fTill),
+                from: this.fFrom,
+                till: this.fTill,
                 agencies: this.fAgencyValue.length ? this.fAgencyValue : null
             })
             .then((success) => {

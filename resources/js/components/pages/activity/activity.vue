@@ -289,10 +289,8 @@ export default {
             await axios.post('api/v1/filter/activity', {
                 role: this.fRole,
                 agency: this.fAgencyValue,
-                from: this.fFrom,
-                to: this.fTo,
-                tfrom: this.fTFrom,
-                tto: this.fTTo,
+                from: this.fFrom +' '+ this.fTFrom,
+                to: this.fTo +' '+ this.fTTo
             })
             .then((success) => {
                 this.responseFiltered = success.data.data
@@ -301,6 +299,8 @@ export default {
             .catch((error) => {
                 console.log(error)
             })
+
+            console.log(this.fFrom +' '+ this.fTFrom)
         },
         resetFilter(){
           this.getActivities(0);
@@ -379,6 +379,11 @@ export default {
         reformat_date(value){
             if (value) {
                 return moment(String(value)).format('YYYY-MM-DD')
+            }
+        },
+        reformat_time(value){
+            if (value) {
+                return moment(String(value)).format('hh-mm-ss')
             }
         },
         //Modals

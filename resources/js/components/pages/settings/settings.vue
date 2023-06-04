@@ -241,6 +241,25 @@
             </div>
         </div>
     </PageLayout>
+    <Modal v-show="modalActive && showModal == 'modalSubmit'" @close="closeModal">
+      <template v-slot:body>
+        <img src="/img/icon/modal-send.svg" class="mb-6">
+        <h5 class="font-exo-600 text-xl text-dark2 mb-4">Change your profile photo</h5>
+        <p class="font-inter-400 text-lg text-dark2 mb-11">Are you sure you want to change your photo?</p>
+      </template>
+      <template v-slot:footer>
+        <div class="flex items-center justify-end w-full">
+          <button @click="closeModal"
+                  class="border border-blue mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 text-blue rounded-lg flex items-center justify-center">
+            Cancel
+          </button>
+          <button @click="changePhoto()"
+                  class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+            Yes
+          </button>
+        </div>
+      </template>
+    </Modal>
 </template>
 
 <script>
@@ -353,6 +372,9 @@ export default {
         //Input File Photo
         async onFileChange() {
           this.profileImage = this.$refs.profileImage.files[0];
+          this.openModal('modalSubmit');
+        },
+        async changePhoto(){
           const formData = new FormData();
           formData.append('profile', this.profileImage);
             const headers = { 'Content-Type': 'multipart/form-data' };
@@ -368,10 +390,12 @@ export default {
                 this.successMessage = success.data.errors.current_password['0'];
                 this.successIcon = 'warning-red.svg';
               }
+              this.closeModal();
           }).catch((error) => {
               this.successAlert = true;
               this.successMessage = error.response.data.errors.profile[0];
               this.successIcon = 'warning-red.svg';
+              this.closeModal();
           });
         },
         //Change Password
