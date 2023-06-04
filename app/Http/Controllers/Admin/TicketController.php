@@ -102,14 +102,16 @@ class TicketController extends ApiController
                 'reported_by_id' => $reportedBy->id,
                 'remarks' => request('remarks'),
             ]);
-
-            foreach (request('additional_documents_file') as $docu) {
-              $path = Storage::disk('s3')->put('documents_file', $docu);
-              TicketDocumentFile::create([
-                'ticket_id' => $ticket->id,
-                'document_file' => $path,
-              ]);
+            if(request('additional_documents_file')){
+              foreach (request('additional_documents_file') as $docu) {
+                $path = Storage::disk('s3')->put('documents_file', $docu);
+                TicketDocumentFile::create([
+                  'ticket_id' => $ticket->id,
+                  'document_file' => $path,
+                ]);
+              }
             }
+
 
 
             foreach(request('violations') as $vio){
