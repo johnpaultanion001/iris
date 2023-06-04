@@ -51,8 +51,11 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3.5" width="13" height="14" viewBox="0 0 13 14" fill="none">
                                                 <path d="M8.48223 3.875L4.36612 7.99112C3.87796 8.47927 3.87796 9.27073 4.36612 9.75888C4.85427 10.247 5.64573 10.247 6.13388 9.75888L10.1428 5.64277C11.1191 4.66646 11.1191 3.08354 10.1428 2.10723C9.16646 1.13092 7.58354 1.13092 6.60723 2.10723L2.59835 6.22335C1.13388 7.68782 1.13388 10.0622 2.59835 11.5267C4.06282 12.9911 6.43718 12.9911 7.90165 11.5267L11.8125 7.625" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg> Upload
-                                            <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden multiple="multiple">
+                                            <input type="file" name="documents" @change="onFileChange()" id="documents" hidden multiple="multiple" ref="documents">
                                         </label>
+                                        <div v-for="item in docu_name" class="w-100 overflow-auto">
+                                          <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
+                                      </div>
                                         <div class="block w-100 overflow-auto">
                                             <div v-for="item in additional_documents_file" class="w-100 overflow-auto">
                                                 <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
@@ -390,6 +393,7 @@ export default {
             complaint: '',
             platform: '',
             link: '',
+            docu_name: [],
             additional_documents_file: [],
             selected_docu: [],
             vendor_name: '',
@@ -495,6 +499,7 @@ export default {
             const response = await axios.get('api/v1/tickets/'+this.id);
             //Filter Ticket Data
             this.ticketInfo = response.data.data;
+            console.log(this.ticketInfo)
 
             this.product_service = this.ticketInfo.product_service
             this.complaint = this.ticketInfo.complaint
@@ -703,16 +708,16 @@ export default {
             }
         },
         //Input File
-        onFileChange($event) {
-            var files = $event.target.files || $event.dataTransfer.files;
-            if (!files.length)
-                return;
+        onFileChange() {
+          this.docu_name = [];
+          this.documents = this.$refs.documents.files;
+          if (this.documents.length <= 0)
+              return;
 
-            for (var i = 0; i < files.length; i++) {
-                this.selected_docu.push({file: files[i]['name']});
+            for (var i = 0; i < this.documents.length; i++) {
+                this.selected_docu.push({file: URL.createObjectURL(this.documents[i])});
+                this.docu_name.push({file: this.documents[i].name});
             }
-
-            this.additional_documents_file = this.selected_docu
         },
         //Create
         async updateTicket() {
@@ -745,30 +750,22 @@ export default {
             .catch((error) => {
                 console.log(error)
             })
-
-            await axios.post('api/v1/ticket/update/'+this.id, {
-                product_service: this.product_service,
-                complaint: this.complaint,
-                platform: this.platform,
-                link: this.link,
-                additional_documents_file: this.additional_documents_file,
-                reported_first_name: String(this.reported_first_name[0]),
-                reported_last_name: String(this.reported_last_name[0]),
-                reported_email_address: String(this.reported_email_address),
-                reported_mobile_number: String(this.reported_mobile_number),
-                remarks: this.remarks
-
-                // product_service: 'Testing',
-                // complaint: 'Testing',
-                // platform: 'Testing',
-                // link: 'iris.com/test.pdf',
-                // additional_documents_file: 'iris.com/test.pdf',
-                // reported_first_name: 'Testing',
-                // reported_last_name: 'Testing',
-                // reported_email_address: 'sting@testinga.com',
-                // reported_mobile_number: '09087645361',
-                // remarks: 'Testing'
-            })
+          const formData = new FormData();
+          formData.append('product_service', this.product_service);
+          formData.append('complaint', this.complaint);
+          formData.append('platform', this.platform);
+          formData.append('link', this.link);
+          for (var i = 0; i < this.$refs.documents.files.length; i++ ){
+              let file = this.$refs.documents.files[i];
+              formData.append('additional_documents_file', file);
+          }
+          formData.append('reported_first_name', String(this.reported_first_name[0]));
+          formData.append('reported_last_name', String(this.reported_last_name[0]));
+          formData.append('reported_email_address', String(this.reported_email_address));
+          formData.append('reported_mobile_number', String(this.reported_mobile_number));
+          formData.append('remarks', this.remarks);
+          const headers = { 'Content-Type': 'multipart/form-data' };
+            await axios.post('api/v1/ticket/update/'+this.id, formData, { headers })
             .then((response) => {
               if (response.data && response.data.message && response.data.message.validationFailed) {
                 this.errors = response.data.message.errors
