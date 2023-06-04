@@ -54,7 +54,7 @@
                 <div class="relative w-full">
                   <label for="documents" class="text-base text-blue-grey text-xs font-inter-700">Upload Additional
                     Documents</label>
-                  <div class="flex items-start mt-4 ">
+                  <div class="flex items-center mt-4 ">
                     <label
                       class="cursor-pointer w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                       <svg xmlns="http://www.w3.org/2000/svg" class="mr-3.5" width="13" height="14" viewBox="0 0 13 14"
@@ -64,12 +64,10 @@
                           stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                       Upload
-                      <input type="file" name="documents" @change="onFileChange()" id="documents" hidden multiple="multiple" ref="documents">
+                      <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden multiple="multiple">
                     </label>
-                    <div>
-                      <div v-for="item in docu_name" class="w-100 overflow-auto">
-                          <p class="text-blue-grey text-xxs ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
-                      </div>
+                    <div v-for="item in docu_name" class="w-100 overflow-auto">
+                        <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
                     </div>
                     <p class="text-red pt-2 text-xs" v-if="errors && errors.additional_documents_file">{{ errors.additional_documents_file[0]}}</p>
                   </div>
@@ -240,7 +238,7 @@
                        style="max-height: 7.5rem;">
                   <p class="text-blue-grey font-opensans-600 text-xxs text-center my-3 ellipsis-2"
                      style="height: 34px;">{{ item.agency }}</p>
-                  <p @click="removeChecked(item.code)" class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">
+                  <p class="cursor-pointer font-opensans-600 text-xxs text-center my-3" style="color: #EB5757">
                     Remove</p>
                 </div>
               </div>
@@ -296,7 +294,7 @@
               </div>
               <div v-for="(agency, index) in allAgencies" ref="allAgencies" class="py-2">
                 <label class="cursor-pointer flex items-center">
-                  <input type="checkbox" @change.prevent="agencyChecked(agency.id, agency.index, $event)" :value="agency.id" v-model="chosenAgencies">
+                  <input type="checkbox" @change.prevent="agencyChecked(agency.id, agency.index, $event)">
                   <img :src="agency.logo" class="w-15 h-15 mx-4 rounded-full object-contain border-light border">
                   <p class="font-inter-400 text-black font-base">{{ agency.agency }}</p>
                 </label>
@@ -477,7 +475,6 @@ export default {
       //Agencies
       allAgencies: [],
       filterSearchAgency: '',
-      chosenAgencies: [],
       selectedAgencies: [],
       currentAgencies: [],
       arrayAgencies: null,
@@ -583,38 +580,15 @@ export default {
     //Add checked agencies
     addChecked() {
       const arrayAgencies = []
-      const chosenAgencies = []
       this.selectedAgencies.map(function (value, key) {
         value.map(function (value, key) {
           arrayAgencies.push({agency_id: value.id});
-          chosenAgencies.push(value.id)
         });
       });
-      this.chosenAgencies = chosenAgencies
       this.arrayAgencies = arrayAgencies
       this.currentAgencies = this.selectedAgencies;
       this.closeModal();
-    },
-    //Remove checked agencies
-    removeChecked(code){
-        const index = this.selectedAgencies.filter((a) => (a.code == code));
-        this.selectedAgencies.splice(index, 1);
-
-        this.currentAgencies = this.selectedAgencies;
-        //clone
-        const arrayAgencies = []
-      const chosenAgencies = []
-        this.selectedAgencies.map(function (value, key) {
-          value.map(function (value, key) {
-            arrayAgencies.push({agency_id: value.id});
-            chosenAgencies.push(value.id)
-          });
-        });
-        this.chosenAgencies = chosenAgencies
-        this.arrayAgencies = arrayAgencies
-        this.currentAgencies = this.selectedAgencies;
-    },
-    //Get Violations
+    },//Get Violations
     async getViolations() {
       const response = await axios.get('api/v1/list_violations');
       //Filter Agencies Ticket
@@ -640,6 +614,7 @@ export default {
       this.arrayViolations = arrayViolations
 
       this.selectedViolations = this.checkedViolations
+
       this.closeModal();
     },
     editAmount() {
@@ -697,18 +672,18 @@ export default {
       }
     },
     //Input File
-    onFileChange() {
-      this.docu_name = [];
-      this.documents = this.$refs.documents.files;
-      if (this.documents.length <= 0)
-          return;
+    onFileChange($event) {
+        var files = $event.target.files || $event.dataTransfer.files;
+        if (!files.length)
+            return;
 
-        for (var i = 0; i < this.documents.length; i++) {
-            this.selected_docu.push(this.documents[i]);
-            this.docu_name.push({file: this.documents[i].name});
+        for (var i = 0; i < files.length; i++) {
+            this.selected_docu.push(files[i]);
+            this.docu_name.push({file: files[i].name});
         }
 
-      console.log(this.selected_docu)
+        this.additional_documents_file = this.selected_docu
+        console.log(this.additional_documents_files)
     },
     // Search Input Dropdown
     updateValue(value) {
@@ -720,34 +695,28 @@ export default {
     //Create
     async createTicket() {
       this.showModal = ''
-      const formData = new FormData();
-          formData.append('product_service', this.product_service);
-          formData.append('complaint', this.complaint);
-          formData.append('platform', this.platform);
-          formData.append('link', this.link);
-          for (var i = 0; i < this.$refs.documents.files.length; i++ ){
-              let file = this.$refs.documents.files[i];
-              formData.append('additional_documents_file', file);
-          }
-          formData.append('reported_first_name', String(this.reported_first_name));
-          formData.append('reported_last_name', String(this.reported_last_name));
-          formData.append('reported_email_address', String(this.reported_email_address));
-          formData.append('reported_mobile_number', String(this.reported_mobile_number));
-          formData.append('remarks', this.remarks);
-          formData.append('vendor_name', String(this.vendor_name));
-          formData.append('email_address', String(this.email_address));
-          formData.append('mobile_number', String(this.mobile_number));
-          formData.append('city', String(this.city));
-          formData.append('agencies', this.arrayAgencies);
-          formData.append('violations', [{violation: 'haha'}]);
+      await axios.post('api/v1/tickets', {
+        product_service: this.product_service,
+        complaint: this.complaint,
+        platform: this.platform,
+        link: this.link,
+        additional_documents_file: c,
+        vendor_name: this.vendor_name,
+        email_address: this.email_address,
+        mobile_number: this.mobile_number,
+        city: this.city,
+        reported_first_name: this.reported_first_name,
+        reported_last_name: this.reported_last_name,
+        reported_email_address: this.reported_email_address,
+        reported_mobile_number: this.reported_mobile_number,
+        remarks: this.remarks,
+        agencies: this.arrayAgencies,
+        violations: this.arrayViolations,
 
-          const headers = { 'Content-Type': 'multipart/form-data' };
-
-         await axios.post('api/v1/tickets', formData, { headers })
+      })
         .then((response) => {
           if (response.data && response.data.message && response.data.message.validationFailed) {
             this.errors = response.data.message.errors
-            console.log(response.data.message.errors);
             this.successAlert = true;
             this.successMessage = 'Error occured. Please try again';
             this.successIcon = 'warning-red.svg';
@@ -760,8 +729,8 @@ export default {
             this.closeModal();
           }
         })
-        .catch((response) => {
-            // console.log(response.data);
+        .catch((error) => {
+            console.log(error.response.data.errors)
           // this.successAlert = true;
           // this.successMessage = 'Error occured. Please try again';
           // this.successIcon = 'warning-red.svg';
