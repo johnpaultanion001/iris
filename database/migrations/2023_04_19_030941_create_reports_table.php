@@ -19,6 +19,7 @@ class CreateReportsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('file');
+            $table->boolean('isRead')->default(false);
             $table->timestamps();
         });
     }

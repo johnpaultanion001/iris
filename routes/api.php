@@ -66,6 +66,8 @@ Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Admin', 'middl
 
   //Reports
   Route::get('reports', 'ReportController@index')->name('reports.index');
+  Route::post('reports/mark_read', 'ReportController@mark_read')->name('reports.mark_read');
+  Route::post('reports/mark_all_read', 'ReportController@mark_all_read')->name('reports.mark_all_read');
 
   //Filter
   Route::post('filter/tickets', 'FilterController@filter_tickets')->name('filter.tickets');

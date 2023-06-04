@@ -15,4 +15,33 @@ class ReportController extends Controller
 
     return new ReportCollection($collection);
   }
+  public function mark_read(Request $request)
+  {
+    $validator = Validator::make($request->all(), [
+      'id' => 'required',
+      'isRead' => 'required',
+    ]);
+    if ($validator->fails()) {
+      return $this->responseUnprocessable($validator->errors());
+    }
+    Report::where('id', request('id'),)->update([
+        'isRead' => request('isRead'),
+    ]);
+
+    return $this->responseResourceUpdated('Updated successfully');
+  }
+  public function mark_all_read(Request $request)
+  {
+    $validator = Validator::make($request->all(), [
+      'isRead' => 'required',
+    ]);
+    if ($validator->fails()) {
+      return $this->responseUnprocessable($validator->errors());
+    }
+    Report::where('user_id', auth("api")->user()->id)->update([
+      'isRead' => request('isRead'),
+    ]);
+
+    return $this->responseResourceUpdated('Updated successfully');
+  }
 }

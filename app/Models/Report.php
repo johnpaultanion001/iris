@@ -13,5 +13,6 @@ class Report extends Model
       'title',
       'description',
       'file',
+      'isRead',
   ];
 }
