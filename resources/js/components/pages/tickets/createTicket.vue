@@ -69,7 +69,7 @@
                     <div v-for="item in docu_name" class="w-100 overflow-auto">
                         <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
                     </div>
-                    <p class="text-red pt-2 text-xs" v-if="errors && errors.additional_documents_file">{{ errors.additional_documents_file}}</p>
+                    <p class="text-red pt-2 text-xs" v-if="errors && errors.additional_documents_file">{{ errors.additional_documents_file[0]}}</p>
                   </div>
                 </div>
               </div>
@@ -680,8 +680,8 @@ export default {
         for (var i = 0; i < files.length; i++) {
             this.selected_docu.push({file: URL.createObjectURL(files[i])});
             this.docu_name.push({file: files[i].name});
-        } 
-        
+        }
+
         this.additional_documents_file = this.selected_docu
     },
     // Search Input Dropdown

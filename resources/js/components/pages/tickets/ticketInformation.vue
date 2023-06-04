@@ -211,7 +211,7 @@
                                         </tr>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Link</td>
-                                            <td class="py-3 text-blue text-base font-exo-400"><a :href="ticketInfo.link" download>{{ ticketInfo.link }}</a></td>
+                                            <td class="py-3 text-blue text-base font-exo-400"><a :href="ticketInfo.link">{{ ticketInfo.link }}</a></td>
                                         </tr>
                                         <tr class="border-b border-light relative">
                                             <td class="py-3 text-blue-grey text-base font-exo-400 w-1/2 md:w-1/3 xl:w-1/4 whitespace-nowrap">Created By</td>

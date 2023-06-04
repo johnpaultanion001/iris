@@ -14,12 +14,14 @@
                                                          :free-text=true
                                                          @update-value="updateValue($event)"
                                                          @clear-input="clearInput()"/>
+                                  <p class="text-red pt-2 text-xs" v-if="errors && errors.product_service">{{ errors.product_service[0]}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="complaint" class="text-base text-blue-grey text-xs font-inter-700">Write Complaint</label>
                                     <textarea type="text" v-model="complaint" placeholder="Write complaint" name="complaint" id="complaint" class="mt-2 w-full secondary-textarea"></textarea>
+                                  <p class="text-red pt-2 text-xs" v-if="errors && errors.complaint">{{ errors.complaint[0]}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -30,6 +32,7 @@
                                       <input type="radio" v-model="platform" :value="data.value" :id="data.id" class="mr-2.5"/>
                                       {{ data.value }}
                                     </label>
+                                    <p class="text-red pt-2 text-xs" v-if="errors && errors.platform">{{ errors.platform[0]}}</p>
                                   </div>
                                 </div>
                             </div>
@@ -37,6 +40,7 @@
                                 <div class="relative w-full">
                                     <label for="link" class="text-base text-blue-grey text-xs font-inter-700">Link</label>
                                     <input type="text" v-model="link" name="link" id="link" class="mt-2 w-full secondary-input">
+                                  <p class="text-red pt-2 text-xs" v-if="errors && errors.link">{{ errors.link[0]}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -54,7 +58,7 @@
                                                 <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
                                             </div>
                                         </div>
-                                        <p class="text-red pt-2 text-xs" v-if="errors && errors.additional_documents_file">{{ errors.additional_documents_file}}</p>
+                                        <p class="text-red pt-2 text-xs" v-if="errors && errors.additional_documents_file">{{ errors.additional_documents_file[0]}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -107,24 +111,28 @@
                                 <div class="relative w-full">
                                     <label for="reported_first_name" class="text-base text-blue-grey text-xs font-inter-700">First Name</label>
                                     <input type="text" v-model="reported_first_name" placeholder="First Name" name="reported_first_name" id="reported_first_name" class="mt-2 w-full secondary-input"/>
+                                  <p class="text-red pt-2 text-xs" v-if="errors && errors.reported_first_name">{{ errors.reported_first_name[0]}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_last_name" class="text-base text-blue-grey text-xs font-inter-700">Last Name</label>
                                     <input type="text" v-model="reported_last_name" placeholder="Last Name" name="reported_last_name" id="reported_last_name" class="mt-2 w-full secondary-input">
+                                  <p class="text-red pt-2 text-xs" v-if="errors && errors.reported_last_name">{{ errors.reported_last_name[0]}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_email_address" class="text-base text-blue-grey text-xs font-inter-700">Email Address</label>
                                     <input type="email" v-model="reported_email_address" placeholder="Email Address" name="reported_email_address" id="reported_email_address" class="mt-2 w-full secondary-input">
+                                  <p class="text-red pt-2 text-xs" v-if="errors && errors.reported_email_address">{{ errors.reported_email_address[0]}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <div class="relative w-full">
                                     <label for="reported_mobile_number" class="text-base text-blue-grey text-xs font-inter-700">Mobile Number</label>
                                     <input type="text" v-model="reported_mobile_number" name="reported_mobile_number" placeholder="Mobile Number" id="reported_mobile_number" class="mt-2 w-full secondary-input">
+                                  <p class="text-red pt-2 text-xs" v-if="errors && errors.reported_mobile_number">{{ errors.reported_mobile_number[0]}}</p>
                                 </div>
                             </div>
                         </div>
@@ -453,6 +461,7 @@ export default {
                 value: "Google"
               },
             ],
+          errors: null
         };
     },
     watch: {
@@ -701,7 +710,7 @@ export default {
 
             for (var i = 0; i < files.length; i++) {
                 this.selected_docu.push({file: files[i]['name']});
-            } 
+            }
 
             this.additional_documents_file = this.selected_docu
         },
@@ -743,9 +752,9 @@ export default {
                 platform: this.platform,
                 link: this.link,
                 additional_documents_file: this.additional_documents_file,
-                reported_first_name: this.reported_first_name,
-                reported_last_name: this.reported_last_name,
-                reported_email_address: this.reported_email_address,
+                reported_first_name: String(this.reported_first_name[0]),
+                reported_last_name: String(this.reported_last_name[0]),
+                reported_email_address: String(this.reported_email_address),
                 reported_mobile_number: String(this.reported_mobile_number),
                 remarks: this.remarks
 
@@ -760,12 +769,20 @@ export default {
                 // reported_mobile_number: '09087645361',
                 // remarks: 'Testing'
             })
-            .then((success) => {
+            .then((response) => {
+              if (response.data && response.data.message && response.data.message.validationFailed) {
+                this.errors = response.data.message.errors
+                this.successAlert = true;
+                this.successMessage = 'Error occured. Please try again';
+                this.successIcon = 'warning-red.svg';
+              } else {
+                this.errors = null
                 //Alert Content
                 this.successAlert = true;
                 this.successMessage = 'Ticket submitted & assigned agencies notified';
                 this.successIcon = 'like.svg';
                 this.closeModal();
+              }
             })
             .catch((error) => {
                 this.successAlert = true;
