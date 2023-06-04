@@ -12,7 +12,10 @@
             <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
                 <ContentCard>
                     <div class="notifications py-2 rounded-2xl bg-white overflow-hidden">
-                        <div v-for="(inb, index) in inbox.slice(0, limit)">
+                        <div v-if="inbox.length == 0">
+                            <p class="font-opensans-600 text-ms text-blue-grey text-center p-2">Sorry, your inbox is empty.</p>
+                        </div>
+                        <div v-if="inbox.length > 0" v-for="(inb, index) in inbox.slice(0, limit)">
                             <div @click.prevent="markRead(inb.id)" :class="inbox.length == index + 1 ? 'border-0' : 'border-b border-light'"  class="notification flex items-center justify-between py-4 pl-3.5 pr-3.5 md:pr-8 bg-white hover:bg-lighter-grey">
                                 <div class="notification flex items-center justify-between">
                                     <div :class="inb.isRead == 0 ? 'bg-green' : 'bg-transparent'" class="circle-notif-green mr-2.5 min-w-2 w-2 h-2 rounded-full"></div>
@@ -106,7 +109,7 @@ export default {
             })
         },
         loadmore(){
-            this.limit = this.limit + 2
+            this.limit = this.limit + 10
             this.getInbox();
         }
     }

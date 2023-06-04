@@ -9,7 +9,8 @@
           <div class="rounded-full border mr-3 block">
             <img :src="agencyImg" style="width: 50px; height: 50px;max-width: 50px;max-height: 50px;padding: 7px;">
           </div>
-          <p class="text-sm text-blue-grey font-opensans-600">{{ agencyName }}</p>
+          <p v-if="onMobile == false" class="text-sm text-blue-grey font-opensans-600">{{ agencyName }}</p>
+          <p v-if="onMobile == true" class="text-sm text-blue-grey font-opensans-600">{{ agencyCode }}</p>
         </div>
         <router-link v-for="(page, index) in pages"
                      class="rounded w-full flex items-center mb-1 py-4.5 px-5 text-sm font-opensans-600  border-l-4 hover:bg-lighter"
@@ -45,11 +46,15 @@ export default {
   props: ['pageName', 'show'],
   async mounted() {
     this.getUser();
+    this.isMobile();
+    window.addEventListener("resize", this.isMobile);
   },
   data() {
     return {
       agencyName: "",
       agencyImg: "",
+      agencyCode: "",
+      onMobile: false,
       pages: [
         {
           name: "Dashboard",
@@ -102,6 +107,16 @@ export default {
       //Filter User Data
       this.agencyName = response.data.data.assigned_agencies.agency;
       this.agencyImg = response.data.data.assigned_agencies.logo;
+      this.agencyCode = response.data.data.assigned_agencies.code;
+    },
+    //Format Mobile Display Settings
+    isMobile() {
+      if( (screen.width >= 768 && screen.width <= 991) || (window.innerWidth >= 768 && window.innerWidth <= 991) ) {
+          this.onMobile = true;
+      }
+      else{
+          this.onMobile = false;
+      }
     },
   },
 }

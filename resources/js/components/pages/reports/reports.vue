@@ -12,7 +12,10 @@
             <div class="col-span-12 col-start-1 md:col-span-10 col md:col-start-2">
                 <ContentCard>
                     <div class="notifications py-2 rounded-2xl bg-white overflow-hidden">
-                        <div v-for="(report, index) in reports.slice(0, limit)">
+                        <div v-if="reports.length == 0">
+                            <p class="font-opensans-600 text-ms text-blue-grey text-center p-2">Sorry, your inbox is empty.</p>
+                        </div>
+                        <div v-if="reports.length > 0" v-for="(report, index) in reports.slice(0, limit)">
                             <div @click.prevent="markRead(report.id)" :class="reports.length == index +1 ? 'border-0' : 'border-b border-light'" class="notification flex items-center justify-between  py-3 pl-3.5 pr-3.5 md:pr-8 bg-white hover:bg-lighter-grey">
                                 <div class="notification flex items-center justify-between">
                                     <div class="p-3">
@@ -90,7 +93,7 @@ export default {
             })
         },
         loadmore(){
-            this.limit = this.limit + 2
+            this.limit = this.limit + 10
             this.getReports();
         }
     }

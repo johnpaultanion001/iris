@@ -27,10 +27,8 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="5" height="17" viewBox="0 0 5 17" fill="none"><path d="M2.5 4.5C1.39543 4.5 0.5 3.60457 0.5 2.5C0.5 1.39543 1.39543 0.5 2.5 0.5C3.60457 0.5 4.5 1.39543 4.5 2.5C4.5 3.60457 3.60457 4.5 2.5 4.5Z" fill="#ffffff"></path><path d="M2.5 10.5C1.39543 10.5 0.5 9.60457 0.5 8.5C0.5 7.39543 1.39543 6.5 2.5 6.5C3.60457 6.5 4.5 7.39543 4.5 8.5C4.5 9.60457 3.60457 10.5 2.5 10.5Z" fill="#ffffff"></path><path d="M2.5 16.5C1.39543 16.5 0.5 15.6046 0.5 14.5C0.5 13.3954 1.39543 12.5 2.5 12.5C3.60457 12.5 4.5 13.3954 4.5 14.5C4.5 15.6046 3.60457 16.5 2.5 16.5Z" fill="#ffffff"></path></svg>
       </button>
     </div>
-    <div v-if="showFilter"
-         class="bg-white-25 sm:bg-transparent p-2.5 sm:p-0 rounded-lg col-span-12 xl:col-span-6 flex items-center justify-end flex-col md:flex-row flex-wrap">
-      <button :class="vendorID ?  'bg-greygreygrey text-blue' : 'bg-white-25 text-white'"
-              class="mt-1 md:mt-0 min-w-110 w-full md:w-fit text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-3.5 rounded-full flex items-center justify-center">
+    <div v-if="showFilter" class="bg-white-25 sm:bg-transparent p-2.5 sm:p-0 rounded-lg col-span-12 xl:col-span-6 flex items-center justify-end flex-col md:flex-row flex-wrap">
+      <button :class="vendorID ?  'bg-greygreygrey text-blue' : 'bg-white-25 text-white'" class="mb-1 md:mt-0 min-w-110 w-full md:w-fit text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-3.5 rounded-full flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 13" fill="none" class="mr-4">
           <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M0.292893 0.792893C0.683417 0.402369 1.31658 0.402369 1.70711 0.792893L6 5.08579L10.2929 0.792893C10.6834 0.402369 11.3166 0.402369 11.7071 0.792893C12.0976 1.18342 12.0976 1.81658 11.7071 2.20711L7.41421 6.5L11.7071 10.7929C12.0976 11.1834 12.0976 11.8166 11.7071 12.2071C11.3166 12.5976 10.6834 12.5976 10.2929 12.2071L6 7.91421L1.70711 12.2071C1.31658 12.5976 0.683417 12.5976 0.292893 12.2071C-0.0976311 11.8166 -0.0976311 11.1834 0.292893 10.7929L4.58579 6.5L0.292893 2.20711C-0.0976311 1.81658 -0.0976311 1.18342 0.292893 0.792893Z"
@@ -38,12 +36,10 @@
         </svg>
         3 Filters
       </button>
-      <button @click="openModal('filterModal')" :class="vendorID ?  'border-blue text-blue' : 'border-white text-white'"
-              class="border mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 rounded-lg flex items-center justify-center">
+      <button @click="openModal('filterModal')" :class="vendorID ?  'border-blue text-blue' : 'border-white text-white'" class="border mb-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 rounded-lg flex items-center justify-center">
         Filter
       </button>
-      <button :class="vendorID ?  'border-blue text-blue' : 'border-white text-white'"
-              class="border mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 rounded-lg flex items-center justify-center">
+      <button :class="vendorID ?  'border-blue text-blue' : 'border-white text-white'" class="border mb-1 md:mt-0 min-w-110 w-full md:w-fit bg-transparent hover:bg-white-25 text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 rounded-lg flex items-center justify-center">
         Export
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none" class="ml-4">
           <path fill-rule="evenodd" clip-rule="evenodd"
@@ -51,8 +47,7 @@
                 :fill="vendorID ? '#1267E5' : '#ffffff'"/>
         </svg>
       </button>
-      <router-link to="/create-ticket"
-                   class="mt-1 md:mt-0 min-w-110 w-full md:w-fit bg-blue hover:bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
+      <router-link to="/create-ticket" class="mb-1 min-w-110 w-full md:w-fit bg-blue hover:bg-blue text-sm font-opensans-600 mx-0 sm:mx-2 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none" class="mr-2">
           <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M5.5 0.75C5.91421 0.75 6.25 1.08579 6.25 1.5V5.25H10C10.4142 5.25 10.75 5.58579 10.75 6C10.75 6.41421 10.4142 6.75 10 6.75H6.25V10.5C6.25 10.9142 5.91421 11.25 5.5 11.25C5.08579 11.25 4.75 10.9142 4.75 10.5V6.75H1C0.585786 6.75 0.25 6.41421 0.25 6C0.25 5.58579 0.585786 5.25 1 5.25L4.75 5.25V1.5C4.75 1.08579 5.08579 0.75 5.5 0.75Z"

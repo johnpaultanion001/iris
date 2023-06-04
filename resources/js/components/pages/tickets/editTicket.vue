@@ -42,14 +42,19 @@
                             <div class="col-span-2">
                                 <div class="relative w-full">
                                     <label for="documents" class="text-base text-blue-grey text-xs font-inter-700">Upload Additional Documents</label>
-                                    <div class="flex items-center mt-4 ">
+                                    <div class="flex items-start mt-4 ">
                                         <label class="cursor-pointer w-fit bg-blue text-sm font-opensans-600 py-2.5 px-5 shadow-main text-white rounded-lg flex items-center justify-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3.5" width="13" height="14" viewBox="0 0 13 14" fill="none">
                                                 <path d="M8.48223 3.875L4.36612 7.99112C3.87796 8.47927 3.87796 9.27073 4.36612 9.75888C4.85427 10.247 5.64573 10.247 6.13388 9.75888L10.1428 5.64277C11.1191 4.66646 11.1191 3.08354 10.1428 2.10723C9.16646 1.13092 7.58354 1.13092 6.60723 2.10723L2.59835 6.22335C1.13388 7.68782 1.13388 10.0622 2.59835 11.5267C4.06282 12.9911 6.43718 12.9911 7.90165 11.5267L11.8125 7.625" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg> Upload
-                                            <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden>
+                                            <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden multiple="multiple">
                                         </label>
-                                        <p class="text-blue-grey text-base ml-2 font-inter-400 truncate">{{ additional_documents_file }}</p>
+                                        <div class="block w-100 overflow-auto">
+                                            <div v-for="item in additional_documents_file" class="w-100 overflow-auto">
+                                                <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-red pt-2 text-xs" v-if="errors && errors.additional_documents_file">{{ errors.additional_documents_file}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -377,7 +382,8 @@ export default {
             complaint: '',
             platform: '',
             link: '',
-            additional_documents_file: '',
+            additional_documents_file: [],
+            selected_docu: [],
             vendor_name: '',
             email_address: '',
             mobile_number: '',
@@ -692,7 +698,12 @@ export default {
             var files = $event.target.files || $event.dataTransfer.files;
             if (!files.length)
                 return;
-            this.additional_documents_file = files['0']['name'];
+
+            for (var i = 0; i < files.length; i++) {
+                this.selected_docu.push({file: files[i]['name']});
+            } 
+
+            this.additional_documents_file = this.selected_docu
         },
         //Create
         async updateTicket() {

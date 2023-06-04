@@ -64,10 +64,12 @@
                           stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                       Upload
-                      <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden>
+                      <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden multiple="multiple">
                     </label>
-                    <p class="text-blue-grey text-base ml-2 font-inter-400">{{ additional_documents_file }}</p>
-                    <p class="text-red pt-2 text-xs" v-if="errors && errors.additional_documents_file">{{ errors.additional_documents_file[0]}}</p>
+                    <div v-for="item in docu_name" class="w-100 overflow-auto">
+                        <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
+                    </div>
+                    <p class="text-red pt-2 text-xs" v-if="errors && errors.additional_documents_file">{{ errors.additional_documents_file}}</p>
                   </div>
                 </div>
               </div>
@@ -457,7 +459,9 @@ export default {
       complaint: '',
       platform: '',
       link: '',
-      additional_documents_file: '',
+      additional_documents_file: [],
+      docu_name: [],
+      selected_docu: [],
       vendor_name: '',
       email_address: '',
       mobile_number: '',
@@ -669,10 +673,16 @@ export default {
     },
     //Input File
     onFileChange($event) {
-      var files = $event.target.files || $event.dataTransfer.files;
-      if (!files.length)
-        return;
-      this.additional_documents_file = files['0']['name'];
+        var files = $event.target.files || $event.dataTransfer.files;
+        if (!files.length)
+            return;
+
+        for (var i = 0; i < files.length; i++) {
+            this.selected_docu.push({file: URL.createObjectURL(files[i])});
+            this.docu_name.push({file: files[i].name});
+        } 
+        
+        this.additional_documents_file = this.selected_docu
     },
     // Search Input Dropdown
     updateValue(value) {
@@ -719,9 +729,10 @@ export default {
           }
         })
         .catch((error) => {
-          this.successAlert = true;
-          this.successMessage = 'Error occured. Please try again';
-          this.successIcon = 'warning-red.svg';
+            console.log(error.response.data.errors)
+          // this.successAlert = true;
+          // this.successMessage = 'Error occured. Please try again';
+          // this.successIcon = 'warning-red.svg';
         })
     },
   },

@@ -282,7 +282,8 @@ export default {
             verUniqueMatche: false,
             validPassword: false,
             //User info
-            userInfo: []
+            userInfo: [],
+            selected_docu: []
         };
     },
     components: { PageLayout, ContentCard, Modal, AlertTop },
@@ -354,11 +355,11 @@ export default {
             var files = $event.target.files || $event.dataTransfer.files;
             if (!files.length)
             return;
-            this.additional_documents_file = files['0']['name'];
 
+            // var x = URL.createObjectURL(files[0])
             
-            await axios.post('/api/v1/user/change_photo', {
-                profile: files['0']['name'],
+            await axios.post('/api/v1/user/'+ this.userInfo.id +'/change_profile', {
+                profile: files[0],
             })
             .then((success) => {
                 //Alert Content
@@ -377,6 +378,7 @@ export default {
                 this.successAlert = true;
                 this.successMessage = error;
                 this.successIcon = 'warning-red.svg';
+                console.log(error.response.data.errors)
             })
         },
         //Change Password
