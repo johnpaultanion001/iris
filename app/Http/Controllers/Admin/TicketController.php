@@ -172,7 +172,7 @@ class TicketController extends ApiController
           'complaint' => 'required',
           'platform' => 'required',
           'link' => 'required',
-          'additional_documents_file' => 'required',
+          //'additional_documents_file' => 'required',
 
           // reported by info
           'reported_first_name' => 'required',
@@ -194,14 +194,20 @@ class TicketController extends ApiController
             'link' => request('link'),
             'remarks' => request('remarks'),
         ]);
+
+
+       if(request('additional_documents_file')){
         TicketDocumentFile::where('ticket_id',$ticket->id)->delete();
-        foreach(request('additional_documents_file') as $docu){
-          $path = Storage::disk('s3')->put('documents_file', $docu['file']);
-            TicketDocumentFile::create([
-              'ticket_id' => $ticket->id,
-              'document_file' => $path,
-            ]);
+        foreach (request('additional_documents_file') as $docu) {
+          $path = Storage::disk('s3')->put('documents_file', $docu);
+          TicketDocumentFile::create([
+            'ticket_id' => $ticket->id,
+            'document_file' => $path,
+          ]);
         }
+      }
+
+
 
         ReportedBy::find($ticket->reported_by_id)->update(
               [
@@ -211,9 +217,18 @@ class TicketController extends ApiController
                 'mobile_number' => request('reported_mobile_number'),
               ]
         );
+        foreach($ticket->ticketsDocuments()->get() as $document){
+          $docu = Storage::disk('s3')->temporaryUrl($document->document_file, now()->addMinutes(5));
+
+          $documents[] = array(
+              'file' =>  $docu,
+          );
+        }
+
         $data = [
           'tiket_id' => $ticket->id,
           'tiket_no' => $ticket->id,
+          'additional_documents_file' => $documents ?? '',
         ];
 
         return $this->responseResourceUpdated('Ticket updated successfully',$data);
