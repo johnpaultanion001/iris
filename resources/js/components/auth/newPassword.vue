@@ -114,10 +114,11 @@ export default {
                     this.successAlert = true;
                     this.successMessage = success.data.message;
                     this.successIcon = 'like.svg';
+                    this.$router.push("/");
                 })
                 .catch((error) => {
                     this.successAlert = true;
-                    this.successMessage = error.response.data;
+                    this.successMessage = error.response.data.errors;
                     this.successIcon = 'warning-red.svg';
                 })
             }

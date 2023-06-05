@@ -20073,7 +20073,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       client_secret: 'NG9cF4LP3pttCZdipGszpmPHvnyg8rwwfuVLHRsr',
       scope: '',
       username: '',
-      password: ''
+      password: '',
+      errors: ''
     };
   },
   mounted: function mounted() {
@@ -20119,8 +20120,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   'Access-Control-Allow-Origin': '*',
                   'Access-Control-Allow-Headers': 'Content-Type, x-xsrf-token'
                 }
-              }).then(function (res) {
-                localStorage.setItem('token', res.data['access_token']);
+              }).then(function (response) {
+                localStorage.setItem('token', response.data['access_token']);
                 if (_this2.isRemember) {
                   localStorage.setItem('iris-username', _this2.username);
                   localStorage.setItem('iris-password', _this2.password);
@@ -20131,7 +20132,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 // this.$router.push("/");
                 window.location.href = "/";
               })["catch"](function (error) {
-                console.log(error.message);
+                _this2.errors = error.response.data.message;
               });
             case 3:
             case "end":
@@ -20225,9 +20226,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.successAlert = true;
                 _this.successMessage = success.data.message;
                 _this.successIcon = 'like.svg';
+                _this.$router.push("/");
               })["catch"](function (error) {
                 _this.successAlert = true;
-                _this.successMessage = error.response.data;
+                _this.successMessage = error.response.data.errors;
                 _this.successIcon = 'warning-red.svg';
               });
             case 3:
@@ -23058,7 +23060,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //Add checked Violations
     addCheckedViolation: function addCheckedViolation() {
       var arrayViolations = [];
-      this.selectedViolations.map(function (value, key) {
+      this.checkedViolations.map(function (value, key) {
         arrayViolations.push({
           violation: value.violation,
           amount: value.amount
@@ -23134,17 +23136,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     //Input File
-    onFileChange: function onFileChange($event) {
-      var files = $event.target.files || $event.dataTransfer.files;
-      if (!files.length) return;
-      for (var i = 0; i < files.length; i++) {
-        this.selected_docu.push(files[i]);
+    onFileChange: function onFileChange() {
+      this.docu_name = [];
+      this.documents = this.$refs.documents.files;
+      if (this.documents.length <= 0) return;
+      for (var i = 0; i < this.documents.length; i++) {
+        this.selected_docu.push(this.documents[i]);
         this.docu_name.push({
-          file: files[i].name
+          file: this.documents[i].name
         });
       }
-      this.additional_documents_file = this.selected_docu;
-      console.log(this.additional_documents_files);
     },
     // Search Input Dropdown
     updateValue: function updateValue(value) {
@@ -23157,28 +23158,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     createTicket: function createTicket() {
       var _this7 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        var formData, headers;
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
           while (1) switch (_context5.prev = _context5.next) {
             case 0:
               _this7.showModal = '';
-              _context5.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().post('api/v1/tickets', {
-                product_service: _this7.product_service,
-                complaint: _this7.complaint,
-                platform: _this7.platform,
-                link: _this7.link,
-                additional_documents_file: c,
-                vendor_name: _this7.vendor_name,
-                email_address: _this7.email_address,
-                mobile_number: _this7.mobile_number,
-                city: _this7.city,
-                reported_first_name: _this7.reported_first_name,
-                reported_last_name: _this7.reported_last_name,
-                reported_email_address: _this7.reported_email_address,
-                reported_mobile_number: _this7.reported_mobile_number,
-                remarks: _this7.remarks,
-                agencies: _this7.arrayAgencies,
-                violations: _this7.arrayViolations
+              formData = new FormData();
+              formData.append('product_service', _this7.product_service);
+              formData.append('complaint', _this7.complaint);
+              formData.append('platform', _this7.platform);
+              formData.append('link', _this7.link);
+              // for (var i = 0; i < this.$refs.documents.files.length; i++ ){
+              //     let file = this.$refs.documents.files[i];
+              //     formData.append('additional_documents_file', file);
+              // }
+              formData.append('additional_documents_file', _this7.docu_name);
+              formData.append('vendor_name', String(_this7.vendor_name));
+              formData.append('email_address', String(_this7.email_address));
+              formData.append('mobile_number', String(_this7.mobile_number));
+              formData.append('city', String(_this7.city));
+              formData.append('reported_first_name', String(_this7.reported_first_name));
+              formData.append('reported_last_name', String(_this7.reported_last_name));
+              formData.append('reported_email_address', String(_this7.reported_email_address));
+              formData.append('reported_mobile_number', String(_this7.reported_mobile_number));
+              formData.append('remarks', _this7.remarks);
+              formData.append('agencies', _this7.arrayAgencies);
+              formData.append('violations', _this7.arrayViolations);
+              headers = {
+                'Content-Type': 'multipart/form-data'
+              };
+              _context5.next = 21;
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().post('api/v1/tickets', formData, {
+                headers: headers
               }).then(function (response) {
                 if (response.data && response.data.message && response.data.message.validationFailed) {
                   _this7.errors = response.data.message.errors;
@@ -23194,12 +23205,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this7.closeModal();
                 }
               })["catch"](function (error) {
-                console.log(error.response.data.errors);
+                console.log(error.response);
                 // this.successAlert = true;
                 // this.successMessage = 'Error occured. Please try again';
                 // this.successIcon = 'warning-red.svg';
               });
-            case 3:
+            case 21:
             case "end":
               return _context5.stop();
           }
@@ -27396,46 +27407,50 @@ var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-6aa0b866"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
 var _hoisted_1 = {
+  key: 0,
+  "class": "text-red pt-2 text-xs"
+};
+var _hoisted_2 = {
   "class": "block pt-4 pb-2"
 };
-var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "username",
     "class": "text-base text-blue-grey text-xs font-inter-700"
   }, "Username", -1 /* HOISTED */);
 });
-var _hoisted_3 = {
+var _hoisted_4 = {
   "class": "block relative py-2"
 };
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "password",
     "class": "text-base text-blue-grey text-xs font-inter-700"
   }, "Password", -1 /* HOISTED */);
 });
-var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
     d: "M10 12.9697C11.1046 12.9697 12 12.0743 12 10.9697C12 9.86516 11.1046 8.96973 10 8.96973C8.89544 8.96973 8.00001 9.86516 8.00001 10.9697C8.00001 12.0743 8.89544 12.9697 10 12.9697Z"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
     "fill-rule": "evenodd",
     "clip-rule": "evenodd",
     d: "M0.457764 10.9698C1.73202 6.91264 5.52232 3.96973 9.99997 3.96973C14.4776 3.96973 18.2679 6.91261 19.5422 10.9697C18.2679 15.0268 14.4776 17.9697 9.99995 17.9697C5.52232 17.9697 1.73204 15.0269 0.457764 10.9698ZM14 10.9697C14 13.1789 12.2091 14.9697 10 14.9697C7.79087 14.9697 6.00001 13.1789 6.00001 10.9697C6.00001 8.76059 7.79087 6.96973 10 6.96973C12.2091 6.96973 14 8.76059 14 10.9697Z"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_7 = [_hoisted_5, _hoisted_6];
-var _hoisted_8 = {
+var _hoisted_8 = [_hoisted_6, _hoisted_7];
+var _hoisted_9 = {
   "class": "flex items-center pt-2 pb-4"
 };
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "remember-me",
     "class": "ml-2 text-blue-grey text-xs font-inter-400"
   }, "Remember me", -1 /* HOISTED */);
 });
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "block py-4"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -27445,7 +27460,7 @@ var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
     "class": "cursor-pointer shadow-main rounded-lg w-full p-3 bg-blue text-white font-opensans-600 text-sm"
   })], -1 /* HOISTED */);
 });
-var _hoisted_11 = {
+var _hoisted_12 = {
   "class": "block pb-1 w-full"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -27458,13 +27473,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     page: "login"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+      return [$data.errors && $data.errors ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
         onsubmit: "return false",
         "class": "block",
         onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return $options.submitLogin && $options.submitLogin.apply($options, arguments);
         }, ["prevent"]))
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "email",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $data.username = $event;
@@ -27472,7 +27487,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         name: "username",
         id: "username",
         "class": "mt-1 w-full main-input"
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.username]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, $data.showPassword ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.username]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, $data.showPassword ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
         key: 0,
         type: "text",
         name: "password",
@@ -27505,7 +27520,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         viewBox: "0 0 20 21",
         fill: "none",
         style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)($data.showPassword ? 'fill: #1267E5' : 'fill: #CED4DA')
-      }, _hoisted_7, 4 /* STYLE */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, _hoisted_8, 4 /* STYLE */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         onClick: _cache[4] || (_cache[4] = function ($event) {
           return $data.isRemember = !$data.isRemember;
         }),
@@ -27516,7 +27531,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "remember-me",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.isRemember ? 'checked' : 'unchecked'),
         name: "remember-me"
-      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.isRemember]]), _hoisted_9]), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.isRemember]]), _hoisted_10]), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
         to: "/reset-password",
         "class": "mt-2 text-blue font-opensans-600 text-sm block text-center hover:underline"
       }, {
@@ -31451,12 +31466,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             type: "file",
             name: "documents",
             onChange: _cache[7] || (_cache[7] = function ($event) {
-              return $options.onFileChange($event);
+              return $options.onFileChange();
             }),
             id: "documents",
             hidden: "",
-            multiple: "multiple"
-          }, null, 32 /* HYDRATE_EVENTS */)]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.docu_name, function (item) {
+            multiple: "multiple",
+            ref: "documents"
+          }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.docu_name, function (item) {
             return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.file), 1 /* TEXT */)]);
           }), 256 /* UNKEYED_FRAGMENT */)), $data.errors && $data.errors.additional_documents_file ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.additional_documents_file[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])];
         }),
@@ -34005,16 +34021,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             onClick: _cache[7] || (_cache[7] = function ($event) {
               return $options.openModal('ticketStatusModal');
             }),
-            "class": "whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center"
+            "class": "border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white hover:bg-blue text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 text-blue hover:text-white rounded-full flex items-center justify-center"
           }, " Update Ticket Status "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
             onClick: _cache[8] || (_cache[8] = function ($event) {
               $options.openModal('modalSeverity');
               $data.severity = _this.ticketInfo.severity;
             }),
-            "class": "border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 text-blue rounded-full flex items-center justify-center"
+            "class": "border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white hover:bg-blue text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 text-blue hover:text-white rounded-full flex items-center justify-center"
           }, " Update Severity "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
             to: '/edit-ticket/' + $data.id,
-            "class": "border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center"
+            "class": "border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white hover:bg-blue text-sm font-opensans-600 py-2.5 px-5 text-blue hover:text-white rounded-full flex items-center justify-center"
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Edit ")];

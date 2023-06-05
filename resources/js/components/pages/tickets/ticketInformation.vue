@@ -159,13 +159,13 @@
                             </div>
                             <div class="flex items-center justify-between w-full pt-5 flex-wrap">
                                 <div v-if="ticketInfo.status != 'INVALID' && ticketInfo.status != 'RESOLVED'" class="flex items-center justify-start flex-wrap w-full md:w-auto">
-                                    <button @click="openModal('ticketStatusModal')" class="whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-blue text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 shadow-main text-white rounded-full flex items-center justify-center">
+                                    <button @click="openModal('ticketStatusModal')" class="border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white hover:bg-blue text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 text-blue hover:text-white rounded-full flex items-center justify-center">
                                         Update Ticket Status
                                     </button>
-                                    <button @click="openModal('modalSeverity'); severity = this.ticketInfo.severity" class="border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
+                                    <button @click="openModal('modalSeverity'); severity = this.ticketInfo.severity" class="border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white hover:bg-blue text-sm font-opensans-600 mr-0 md:mr-2 py-2.5 px-5 text-blue hover:text-white rounded-full flex items-center justify-center">
                                         Update Severity
                                     </button>
-                                    <router-link :to="'/edit-ticket/'+id" class="border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white text-sm font-opensans-600 py-2.5 px-5 text-blue rounded-full flex items-center justify-center">
+                                    <router-link :to="'/edit-ticket/'+id" class="border border-blue whitespace-nowrap mt-1 md:mt-0 min-w-0 min-w-110 w-full md:w-fit bg-white hover:bg-blue text-sm font-opensans-600 py-2.5 px-5 text-blue hover:text-white rounded-full flex items-center justify-center">
                                         Edit
                                     </router-link>
                                 </div>

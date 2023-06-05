@@ -1,5 +1,6 @@
 <template>
     <Layout headerBg="/img/background-login.svg" headerTitle="Welcome back!" headerText="Enter your email & password to login" page="login">
+        <p class="text-red pt-2 text-xs" v-if="errors && errors">{{ errors }}</p>
         <form onsubmit="return false"  class="block" @submit.prevent="submitLogin">
             <div class="block pt-4 pb-2">
                <label for="username" class="text-base text-blue-grey text-xs font-inter-700">Username</label>
@@ -49,7 +50,8 @@ export default {
             client_secret: 'NG9cF4LP3pttCZdipGszpmPHvnyg8rwwfuVLHRsr',
             scope: '',
             username: '',
-            password: ''
+            password: '',
+            errors: ''
         };
     },
     async mounted(){
@@ -79,8 +81,8 @@ export default {
                     'Access-Control-Allow-Headers': 'Content-Type, x-xsrf-token'
                 },
             })
-            .then((res) => {
-                localStorage.setItem('token', res.data['access_token']);
+            .then((response) => {
+                localStorage.setItem('token', response.data['access_token']);
                 if(this.isRemember){
                     localStorage.setItem('iris-username', this.username);
                     localStorage.setItem('iris-password', this.password);
@@ -92,7 +94,7 @@ export default {
                 window.location.href = "/";
             })
             .catch((error) => {
-                console.log(error.message)
+                this.errors = error.response.data.message
             })
         },
     }

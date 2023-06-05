@@ -64,7 +64,7 @@
                           stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                       Upload
-                      <input type="file" name="documents" @change="onFileChange($event)" id="documents" hidden multiple="multiple">
+                      <input type="file" name="documents" @change="onFileChange()" id="documents" hidden multiple="multiple" ref="documents">
                     </label>
                     <div v-for="item in docu_name" class="w-100 overflow-auto">
                         <p class="text-blue-grey text-base ml-2 font-inter-400 truncate w-100">{{ item.file }}</p>
@@ -608,7 +608,7 @@ export default {
     //Add checked Violations
     addCheckedViolation() {
       const arrayViolations = []
-      this.selectedViolations.map(function (value, key) {
+      this.checkedViolations.map(function (value, key) {
         arrayViolations.push({violation: value.violation, amount: value.amount});
       });
       this.arrayViolations = arrayViolations
@@ -672,18 +672,16 @@ export default {
       }
     },
     //Input File
-    onFileChange($event) {
-        var files = $event.target.files || $event.dataTransfer.files;
-        if (!files.length)
-            return;
+    onFileChange() {
+      this.docu_name = [];
+      this.documents = this.$refs.documents.files;
+      if (this.documents.length <= 0)
+          return;
 
-        for (var i = 0; i < files.length; i++) {
-            this.selected_docu.push(files[i]);
-            this.docu_name.push({file: files[i].name});
+        for (var i = 0; i < this.documents.length; i++) {
+            this.selected_docu.push(this.documents[i]);
+            this.docu_name.push({file: this.documents[i].name});
         }
-
-        this.additional_documents_file = this.selected_docu
-        console.log(this.additional_documents_files)
     },
     // Search Input Dropdown
     updateValue(value) {
@@ -695,25 +693,30 @@ export default {
     //Create
     async createTicket() {
       this.showModal = ''
-      await axios.post('api/v1/tickets', {
-        product_service: this.product_service,
-        complaint: this.complaint,
-        platform: this.platform,
-        link: this.link,
-        additional_documents_file: c,
-        vendor_name: this.vendor_name,
-        email_address: this.email_address,
-        mobile_number: this.mobile_number,
-        city: this.city,
-        reported_first_name: this.reported_first_name,
-        reported_last_name: this.reported_last_name,
-        reported_email_address: this.reported_email_address,
-        reported_mobile_number: this.reported_mobile_number,
-        remarks: this.remarks,
-        agencies: this.arrayAgencies,
-        violations: this.arrayViolations,
+      const formData = new FormData();
+          formData.append('product_service', this.product_service);
+          formData.append('complaint', this.complaint);
+          formData.append('platform', this.platform);
+          formData.append('link', this.link);
+          // for (var i = 0; i < this.$refs.documents.files.length; i++ ){
+          //     let file = this.$refs.documents.files[i];
+          //     formData.append('additional_documents_file', file);
+          // }
+          formData.append('additional_documents_file', this.docu_name);
+          formData.append('vendor_name', String(this.vendor_name));
+          formData.append('email_address', String(this.email_address));
+          formData.append('mobile_number', String(this.mobile_number));
+          formData.append('city', String(this.city));
+          formData.append('reported_first_name', String(this.reported_first_name));
+          formData.append('reported_last_name', String(this.reported_last_name));
+          formData.append('reported_email_address', String(this.reported_email_address));
+          formData.append('reported_mobile_number', String(this.reported_mobile_number));
+          formData.append('remarks', this.remarks);
+          formData.append('agencies', this.arrayAgencies);
+          formData.append('violations', this.arrayViolations);
+          const headers = { 'Content-Type': 'multipart/form-data' };
 
-      })
+        await axios.post('api/v1/tickets', formData, { headers })
         .then((response) => {
           if (response.data && response.data.message && response.data.message.validationFailed) {
             this.errors = response.data.message.errors
@@ -730,7 +733,7 @@ export default {
           }
         })
         .catch((error) => {
-            console.log(error.response.data.errors)
+            console.log(error.response)
           // this.successAlert = true;
           // this.successMessage = 'Error occured. Please try again';
           // this.successIcon = 'warning-red.svg';
