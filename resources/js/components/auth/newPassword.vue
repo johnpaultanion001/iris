@@ -1,4 +1,5 @@
 <template>
+    <AlertTop :alertIcon="'/img/icon/'+successIcon" :active="successAlert" :content="successMessage" v-if="successAlert" @close="successAlert = false"/>
     <Layout headerBg="/img/background-password.svg" :headerTitle="'Hi, ' + userFirstName" headerText="Secure your account by creating a new password">
         <div class="block">
             <div class="block relative pt-4 pb-2">
@@ -57,7 +58,7 @@
                 </p>
             </div>
             <div class="block pt-4">
-                <button @click="newPassword" class="cursor-pointer shadow-main rounded-lg w-full p-3 bg-blue text-white font-opensans-600 text-sm">Update password</button>
+                <button @click="newPassword" :class="validPassword ? 'opacity-100' : 'opacity-50'" class="cursor-pointer shadow-main rounded-lg w-full p-3 bg-blue text-white font-opensans-600 text-sm">Update password</button>
             </div>
         </div>
     </Layout>
@@ -66,18 +67,19 @@
 <script>
 import Layout from './layout.vue'
 import axios from 'axios'
+import AlertTop from '../utilities/alertTop.vue'
 
 export default {
     setup: () => ({
         title: 'New Password'
     }),
-    components: { Layout },
+    components: { Layout, AlertTop },
     data() {
         return {
             token: this.$route.params.token,
             id: this.$route.params.id,
-            userFirstName: 'Juana',
-            userEmail: null,
+            userFirstName: this.$route.params.name,
+            userEmail: this.$route.params.email,
             showPassword: false,
             showCPassword: false,
             password: null,
@@ -89,43 +91,34 @@ export default {
             verOneLower: false,
             verOneUpper: false,
             verUniqueMatche: false,
-            validPassword: false
+            validPassword: false,
+            successAlert: false,
+            successMessage: '',
+            successIcon: null,
             //User Data
 
         };
     },
-    async mounted() {
-        this.getUser();
-    },
     methods: {
-        //Get User
-        async getUser(){
-            this.pageNumber = 0;
-            const response = await axios.get('api/v1/profile');
-            //Filter User Data
-            this.userFirstName = response.data.data.name;
-            this.userImg = response.data.data.profile;
-            this.userEmail = response.data.data.email;
-        },
         //New Pass
         async newPassword() {
             if(this.validPassword == true){
-                await axios.post('api/v1/password-reset', {
+                await axios.post('api/v1/auth/password-reset', {
                     email: this.userEmail,
-                    password:this.password,
+                    password: this.password,
                     password_confirmation: this.cPassword,
                     token: this.token
                 })
                 .then((success) => {
                     //Alert Content
                     this.successAlert = true;
-                    this.successMessage = 'Password successfully changed';
+                    this.successMessage = success.data.message;
                     this.successIcon = 'like.svg';
                     this.$router.push("/");
                 })
                 .catch((error) => {
                     this.successAlert = true;
-                    this.successMessage = 'Error occured. Please try again';
+                    this.successMessage = error.response.data.errors;
                     this.successIcon = 'warning-red.svg';
                 })
             }

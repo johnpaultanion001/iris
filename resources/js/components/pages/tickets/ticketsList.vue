@@ -726,8 +726,8 @@ export default {
       await axios.post('api/v1/filter/tickets', {
         product_service: this.fProductSevice,
         severity: this.fSeverity,
-        from: this.reformat_date(this.fFrom),
-        till: this.reformat_date(this.fTill),
+        from: this.fFrom,
+        till: this.fTill,
         agencies: this.fAgencyValue.length > 0 ? this.fAgencyValue : null
       })
         .then((success) => {

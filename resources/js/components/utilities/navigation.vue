@@ -16,7 +16,7 @@
         </div>
         <div class="col-span-3 xl:col-span-4 flex items-center relative">
             <div @click="dropdown = !dropdown" class="w-full flex items-center justify-end">
-                <img :src="userImg" class="mr-2 w-9 h-9 rounded-full">
+                <img :src="userImg" class="mr-2 w-9 h-9 rounded-full object-cover border border-light">
                 <p class="text-base text-white font-inter-700">Hi, {{ userFirstName }} 👋</p>
             </div>
             <div v-if="dropdown" class="dropdown absolute top-14 right-0 rounded-lg bg-white shadow-secondary overflow-hidden">

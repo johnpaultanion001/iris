@@ -261,8 +261,8 @@ export default {
 
             await axios.post('api/v1/filter/vendors', {
                 city: this.fCity,
-                from: this.reformat_date(this.fFrom),
-                till: this.reformat_date(this.fTill)
+                from: this.fFrom,
+                till: this.fTill
             })
             .then((success) => {
                 this.responseFiltered = success.data.data

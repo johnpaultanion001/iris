@@ -608,7 +608,7 @@ export default {
     //Add checked Violations
     addCheckedViolation() {
       const arrayViolations = []
-      this.selectedViolations.map(function (value, key) {
+      this.checkedViolations.map(function (value, key) {
         arrayViolations.push({violation: value.violation, amount: value.amount});
       });
       this.arrayViolations = arrayViolations
@@ -679,7 +679,7 @@ export default {
           return;
 
         for (var i = 0; i < this.documents.length; i++) {
-            this.selected_docu.push({file: URL.createObjectURL(this.documents[i])});
+            this.selected_docu.push(this.documents[i]);
             this.docu_name.push({file: this.documents[i].name});
         }
     },
@@ -698,16 +698,24 @@ export default {
           formData.append('complaint', this.complaint);
           formData.append('platform', this.platform);
           formData.append('link', this.link);
-          for (var i = 0; i < this.$refs.documents.files.length; i++ ){
-              let file = this.$refs.documents.files[i];
-              formData.append('additional_documents_file', file);
-          }
-          formData.append('reported_first_name', String(this.reported_first_name[0]));
-          formData.append('reported_last_name', String(this.reported_last_name[0]));
+          // for (var i = 0; i < this.$refs.documents.files.length; i++ ){
+          //     let file = this.$refs.documents.files[i];
+          //     formData.append('additional_documents_file', file);
+          // }
+          formData.append('additional_documents_file', this.docu_name);
+          formData.append('vendor_name', String(this.vendor_name));
+          formData.append('email_address', String(this.email_address));
+          formData.append('mobile_number', String(this.mobile_number));
+          formData.append('city', String(this.city));
+          formData.append('reported_first_name', String(this.reported_first_name));
+          formData.append('reported_last_name', String(this.reported_last_name));
           formData.append('reported_email_address', String(this.reported_email_address));
           formData.append('reported_mobile_number', String(this.reported_mobile_number));
           formData.append('remarks', this.remarks);
+          formData.append('agencies', this.arrayAgencies);
+          formData.append('violations', this.arrayViolations);
           const headers = { 'Content-Type': 'multipart/form-data' };
+
         await axios.post('api/v1/tickets', formData, { headers })
         .then((response) => {
           if (response.data && response.data.message && response.data.message.validationFailed) {
@@ -725,7 +733,7 @@ export default {
           }
         })
         .catch((error) => {
-            console.log(error.response.data.errors)
+            console.log(error.response)
           // this.successAlert = true;
           // this.successMessage = 'Error occured. Please try again';
           // this.successIcon = 'warning-red.svg';
